@@ -59,7 +59,7 @@ export interface Risk {
   severity: RiskSeverity
   risk_type?: string
   eta?: string
-  status: 'open' | 'resolved'
+  status: 'open' | 'resolved' | 'in_progress' | 'blocked'
 }
 
 export interface Contact {
