@@ -58,6 +58,7 @@ export interface Risk {
   chapter_tag: string
   severity: RiskSeverity
   risk_type?: string
+  eta?: string
   status: 'open' | 'resolved'
 }
 
