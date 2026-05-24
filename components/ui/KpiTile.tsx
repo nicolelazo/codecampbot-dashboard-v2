@@ -126,7 +126,7 @@ export default function KpiTile({
           </div>
         )}
 
-        <div className="text-[13px] font-extrabold uppercase tracking-widest" style={{ color: c.num, lineHeight: 1.05 }}>
+        <div className="text-[11px] font-bold uppercase tracking-wide" style={{ color: c.num, lineHeight: 1.2 }}>
           {label}
         </div>
         {sublabel && <div className="text-[10px] text-[#7f8da4]" style={{ lineHeight: 1.2 }}>{sublabel}</div>}

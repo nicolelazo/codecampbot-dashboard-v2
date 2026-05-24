@@ -376,6 +376,12 @@ function sortChaptersForDsu<T extends { status: string; date_iso: string | null 
     if (b.date_iso) return 1
     return 0
   })
+  done.sort((a, b) => {
+    if (a.date_iso && b.date_iso) return a.date_iso.localeCompare(b.date_iso)
+    if (a.date_iso) return -1
+    if (b.date_iso) return 1
+    return 0
+  })
   return [...active, ...tbc, ...done]
 }
 
@@ -465,7 +471,7 @@ export async function buildDsuOverview() {
             ? 'pencil_booked'
             : ch.status
           const status = chapterStatusLabel(displayStatusKey)
-          const weeks = displayStatusKey === 'completed' ? '' : ` (${weeksToGoLabel(ch.date_iso, ch.date_text)})`
+          const weeks = ` (${weeksToGoLabel(ch.date_iso, ch.date_text)})`
           const chapterTasks = chapterTaskMap[ch.id.toLowerCase()] ?? []
           const topTask = chapterTasks.find(t => t.status === 'urgent') ?? chapterTasks[0]
 
@@ -601,7 +607,8 @@ export async function buildDsuOverview() {
             `• Status: ${statusSummary}`,
           ].join('\n')
 
-          return `${statusIcon[displayStatusKey] ?? '•'} <b>${shortcut}</b> ${ch.progress_percent}% · ${status}${weeks}\n${bullets}`
+          const displayedProgress = ch.progress_percent === 100 && chapterTasks.length > 0 ? 90 : ch.progress_percent
+          return `${statusIcon[displayStatusKey] ?? '•'} <b>${shortcut}</b> ${displayedProgress}% · ${status}${weeks}\n${bullets}`
         })
       )).join('\n\n')
     : 'No chapters found.'
