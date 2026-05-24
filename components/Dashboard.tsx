@@ -147,7 +147,7 @@ const DAY_FULL    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'
 // Q2 report deadline — Sui Foundation
 const Q2_DEADLINE = new Date('2026-06-30T23:59:59')
 
-function CalendarModal({ chapters, onClose }: { chapters: Chapter[]; onClose: () => void }) {
+function CalendarModal({ chapters, onClose, isMobile }: { chapters: Chapter[]; onClose: () => void; isMobile: boolean }) {
   const now = new Date()
   const [ym, setYm]         = useState({ year: now.getFullYear(), month: now.getMonth() })
   const [selected, setSelected] = useState<number | null>(now.getDate())
@@ -175,11 +175,11 @@ function CalendarModal({ chapters, onClose }: { chapters: Chapter[]; onClose: ()
 
   return (
     <div
-      style={{ position:'fixed', inset:0, zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center', padding:'24px 24px 24px 304px', background:'rgba(2,6,23,0.8)', backdropFilter:'blur(6px)' }}
+      style={{ position:'fixed', inset:0, zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center', padding: isMobile ? '16px' : '24px 24px 24px 304px', background:'rgba(2,6,23,0.8)', backdropFilter:'blur(6px)' }}
       onClick={onClose}
     >
       <div
-        style={{ width:'min(980px, calc(100vw - 360px))', maxHeight:'calc(100vh - 120px)', background:C.border, borderRadius:'24px', boxShadow:'0 25px 80px rgba(0,0,0,0.9)', display:'grid', gridTemplateColumns:'minmax(300px,340px) 1fr', overflow:'hidden', animation:'slideDown .3s ease-out' }}
+        style={{ width: isMobile ? '100%' : 'min(980px, calc(100vw - 360px))', maxHeight:'calc(100vh - 120px)', background:C.border, borderRadius: isMobile ? '16px' : '24px', boxShadow:'0 25px 80px rgba(0,0,0,0.9)', display:'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(300px,340px) 1fr', overflow:'hidden', animation:'slideDown .3s ease-out' }}
         onClick={e => e.stopPropagation()}
       >
         {/* Left — date selector */}
@@ -549,7 +549,7 @@ function sortChaptersForFw(chapters: Chapter[]): Chapter[] {
   })
 }
 
-function FwStatusSection({ chapters, onShowChapter }: { chapters: Chapter[]; onShowChapter: (id: string) => void }) {
+function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chapter[]; onShowChapter: (id: string) => void; isMobile: boolean }) {
   if (chapters.length === 0) return null
   const sorted = sortChaptersForFw(chapters)
   return (
@@ -574,33 +574,59 @@ function FwStatusSection({ chapters, onShowChapter }: { chapters: Chapter[]; onS
               onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = isTacloban ? 'rgba(248,113,113,0.35)' : C.border }}
             >
               {/* Top row */}
-              <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr 80px 130px', alignItems: 'center', gap: '16px' }}>
-                {/* Name + date/risk */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
-                  {isTacloban && <span style={{ fontSize: '13px', flexShrink: 0 }}>⚠️</span>}
-                  <div style={{ minWidth: 0 }}>
-                    <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Ch{c.number} · {c.city}</div>
-                    {isTacloban
-                      ? <div style={{ fontSize: '9px', color: '#FBBF24', fontWeight: 700, marginTop: '1px' }}>🔴 CANCELLATION DISCUSSION · Candidate · No date · No reply</div>
-                      : c.date_text ? <div style={{ fontSize: '9px', color: C.muted, marginTop: '1px' }}>{c.date_text}</div> : null}
+              {isMobile ? (
+                <>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, flex: 1 }}>
+                      {isTacloban && <span style={{ fontSize: '12px', flexShrink: 0 }}>⚠️</span>}
+                      <div style={{ minWidth: 0 }}>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Ch{c.number} · {c.city}</div>
+                        {isTacloban
+                          ? <div style={{ fontSize: '9px', color: '#FBBF24', fontWeight: 700, marginTop: '1px' }}>🔴 Cancellation · No date · No reply</div>
+                          : c.date_text ? <div style={{ fontSize: '9px', color: C.muted, marginTop: '1px' }}>{c.date_text}</div> : null}
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0 }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: badge.bg, border: `1px solid ${badge.border}`, color: badge.color, padding: '2px 8px', borderRadius: '999px', fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                        <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: badge.color, flexShrink: 0 }} />{badge.label}
+                      </span>
+                      <span style={{ fontSize: '11px', fontWeight: 800, color: isTacloban ? '#F87171' : pct >= 80 ? C.teal : pct >= 40 ? C.cyan : C.muted }}>{pct}%</span>
+                    </div>
                   </div>
-                </div>
-                {/* Progress bar */}
-                <div>
-                  <div style={{ height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '999px', overflow: 'hidden' }}>
+                  <div style={{ marginTop: '8px', height: '5px', background: 'rgba(255,255,255,0.06)', borderRadius: '999px', overflow: 'hidden' }}>
                     <div style={{ height: '100%', borderRadius: '999px', width: `${pct}%`, transition: 'width .5s ease-out',
                       background: isTacloban ? 'linear-gradient(90deg,#F87171,#f59e0b)' : pct >= 80 ? 'linear-gradient(90deg,#14b8a6,#2DD4BF)' : pct >= 40 ? 'linear-gradient(90deg,#06b6d4,#14b8a6)' : 'linear-gradient(90deg,#475569,#64748b)' }} />
                   </div>
+                </>
+              ) : (
+                <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr 80px 130px', alignItems: 'center', gap: '16px' }}>
+                  {/* Name + date/risk */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+                    {isTacloban && <span style={{ fontSize: '13px', flexShrink: 0 }}>⚠️</span>}
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Ch{c.number} · {c.city}</div>
+                      {isTacloban
+                        ? <div style={{ fontSize: '9px', color: '#FBBF24', fontWeight: 700, marginTop: '1px' }}>🔴 CANCELLATION DISCUSSION · Candidate · No date · No reply</div>
+                        : c.date_text ? <div style={{ fontSize: '9px', color: C.muted, marginTop: '1px' }}>{c.date_text}</div> : null}
+                    </div>
+                  </div>
+                  {/* Progress bar */}
+                  <div>
+                    <div style={{ height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '999px', overflow: 'hidden' }}>
+                      <div style={{ height: '100%', borderRadius: '999px', width: `${pct}%`, transition: 'width .5s ease-out',
+                        background: isTacloban ? 'linear-gradient(90deg,#F87171,#f59e0b)' : pct >= 80 ? 'linear-gradient(90deg,#14b8a6,#2DD4BF)' : pct >= 40 ? 'linear-gradient(90deg,#06b6d4,#14b8a6)' : 'linear-gradient(90deg,#475569,#64748b)' }} />
+                    </div>
+                  </div>
+                  {/* % */}
+                  <div style={{ fontSize: '13px', fontWeight: 800, textAlign: 'right', color: isTacloban ? '#F87171' : pct >= 80 ? C.teal : pct >= 40 ? C.cyan : C.muted }}>{pct}%</div>
+                  {/* Status badge */}
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: badge.bg, border: `1px solid ${badge.border}`, color: badge.color, padding: '3px 10px', borderRadius: '999px', fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: badge.color, flexShrink: 0 }} />{badge.label}
+                    </span>
+                  </div>
                 </div>
-                {/* % */}
-                <div style={{ fontSize: '13px', fontWeight: 800, textAlign: 'right', color: isTacloban ? '#F87171' : pct >= 80 ? C.teal : pct >= 40 ? C.cyan : C.muted }}>{pct}%</div>
-                {/* Status badge */}
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: badge.bg, border: `1px solid ${badge.border}`, color: badge.color, padding: '3px 10px', borderRadius: '999px', fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
-                    <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: badge.color, flexShrink: 0 }} />{badge.label}
-                  </span>
-                </div>
-              </div>
+              )}
 
               {/* FW checklist pills */}
               {fwItems.length > 0 && (
@@ -631,12 +657,13 @@ function FwStatusSection({ chapters, onShowChapter }: { chapters: Chapter[]; onS
 }
 
 // ── Program Summary ───────────────────────────────────────────────────────────
-function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks }: {
+function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }: {
   kpis: Kpi[]
   risks: Risk[]
   chapters: Chapter[]
   onSwitch: (t: TabId) => void
   onOpenRisks: () => void
+  isMobile: boolean
 }) {
   const kpiMap = Object.fromEntries(kpis.map(k => [k.key, k]))
   const avgPct = chapters.length > 0
@@ -686,7 +713,7 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks }:
   ]
 
   return (
-    <div style={{ marginTop: '32px', display: 'grid', gridTemplateColumns: '190px 1fr 1fr 1fr', gap: '16px', alignItems: 'stretch' }}>
+    <div style={{ marginTop: '32px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '190px 1fr 1fr 1fr', gap: '16px', alignItems: 'stretch' }}>
 
       {/* Program % donut */}
       <div style={{ background: C.surface, borderRadius: '20px', padding: '22px 18px', border: `1px solid ${C.border}`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
@@ -778,7 +805,7 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks }:
 }
 
 // ── Bento Section ─────────────────────────────────────────────────────────────
-function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks }: { kpis: Kpi[]; risks: Risk[]; chapters: Chapter[]; onSwitch: (t: TabId) => void; onOpenRisks: () => void }) {
+function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }: { kpis: Kpi[]; risks: Risk[]; chapters: Chapter[]; onSwitch: (t: TabId) => void; onOpenRisks: () => void; isMobile: boolean }) {
   const kpiMap       = Object.fromEntries(kpis.map(k => [k.key, k]))
   const openRisks    = risks.filter(r => r.status === 'open').length
   const completedCnt = chapters.filter(c => c.status === 'completed').length
@@ -811,7 +838,7 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks }: { kpis: 
   ]
 
   return (
-    <div style={{ display:'grid', gridTemplateColumns:'2.2fr 1fr', gap:'26px', marginTop:'40px', alignItems:'stretch' }}>
+    <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr' : '2.2fr 1fr', gap:'26px', marginTop:'40px', alignItems:'stretch' }}>
 
       {/* Skill corner — 3/4 */}
       <div style={{ background:C.surface, borderRadius:'28px', padding:'34px', border:`1px solid ${C.border}` }}>
@@ -819,14 +846,14 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks }: { kpis: 
           <div style={{ fontSize:'10px', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.15em', color:C.muted, marginBottom:'6px' }}>Program KPIs</div>
           <h3 style={{ fontSize:'24px', fontWeight:800, color:C.text }}>Build Beyond DEVCON <span style={{ color:C.cyan }}>× Sui</span></h3>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'18px' }}>
+        <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap:'18px' }}>
           {skillItems.map(item => (
             <div key={item.label} style={{ background:C.bg, borderRadius:'18px', padding:'24px', border:`1px solid ${C.border}`, display:'flex', alignItems:'flex-start', gap:'18px', minHeight:'126px' }}>
               <div style={{ width:'56px', height:'56px', borderRadius:'14px', flexShrink:0, background:`linear-gradient(135deg,${item.color}33,${item.color}11)`, border:`1px solid ${item.color}44`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'24px' }}>
                 {item.icon}
               </div>
               <div>
-                <div style={{ fontSize:'34px', fontWeight:800, color:item.color, lineHeight:1 }}>{item.value}</div>
+                <div style={{ fontSize: isMobile ? '22px' : '28px', fontWeight:800, color:item.color, lineHeight:1 }}>{item.value}</div>
                 <div style={{ fontSize:'10px', fontWeight:700, color:C.muted, textTransform:'uppercase', letterSpacing:'0.08em', marginTop:'8px' }}>{item.label}</div>
               </div>
             </div>
@@ -885,16 +912,19 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks }: { kpis: 
 }
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
-function Sidebar({ activeTab, activeChapterId, chapters, onSwitch, onShowChapter, onLogout }: {
+function Sidebar({ activeTab, activeChapterId, chapters, onSwitch, onShowChapter, onLogout, isMobile, isOpen, onClose }: {
   activeTab: TabId
   activeChapterId: string | null
   chapters: Chapter[]
   onSwitch: (t: TabId) => void
   onShowChapter: (id: string) => void
   onLogout: () => void
+  isMobile: boolean
+  isOpen: boolean
+  onClose: () => void
 }) {
   return (
-    <aside style={{ position:'fixed', left:0, top:0, bottom:0, width:'280px', background:C.surface, borderRight:`1px solid ${C.border}`, display:'flex', flexDirection:'column', zIndex:100, overflowY:'auto' }}>
+    <aside style={{ position:'fixed', left: isMobile && !isOpen ? '-280px' : 0, top:0, bottom:0, width:'280px', background:C.surface, borderRight:`1px solid ${C.border}`, display:'flex', flexDirection:'column', zIndex:200, overflowY:'auto', transition:'left .3s ease-out' }}>
 
       {/* Logo */}
       <div style={{ padding:'24px 20px', borderBottom:`1px solid ${C.border}`, flexShrink:0 }}>
@@ -921,7 +951,7 @@ function Sidebar({ activeTab, activeChapterId, chapters, onSwitch, onShowChapter
               return (
                 <button
                   key={item.id}
-                  onClick={() => onSwitch(item.id)}
+                  onClick={() => { onSwitch(item.id); if (isMobile) onClose() }}
                   style={{ display:'flex', alignItems:'center', gap:'10px', width:'100%', padding:'9px 10px', borderRadius:'10px', background:isActive ? 'rgba(6,182,212,0.1)' : 'transparent', border:'none', cursor:'pointer', color:isActive ? C.cyan : C.dim, fontSize:'13px', fontWeight:isActive ? 600 : 400, transition:'all .2s', textAlign:'left', marginBottom:'2px' }}
                 >
                   <span style={{ fontSize:'14px', flexShrink:0 }}>{item.icon}</span>
@@ -942,7 +972,7 @@ function Sidebar({ activeTab, activeChapterId, chapters, onSwitch, onShowChapter
               return (
                 <button
                   key={c.id}
-                  onClick={() => onShowChapter(c.id)}
+                  onClick={() => { onShowChapter(c.id); if (isMobile) onClose() }}
                   style={{ display:'flex', alignItems:'center', gap:'8px', width:'100%', padding:'8px 10px', borderRadius:'10px', background:isActive ? 'rgba(6,182,212,0.1)' : 'transparent', border:'none', cursor:'pointer', color:isActive ? C.cyan : C.dim, fontSize:'12px', fontWeight:isActive ? 600 : 400, transition:'all .2s', textAlign:'left', marginBottom:'2px' }}
                 >
                   <div style={{ width:'6px', height:'6px', borderRadius:'50%', background:cat.color, flexShrink:0 }} />
@@ -968,7 +998,7 @@ function Sidebar({ activeTab, activeChapterId, chapters, onSwitch, onShowChapter
 }
 
 // ── Top Header ────────────────────────────────────────────────────────────────
-function TopHeader({ calendarOpen, onToggleCalendar }: { calendarOpen: boolean; onToggleCalendar: () => void }) {
+function TopHeader({ calendarOpen, onToggleCalendar, isMobile, onToggleSidebar }: { calendarOpen: boolean; onToggleCalendar: () => void; isMobile: boolean; onToggleSidebar: () => void }) {
   const [now, setNow] = useState<Date | null>(null)
 
   useEffect(() => {
@@ -993,6 +1023,22 @@ function TopHeader({ calendarOpen, onToggleCalendar }: { calendarOpen: boolean; 
     ? `${DAY_FULL[now.getDay()].slice(0,3).toUpperCase()} ${now.getDate()} ${MONTH_SHORT[now.getMonth()]}`
     : '--- -- ---'
   const yearLabel = now ? String(now.getFullYear()) : '----'
+
+  if (isMobile) {
+    return (
+      <header style={{ position:'sticky', top:0, zIndex:190, height:'56px', background:'rgba(2,6,23,0.97)', backdropFilter:'blur(16px)', borderBottom:`1px solid ${C.border}`, display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 16px', flexShrink:0 }}>
+        <button onClick={onToggleSidebar} style={{ background:'none', border:'none', color:C.dim, fontSize:'20px', cursor:'pointer', padding:'4px 6px', lineHeight:1, display:'flex', alignItems:'center' }}>☰</button>
+        <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
+          <div style={{ width:'28px', height:'28px', borderRadius:'50%', background:'linear-gradient(135deg,#06b6d4,#14b8a6)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'12px', fontWeight:800, color:'#fff' }}>D</div>
+          <span style={{ fontSize:'13px', fontWeight:700, color:C.text }}>CodeCamp HQ</span>
+        </div>
+        <div style={{ display:'flex', alignItems:'center', gap:'6px', background:'rgba(6,182,212,0.08)', border:'1px solid rgba(6,182,212,0.2)', borderRadius:'999px', padding:'4px 10px' }}>
+          <div style={{ width:'5px', height:'5px', borderRadius:'50%', background:C.cyan, animation:'pulse 2s infinite' }} />
+          <span style={{ fontSize:'10px', fontWeight:700, color:C.cyan }}>{q2Label}</span>
+        </div>
+      </header>
+    )
+  }
 
   return (
     <header style={{ position:'sticky', top:0, zIndex:90, height:'80px', background:'rgba(2,6,23,0.95)', backdropFilter:'blur(16px)', borderBottom:`1px solid ${C.border}`, display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 32px', flexShrink:0 }}>
@@ -1049,7 +1095,16 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
 
   const [calendarOpen, setCalendarOpen] = useState(false)
   const [riskPanelOpen, setRiskPanelOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const activeTab = getTabFromQuery(searchParams.get('tab'))
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const [chapters,   setChapters]   = useState<Chapter[]>([])
   const [kpis,       setKpis]       = useState<Kpi[]>([])
@@ -1124,6 +1179,10 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
   return (
     <div style={{ display:'flex', minHeight:'100vh', background:C.bg, fontFamily:"'Plus Jakarta Sans', sans-serif" }}>
 
+      {isMobile && sidebarOpen && (
+        <div onClick={() => setSidebarOpen(false)} style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', zIndex:199 }} />
+      )}
+
       <Sidebar
         activeTab={activeTab}
         activeChapterId={activeChapterId}
@@ -1131,14 +1190,17 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
         onSwitch={switchTab}
         onShowChapter={showChapter}
         onLogout={logout}
+        isMobile={isMobile}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
 
       {/* Main content */}
-      <div style={{ flex:1, marginLeft:'280px', display:'flex', flexDirection:'column', minHeight:'100vh' }}>
+      <div style={{ flex:1, marginLeft: isMobile ? 0 : '280px', display:'flex', flexDirection:'column', minHeight:'100vh' }}>
 
-        <TopHeader calendarOpen={calendarOpen} onToggleCalendar={() => setCalendarOpen(v => !v)} />
+        <TopHeader calendarOpen={calendarOpen} onToggleCalendar={() => setCalendarOpen(v => !v)} isMobile={isMobile} onToggleSidebar={() => setSidebarOpen(v => !v)} />
 
-        <main style={{ flex:1, padding:'46px 48px 54px', overflowX:'hidden' }}>
+        <main style={{ flex:1, padding: isMobile ? '20px 16px 40px' : '46px 48px 54px', overflowX:'hidden' }}>
           {initialChapterId ? (
             chapters.length === 0 ? (
               <div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'400px', color:'#475569', fontSize:'13px' }}>
@@ -1158,20 +1220,20 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
               {/* Hero section header */}
               <div style={{ marginBottom:'34px', maxWidth:'980px' }}>
                 <div style={{ fontSize:'10px', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.15em', color:C.muted, marginBottom:'8px' }}>Event Discovery</div>
-                <h1 style={{ fontSize:'40px', fontWeight:800, color:C.text, marginBottom:'10px', lineHeight:1.1 }}>
+                <h1 style={{ fontSize: isMobile ? '26px' : '40px', fontWeight:800, color:C.text, marginBottom:'10px', lineHeight:1.1 }}>
                   Build Beyond DEVCON <span style={{ color:C.cyan }}>× Sui</span>
                 </h1>
                 <p style={{ fontSize:'16px', color:C.dim, lineHeight:1.7 }}>6 chapters across the Philippines · Q2 2026</p>
               </div>
 
               {/* Bento widgets — stats first */}
-              <BentoSection kpis={kpis} risks={risks} chapters={chapters} onSwitch={switchTab} onOpenRisks={() => setRiskPanelOpen(true)} />
+              <BentoSection kpis={kpis} risks={risks} chapters={chapters} onSwitch={switchTab} onOpenRisks={() => setRiskPanelOpen(true)} isMobile={isMobile} />
 
               {/* FW Status per Chapter */}
-              <FwStatusSection chapters={chapters} onShowChapter={showChapter} />
+              <FwStatusSection chapters={chapters} onShowChapter={showChapter} isMobile={isMobile} />
 
               {/* Program Summary — KPI %, Achievements, Risks, Next Steps */}
-              <ProgramSummarySection kpis={kpis} risks={risks} chapters={chapters} onSwitch={switchTab} onOpenRisks={() => setRiskPanelOpen(true)} />
+              <ProgramSummarySection kpis={kpis} risks={risks} chapters={chapters} onSwitch={switchTab} onOpenRisks={() => setRiskPanelOpen(true)} isMobile={isMobile} />
 
               {/* Upcoming Key Milestones */}
               <UpcomingMilestonesSection chapters={chapters} />
@@ -1185,7 +1247,7 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
                   </div>
                   <div style={{ fontSize:'12px', color:C.muted }}>{chapters.length} events · Q2 2026</div>
                 </div>
-                <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(320px,1fr))', gap:'24px' }}>
+                <div style={{ display:'grid', gridTemplateColumns:`repeat(auto-fit,minmax(${isMobile ? '260px' : '320px'},1fr))`, gap: isMobile ? '16px' : '24px' }}>
                   {chapters.length > 0
                     ? chapters.map(c => <EventCard key={c.id} chapter={c} onSelect={showChapter} />)
                     : Array.from({ length: 6 }).map((_,i) => (
@@ -1198,7 +1260,7 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
 
           ) : (
             <div className="animate-fade-in">
-              {activeTab === 'kpi'        && <KpiPanel kpis={kpis} chapters={chapters} setKpis={setKpis} />}
+              {activeTab === 'kpi'        && <KpiPanel kpis={kpis} chapters={chapters} setKpis={setKpis} isMobile={isMobile} />}
               {activeTab === 'milestones' && <MilestonesPanel />}
               {activeTab === 'chapters'   && <ChaptersPanel chapters={chapters} onShowChapter={showChapter} onRefresh={refresh} />}
               {activeTab === 'risks'      && <RisksPanel risks={risks} setRisks={setRisks} onRefresh={refresh} />}
@@ -1217,7 +1279,7 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
         </footer>
       </div>
 
-      {calendarOpen && <CalendarModal chapters={chapters} onClose={() => setCalendarOpen(false)} />}
+      {calendarOpen && <CalendarModal chapters={chapters} onClose={() => setCalendarOpen(false)} isMobile={isMobile} />}
 
       <RiskDrilldownPanel
         open={riskPanelOpen}

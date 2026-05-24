@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { CHECKLIST_TEMPLATE } from '@/lib/checklist-data'
 
 const noStoreFetch: typeof fetch = (input, init) => {
   return fetch(input, {
@@ -123,6 +124,14 @@ export async function buildDsuMessage(): Promise<string> {
     ? highRisks.map(r => `${sevIcon[r.severity]} <b>${r.code}</b>: ${r.title} — ${r.owner}`).join('\n')
     : '  No high risks'
 
+  const pendingDeepSurge = Object.entries(CHECKLIST_TEMPLATE)
+    .filter(([, items]) => items.some(i => i.tCode === 'LINK' && i.status === 'pending'))
+    .map(([chapter]) => chapter.charAt(0).toUpperCase() + chapter.slice(1))
+
+  const deepSurgeBlock = pendingDeepSurge.length
+    ? `\n<b>🔗 Pending DeepSurge Links</b>\n${pendingDeepSurge.map(c => `• ${c} — TBD (request from Jianyi)`).join('\n')}`
+    : ''
+
   return `<b>📝 DEVCON × Sui — Morning DSU</b>
 <i>${now}</i>
 ━━━━━━━━━━━━━━━━━━━━
@@ -139,5 +148,5 @@ ${urgentBlock}
 <b>⚠️ High Risks</b> (${uniqueOpenRisks.length} total open)
 ${risksBlock}
 
-<i>Use /tasks, /risks, or /chapter [id] for details.</i>`
+<i>Use /tasks, /risks, or /chapter [id] for details.</i>${deepSurgeBlock}`
 }

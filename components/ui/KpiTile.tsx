@@ -116,7 +116,7 @@ export default function KpiTile({
           <div
             className="font-extrabold leading-none"
             style={{
-              fontSize: 20,
+              fontSize: 15,
               color: c.num,
               letterSpacing: '-0.01em',
               textShadow: `0 0 10px ${c.num}2e`,

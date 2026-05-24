@@ -18,14 +18,18 @@ const statusBadge: Record<string, { variant: BadgeVariant; label: string }> = {
 const accentOf = (c: Chapter) =>
   c.color === 'teal' ? '#14b8a6' : c.color === 'yellow' ? '#f59e0b' : c.color === 'purple' ? '#a78bfa' : '#06b6d4'
 
-const CARD: React.CSSProperties = {
-  display: 'grid', gridTemplateColumns: '28px 1fr auto auto', gap: '14px',
-  alignItems: 'center', padding: '20px 22px',
-  background: '#0f172a', border: '1px solid #1e293b', borderRadius: '18px',
-  transition: 'border-color .2s',
+function getCard(isMobile?: boolean): React.CSSProperties {
+  return {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? '28px 1fr auto' : '28px 1fr auto auto',
+    gap: isMobile ? '10px' : '14px',
+    alignItems: 'center', padding: isMobile ? '14px 16px' : '18px 22px',
+    background: '#0f172a', border: '1px solid #1e293b', borderRadius: '18px',
+    transition: 'border-color .2s',
+  }
 }
 
-export default function KpiPanel({ kpis, chapters, setKpis }: { kpis: Kpi[]; chapters: Chapter[]; setKpis: React.Dispatch<React.SetStateAction<Kpi[]>> }) {
+export default function KpiPanel({ kpis, chapters, setKpis, isMobile }: { kpis: Kpi[]; chapters: Chapter[]; setKpis: React.Dispatch<React.SetStateAction<Kpi[]>>; isMobile?: boolean }) {
 
   async function saveKpi(id: string, value: string) {
     setKpis(prev => prev.map(k => k.id === id ? { ...k, value } : k))
@@ -44,23 +48,23 @@ export default function KpiPanel({ kpis, chapters, setKpis }: { kpis: Kpi[]; cha
       <PanelHeader eyebrow="Q2 2026" title="KPI Dashboard" subtitle="Key performance indicators and chapter schedule." />
 
       {/* KPI metric tiles */}
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-4">
+      <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' }}>
         {kpis.map(k => (
           <KpiTile key={k.id} id={k.id} value={k.value} label={k.label} sublabel={['confirmed_deployments', 'completion_rate'].includes(k.key) ? 'Activated to date' : undefined} color={k.color} onSave={saveKpi} />
         ))}
       </div>
 
       {/* Pax tracker */}
-      <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '22px', padding: '34px' }}>
+      <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '22px', padding: isMobile ? '20px 16px' : '28px' }}>
         <p style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em', color: '#64748b', marginBottom: '16px' }}>
           National Pax — MOU Target: 500
         </p>
-        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px', marginBottom: '24px' }}>
           <div>
-            <span style={{ fontSize: '60px', fontWeight: 800, color: '#06b6d4', lineHeight: 1 }}>0</span>
-            <span style={{ fontSize: '22px', fontWeight: 600, color: '#1e293b', marginLeft: '6px' }}>/ 600</span>
+            <span style={{ fontSize: isMobile ? '36px' : '48px', fontWeight: 800, color: '#06b6d4', lineHeight: 1 }}>0</span>
+            <span style={{ fontSize: isMobile ? '14px' : '18px', fontWeight: 600, color: '#1e293b', marginLeft: '6px' }}>/ 600</span>
           </div>
-          <div style={{ display: 'flex', gap: '28px' }}>
+          <div style={{ display: 'flex', gap: isMobile ? '16px' : '24px', flexWrap: 'wrap' }}>
             {[
               { val: String(done),   lbl: 'Done',       color: '#14b8a6' },
               { val: String(active), lbl: 'Active',     color: '#f59e0b' },
@@ -68,7 +72,7 @@ export default function KpiPanel({ kpis, chapters, setKpis }: { kpis: Kpi[]; cha
               { val: '1',            lbl: 'Q3 Pending', color: '#a78bfa' },
             ].map(s => (
               <div key={s.lbl} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '22px', fontWeight: 800, color: s.color, lineHeight: 1 }}>{s.val}</div>
+                <div style={{ fontSize: isMobile ? '16px' : '20px', fontWeight: 800, color: s.color, lineHeight: 1 }}>{s.val}</div>
                 <div style={{ fontSize: '9px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: '4px' }}>{s.lbl}</div>
               </div>
             ))}
@@ -104,7 +108,7 @@ export default function KpiPanel({ kpis, chapters, setKpis }: { kpis: Kpi[]; cha
             const accent = accentOf(c)
             const pax    = PAX_ROWS.find(p => p.chapter_name.toLowerCase().includes(c.city.toLowerCase()))
             return (
-              <div key={c.id} style={{ ...CARD, borderLeft: `3px solid ${accent}` }}
+              <div key={c.id} style={{ ...getCard(isMobile), borderLeft: `3px solid ${accent}` }}
                 onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(6,182,212,0.35)')}
                 onMouseLeave={e => (e.currentTarget.style.borderColor = '#1e293b')}>
                 <span style={{ fontSize: '10px', fontWeight: 700, color: '#475569', fontFamily: 'monospace' }}>{c.number}</span>
@@ -116,10 +120,12 @@ export default function KpiPanel({ kpis, chapters, setKpis }: { kpis: Kpi[]; cha
                   <div style={{ fontSize: '13px', fontWeight: 700, color: accent }}>{c.pax_target ?? 'TBC'}</div>
                   <div style={{ fontSize: '9px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', marginTop: '2px' }}>target pax</div>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
-                  <Badge variant={b.variant} size="sm">{b.label}</Badge>
-                  <span style={{ fontSize: '9px', color: '#475569' }}>{liveCountdown(c.date_iso)}</span>
-                </div>
+                {!isMobile && (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
+                    <Badge variant={b.variant} size="sm">{b.label}</Badge>
+                    <span style={{ fontSize: '9px', color: '#475569' }}>{liveCountdown(c.date_iso)}</span>
+                  </div>
+                )}
               </div>
             )
           })}

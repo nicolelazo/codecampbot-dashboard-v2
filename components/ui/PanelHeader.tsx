@@ -12,7 +12,7 @@ export default function PanelHeader({ eyebrow, title, subtitle, right }: Props) 
         <p style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.16em', color: '#64748b', marginBottom: '8px' }}>
           {eyebrow}
         </p>
-        <h2 style={{ fontSize: '32px', fontWeight: 800, color: '#cfd5dd', lineHeight: 1.1, margin: 0 }}>
+        <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#cfd5dd', lineHeight: 1.1, margin: 0 }}>
           {title}
         </h2>
         {subtitle && (
