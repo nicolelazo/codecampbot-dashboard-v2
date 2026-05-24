@@ -929,8 +929,8 @@ function Sidebar({ activeTab, activeChapterId, chapters, onSwitch, onShowChapter
       {/* Logo */}
       <div style={{ padding:'24px 20px', borderBottom:`1px solid ${C.border}`, flexShrink:0 }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
-          <div style={{ width:'40px', height:'40px', borderRadius:'12px', background:'rgba(6,182,212,0.08)', border:'1px solid rgba(6,182,212,0.25)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-            <Image src="/sui-logo.png" alt="Sui logo" width={24} height={24} unoptimized />
+          <div style={{ width:'44px', height:'44px', borderRadius:'50%', overflow:'hidden', flexShrink:0, boxShadow:'0 0 0 2px rgba(139,92,246,0.4)' }}>
+            <Image src="/devcon-logo.jpg" alt="DEVCON logo" width={44} height={44} unoptimized style={{ width:'100%', height:'100%', objectFit:'cover' }} />
           </div>
           <div>
             <div style={{ fontSize:'15px', fontWeight:700, color:C.text, lineHeight:1.2 }}>CodeCamp HQ</div>

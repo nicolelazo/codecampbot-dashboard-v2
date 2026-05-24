@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
 
 export default function AuthLoginPage() {
   const router = useRouter()
@@ -65,16 +64,19 @@ export default function AuthLoginPage() {
 
         {/* Header */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: isMobile ? '24px' : '28px' }}>
-          <div style={{
-            width: isMobile ? '72px' : '84px',
-            height: isMobile ? '72px' : '84px',
-            borderRadius: '50%',
-            overflow: 'hidden',
-            marginBottom: '16px',
-            boxShadow: '0 0 0 3px rgba(139,92,246,0.35), 0 8px 24px -6px rgba(139,92,246,0.4)',
-          }}>
-            <Image src="/devcon-logo.jpg" alt="DEVCON logo" width={84} height={84} unoptimized priority style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/devcon-logo.jpg"
+            alt="DEVCON logo"
+            style={{
+              width: isMobile ? '72px' : '84px',
+              height: isMobile ? '72px' : '84px',
+              borderRadius: '50%',
+              objectFit: 'cover',
+              marginBottom: '16px',
+              boxShadow: '0 0 0 3px rgba(139,92,246,0.35), 0 8px 24px -6px rgba(139,92,246,0.4)',
+            }}
+          />
 
           <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#7c3aed', marginBottom: '6px' }}>
             Protected Access
@@ -107,20 +109,22 @@ export default function AuthLoginPage() {
           {/* Input wrapper with icon */}
           <div style={{ position: 'relative', marginBottom: error ? '8px' : '16px' }}>
             {/* Left icon */}
-            <div style={{
-              position: 'absolute',
-              left: '12px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '26px',
-              height: '26px',
-              borderRadius: '50%',
-              overflow: 'hidden',
-              pointerEvents: 'none',
-              flexShrink: 0,
-            }}>
-              <Image src="/devcon-logo.jpg" alt="" width={26} height={26} unoptimized style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/devcon-logo.jpg"
+              alt=""
+              style={{
+                position: 'absolute',
+                left: '12px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '26px',
+                height: '26px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                pointerEvents: 'none',
+              }}
+            />
 
             {/* Password input */}
             <input
