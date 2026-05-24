@@ -377,7 +377,7 @@ function sortChaptersForDsu<T extends { status: string; date_iso: string | null 
     return 0
   })
   done.sort((a, b) => {
-    if (a.date_iso && b.date_iso) return a.date_iso.localeCompare(b.date_iso)
+    if (a.date_iso && b.date_iso) return b.date_iso.localeCompare(a.date_iso)
     if (a.date_iso) return -1
     if (b.date_iso) return 1
     return 0
@@ -661,7 +661,7 @@ export async function buildDsuOverview() {
 • Mentors Trained and Deployed: <b>${readKpi(['trained_mentors'])}</b>
 • Students Trained and Deployed: <b>${readKpi(['trained_students', 'students_trained', 'students_trained_deployed'])}</b>
 • Verified Vercel and Mainnet Deployments: <b>${readKpi(['confirmed_deployments', 'verified_deployments'])}</b>
-• Completion Rate: <b>${readKpi(['completion_rate'])}</b>
+• Completion Rate: <b>${(() => { const v = readKpi(['completion_rate']); return v !== '–' && !v.endsWith('%') ? `${v}%` : v })()} </b>
 • Labs Installed and Activated: <b>${readKpi(['computer_labs', 'labs_installed'])}</b>
 
 <b>🏕 Chapter Progress</b>

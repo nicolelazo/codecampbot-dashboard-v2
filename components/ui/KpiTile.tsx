@@ -50,7 +50,7 @@ export default function KpiTile({
         background: `radial-gradient(120% 90% at 50% -10%, ${c.bg}, transparent 65%), linear-gradient(160deg, rgba(2,6,23,0.96), rgba(15,23,42,0.86))`,
         position: 'relative',
         cursor: onSave ? 'pointer' : 'default',
-        minHeight: '118px',
+        minHeight: '86px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -107,7 +107,7 @@ export default function KpiTile({
             style={{
               width: '100%', textAlign: 'center', background: 'transparent',
               border: 'none', borderBottom: `2px solid ${c.num}`,
-              color: c.num, fontSize: 22, fontWeight: 700, lineHeight: 1,
+              color: c.num, fontSize: 16, fontWeight: 700, lineHeight: 1,
               marginBottom: '2px', outline: 'none', fontFamily: 'inherit',
             }}
             disabled={saving}
@@ -116,10 +116,10 @@ export default function KpiTile({
           <div
             className="font-extrabold leading-none"
             style={{
-              fontSize: 28,
+              fontSize: 20,
               color: c.num,
-              letterSpacing: '-0.02em',
-              textShadow: `0 0 14px ${c.num}2e`,
+              letterSpacing: '-0.01em',
+              textShadow: `0 0 10px ${c.num}2e`,
             }}
           >
             {value}
