@@ -613,13 +613,20 @@ export async function buildDsuOverview() {
       )).join('\n\n')
     : 'No chapters found.'
 
-  const urgentBlock = urgentTasks.length
-    ? urgentTasks
-        .slice(0, 6)
+  const urgentBlock = openTasks.length
+    ? openTasks
+        .slice()
+        .sort((a, b) => {
+          const aw = a.status === 'urgent' ? 0 : 1
+          const bw = b.status === 'urgent' ? 0 : 1
+          return aw - bw
+        })
+        .slice(0, 10)
         .map(t => {
           const chapter = chapterRows.find(ch => ch.id.toLowerCase() === t.chapter_id.toLowerCase())
           const chapterCode = chapter ? chapterShortcut(chapter.id, chapter.name) : t.chapter_id.toUpperCase()
-          return `🔴 <b>${chapterCode}</b> · <b>${t.owner}</b>: ${t.description}`
+          const icon = t.status === 'urgent' ? '🔴' : '🔵'
+          return `${icon} <b>${chapterCode}</b> · <b>${t.owner}</b>: ${t.description}`
         })
         .join('\n')
     : 'None'

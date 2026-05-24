@@ -107,7 +107,7 @@ export default function KpiTile({
             style={{
               width: '100%', textAlign: 'center', background: 'transparent',
               border: 'none', borderBottom: `2px solid ${c.num}`,
-              color: c.num, fontSize: 34, fontWeight: 800, lineHeight: 1,
+              color: c.num, fontSize: 22, fontWeight: 700, lineHeight: 1,
               marginBottom: '2px', outline: 'none', fontFamily: 'inherit',
             }}
             disabled={saving}
@@ -116,10 +116,10 @@ export default function KpiTile({
           <div
             className="font-extrabold leading-none"
             style={{
-              fontSize: 38,
+              fontSize: 28,
               color: c.num,
-              letterSpacing: '-0.04em',
-              textShadow: `0 0 18px ${c.num}2e`,
+              letterSpacing: '-0.02em',
+              textShadow: `0 0 14px ${c.num}2e`,
             }}
           >
             {value}
