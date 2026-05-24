@@ -659,7 +659,7 @@ export async function buildDsuOverview() {
 • Total Attendees: <b>${readKpi(['total_attendees', 'attendees_total'], attendeesFromChapters > 0 ? String(attendeesFromChapters) : '–')}</b>
 • Completion Form Submissions: <b>${readKpi(['form_submissions'])}</b>
 • Mentors Trained and Deployed: <b>${readKpi(['trained_mentors'])}</b>
-• Students Trained and Deployed: <b>${readKpi(['trained_students', 'students_trained', 'students_trained_deployed'])}</b>
+• Students Trained: <b>${readKpi(['trained_students', 'students_trained', 'students_trained_deployed'])}</b>
 • Verified Vercel and Mainnet Deployments: <b>${readKpi(['confirmed_deployments', 'verified_deployments'])}</b>
 • Completion Rate: <b>${(() => { const v = readKpi(['completion_rate']); return v !== '–' && !v.endsWith('%') ? `${v}%` : v })()} </b>
 • Labs Installed and Activated: <b>${readKpi(['computer_labs', 'labs_installed'])}</b>

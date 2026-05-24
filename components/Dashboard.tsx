@@ -831,7 +831,7 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }
     { label:'Open Risks',           value:String(openRisks || '0'),                                                          color:C.rose },
     { label:'Labs Active',          value:kpiMap['computer_labs']?.value          ?? '–',                                    color:C.cyan },
     { label:'Total Attendees',      value:kpiMap['total_attendees']?.value        ?? '434 (Manila + Bukidnon + Iloilo)',      color:C.cyan },
-    { label:'Students Deployed',    value:kpiMap['students_trained']?.value       ?? '434 (Manila + Bukidnon + Iloilo)',     color:C.teal },
+    { label:'Students Trained',      value:kpiMap['students_trained']?.value       ?? '434 (Manila + Bukidnon + Iloilo)',     color:C.teal },
     { label:'Verified Submissions', value:kpiMap['verified_submissions']?.value   ?? '241 (29 Manila + 72 BSU + 140 CPU)',   color:'#2DD4BF' },
     { label:'Dev Events',           value:kpiMap['dev_events']?.value             ?? '4 (Bukidnon, Iloilo, Laguna, SHEisDEVCON)', color:C.teal },
     { label:'Days Left Q2',         value:daysLeftStr,                                                                       color:'#f59e0b' },
