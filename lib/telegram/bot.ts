@@ -659,7 +659,7 @@ ${nextStepsBlock}
 
 <i>Tap a chapter shortcut below for detailed chapter status.</i>
 <b>🌐 Full Dashboard:</b>
-<a href="https://devcon-sui-buildbeyond2026-dashboard.vercel.app/">Dashboard</a>`
+<a href="https://codecampbot-dashboard-v2.vercel.app/">Dashboard</a>`
 
   const keyboard = buildDsuChaptersKeyboard(chapterRows)
   return { text, keyboard }

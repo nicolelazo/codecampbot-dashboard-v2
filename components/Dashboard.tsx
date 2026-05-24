@@ -651,9 +651,10 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks }:
     { icon: '👥', text: `${kpiMap['total_attendees']?.value ?? '276~'} total attendees reached` },
     { icon: '🧑‍💻', text: `${kpiMap['students_trained']?.value ?? '–'} students trained` },
     { icon: '🚀', text: `${kpiMap['confirmed_deployments']?.value ?? '–'} confirmed Sui deployments` },
-    { icon: '📍', text: 'Bukidnon — 149 attendees, 81 at 100% completion, 71 verified (BSU, May 6)' },
+    { icon: '📍', text: 'Manila — 128 registered, 60 submitted projects, 29 valid submissions (Letran, Mar 28)' },
+    { icon: '📍', text: 'Bukidnon — 136 registered, 80 submitted projects, 72 valid submissions (BSU, May 6)' },
     { icon: '🆕', text: 'Bukidnon — first-ever BYOD format + Pre-Installation Day (commitment filter)' },
-    { icon: '📍', text: 'Iloilo — 127 attendees, 125 projects, 106 verified (CPU, May 16)' },
+    { icon: '📍', text: 'Iloilo — 170 registered, 162 submitted projects, 140 valid submissions (CPU, May 16)' },
     { icon: '📍', text: 'Laguna — PUP Biñan CITE Campus, May 29 · venue confirmed · took Tacloban slot + merch' },
     { icon: '✅', text: 'Laguna — both dry runs completed · DeepSurge live · seed fund received' },
     { icon: '📣', text: 'Laguna registration posting started May 21 · Tokens received by Lucky' },
@@ -801,9 +802,9 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks }: { kpis: 
     { label:'Chapters Done',        value:`${completedCnt}/${chapters.length}`,                                              color:C.teal },
     { label:'Open Risks',           value:String(openRisks || '0'),                                                          color:C.rose },
     { label:'Labs Active',          value:kpiMap['computer_labs']?.value          ?? '–',                                    color:C.cyan },
-    { label:'Total Attendees',      value:kpiMap['total_attendees']?.value        ?? '276~ (Bukidnon + Iloilo)',              color:C.cyan },
-    { label:'Students Deployed',    value:kpiMap['students_trained']?.value       ?? '276 (Bukidnon + Iloilo)',              color:C.teal },
-    { label:'Verified Submissions', value:kpiMap['verified_submissions']?.value   ?? '177+ (71 BSU + 106 CPU)',              color:'#2DD4BF' },
+    { label:'Total Attendees',      value:kpiMap['total_attendees']?.value        ?? '434 (Manila + Bukidnon + Iloilo)',      color:C.cyan },
+    { label:'Students Deployed',    value:kpiMap['students_trained']?.value       ?? '434 (Manila + Bukidnon + Iloilo)',     color:C.teal },
+    { label:'Verified Submissions', value:kpiMap['verified_submissions']?.value   ?? '241 (29 Manila + 72 BSU + 140 CPU)',   color:'#2DD4BF' },
     { label:'Dev Events',           value:kpiMap['dev_events']?.value             ?? '4 (Bukidnon, Iloilo, Laguna, SHEisDEVCON)', color:C.teal },
     { label:'Days Left Q2',         value:daysLeftStr,                                                                       color:'#f59e0b' },
   ]
@@ -999,7 +1000,6 @@ function TopHeader({ calendarOpen, onToggleCalendar }: { calendarOpen: boolean; 
       <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
         <div style={{ width:'40px', height:'40px', borderRadius:'50%', background:'linear-gradient(135deg,#06b6d4,#14b8a6)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'16px', fontWeight:800, color:'#fff', flexShrink:0 }}>D</div>
         <div>
-          <div style={{ fontSize:'14px', fontWeight:600, color:C.text }}>Dom De Leon</div>
           <div style={{ fontSize:'11px', color:C.muted }}>ExDir · DEVCON</div>
         </div>
       </div>
