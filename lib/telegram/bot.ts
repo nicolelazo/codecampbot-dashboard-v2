@@ -427,7 +427,10 @@ export async function buildDsuOverview() {
     const eventDate = new Date(`${isoDate}T00:00:00+08:00`)
     const diffMs = eventDate.getTime() - localNow.getTime()
 
-    if (diffMs <= 0) return '0 weeks to go'
+    if (diffMs <= 0) {
+    const daysPast = Math.ceil(-diffMs / (1000 * 60 * 60 * 24))
+    return `${daysPast} ${daysPast === 1 ? "day" : "days"} ago`
+  }
 
     const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24))
     const weeks = Math.ceil(diffDays / 7)
