@@ -663,6 +663,7 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks }:
   const KEY_RISKS = [
     { text: 'Tacloban — under cancellation discussion · candidate chapter · no date · no reply', urgent: true,  high: true  },
     { text: 'Laguna — installation day-before (May 28) · high risk if ICT dept not ready on time', urgent: true,  high: true  },
+    { text: 'Laguna — no prof incentives · students may skip camp with no academic credit or grade incentive', urgent: false, high: true  },
     { text: 'CDO (Cagayan de Oro) — Jumpstart request by Kenshin · not active · no venue · training TBC', urgent: false, high: true  },
     ...highRisks.filter(r => !(r.chapter_tag ?? '').toLowerCase().includes('tacloban')).slice(0, 2)
       .map(r => ({ text: `${r.chapter_tag ? r.chapter_tag + ' — ' : ''}${r.title}`, urgent: false, high: true })),
