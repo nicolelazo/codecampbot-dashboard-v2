@@ -64,19 +64,6 @@ export default function AuthLoginPage() {
 
         {/* Header */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: isMobile ? '24px' : '28px' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/devcon-logo.jpg"
-            alt="DEVCON logo"
-            style={{
-              width: isMobile ? '72px' : '84px',
-              height: isMobile ? '72px' : '84px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              marginBottom: '16px',
-              boxShadow: '0 0 0 3px rgba(139,92,246,0.35), 0 8px 24px -6px rgba(139,92,246,0.4)',
-            }}
-          />
 
           <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#7c3aed', marginBottom: '6px' }}>
             Protected Access
@@ -108,23 +95,6 @@ export default function AuthLoginPage() {
 
           {/* Input wrapper with icon */}
           <div style={{ position: 'relative', marginBottom: error ? '8px' : '16px' }}>
-            {/* Left icon */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/devcon-logo.jpg"
-              alt=""
-              style={{
-                position: 'absolute',
-                left: '12px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: '26px',
-                height: '26px',
-                borderRadius: '50%',
-                objectFit: 'cover',
-                pointerEvents: 'none',
-              }}
-            />
 
             {/* Password input */}
             <input
@@ -140,7 +110,7 @@ export default function AuthLoginPage() {
               placeholder="Enter password"
               style={{
                 width: '100%',
-                padding: '13px 44px 13px 48px',
+                padding: '13px 44px 13px 14px',
                 borderRadius: '14px',
                 border: `1px solid ${focused ? 'rgba(139,92,246,0.6)' : '#1e293b'}`,
                 background: '#020617',
