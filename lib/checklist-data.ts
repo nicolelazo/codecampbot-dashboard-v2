@@ -42,6 +42,7 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
     { tCode: 'T-7',    task: 'Dry run — full 4-hour rehearsal',                                                date: 'May 9, 2026',  status: 'upcoming'   },
     { tCode: 'T-3',    task: 'Final logistics: passes, pax confirmation, merch packed',                        date: 'May 13, 2026', status: 'upcoming'   },
     { tCode: 'T-0 ☻', task: 'EVENT DAY — Iloilo Code Camp · CPU Jaro',                                       date: 'May 16, 2026', status: 'upcoming',  isEvent: true },
+    { tCode: 'T+7',    task: 'Liquidation · HQ Finance updated',                                               date: 'May 23, 2026', status: 'upcoming'   },
   ],
   bukidnon: [
     { tCode: 'PRE',    task: 'Cash Advance approved · merch must ship before Apr 29',                          date: 'Apr 18, 2026', status: 'confirm'    },
@@ -71,6 +72,10 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
     { tCode: 'T-35',   task: 'Ocular at confirmed venue',                                                       date: 'Apr 24, 2026', status: 'overdue'    },
     { tCode: 'T-21',   task: 'Create DeepSurge URL · Sui Team Jianyi',                                        date: 'May 8, 2026',  status: 'confirm'    },
     { tCode: 'T-0 ☻', task: 'EVENT DAY — Laguna Code Camp',                                                   date: 'May 29, 2026', status: 'upcoming',  isEvent: true },
+    { tCode: 'PRE',    task: 'Finalize 10 mentors · confirm attendance and roles',                              date: 'May 28, 2026', status: 'upcoming'   },
+    { tCode: 'PRE',    task: 'Prepare promo materials · Canva + branding guidelines',                           date: 'May 28, 2026', status: 'upcoming'   },
+    { tCode: 'T+7',    task: 'Liquidation · HQ Finance updated',                                               date: 'Jun 5, 2026',  status: 'upcoming'   },
+    { tCode: 'T+3',    task: 'Post report · SITREP submitted · pax count logged',                              date: 'Jun 1, 2026',  status: 'upcoming'   },
   ],
 }
 

@@ -1001,7 +1001,7 @@ function TopHeader({ calendarOpen, onToggleCalendar }: { calendarOpen: boolean; 
       <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
         <div style={{ width:'40px', height:'40px', borderRadius:'50%', background:'linear-gradient(135deg,#06b6d4,#14b8a6)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'16px', fontWeight:800, color:'#fff', flexShrink:0 }}>D</div>
         <div>
-          <div style={{ fontSize:'11px', color:C.muted }}>ExDir · DEVCON</div>
+          <div style={{ fontSize:'11px', color:C.muted }}>DEVCON</div>
         </div>
       </div>
 

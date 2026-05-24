@@ -433,8 +433,7 @@ export async function buildDsuOverview() {
   }
 
     const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24))
-    const weeks = Math.ceil(diffDays / 7)
-    return `${weeks} ${weeks === 1 ? 'week' : 'weeks'} to go`
+    return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} to go`
   }
 
   const now = new Date().toLocaleDateString('en-PH', {
