@@ -74,7 +74,7 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
     { tCode: 'T-35',   task: 'Ocular at confirmed venue',                                                       date: 'Apr 24, 2026', status: 'overdue'    },
     { tCode: 'T-21',   task: 'Create DeepSurge URL · Sui Team Jianyi',                                        date: 'May 8, 2026',  status: 'confirm'    },
     { tCode: 'T-0 ☻', task: 'EVENT DAY — Laguna Code Camp',                                                   date: 'May 29, 2026', status: 'upcoming',  isEvent: true },
-    { tCode: 'PRE',    task: 'Finalize 10 mentors · confirm attendance and roles',                              date: 'May 28, 2026', status: 'upcoming'   },
+    { tCode: 'PRE',    task: 'Finalize 10 mentors · confirm attendance and roles',                              date: 'May 28, 2026', status: 'done'       },
     { tCode: 'PRE',    task: 'Prepare promo materials · Canva + branding guidelines',                           date: 'May 28, 2026', status: 'upcoming'   },
     { tCode: 'T+7',    task: 'Liquidation · HQ Finance updated',                                               date: 'Jun 5, 2026',  status: 'upcoming'   },
     { tCode: 'T+3',    task: 'Post report · SITREP submitted · pax count logged',                              date: 'Jun 1, 2026',  status: 'upcoming'   },
