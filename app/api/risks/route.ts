@@ -8,6 +8,16 @@ function db() {
   )
 }
 
+export async function GET() {
+  const supabase = db()
+  const { data, error } = await supabase
+    .from('risks')
+    .select('id, code, title, chapter_tag, severity, status, owner')
+    .order('code')
+  if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 })
+  return NextResponse.json({ ok: true, data })
+}
+
 export async function POST(req: NextRequest) {
   const body = await req.json()
   const { title, description, owner, chapter_tag, severity, risk_type, eta } = body
