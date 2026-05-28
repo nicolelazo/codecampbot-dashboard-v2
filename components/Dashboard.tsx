@@ -449,63 +449,65 @@ function UpcomingMilestonesSection({ chapters }: { chapters: Chapter[] }) {
 }
 
 // ── Submission Summary ────────────────────────────────────────────────────────
-function SubmissionSummarySection() {
+function SubmissionSummarySection({ isMobile }: { isMobile?: boolean }) {
   type Row = { location: string; date: string; done: true; registrations: number; total: number; share: string; verified: number; incomplete: number; rate: string }
            | { location: string; date: string; done: false }
   const ROWS: Row[] = [
-    { location: 'Manila',   date: 'Mar 28', done: true,  registrations: 128, total: 60,  share: '19.40%', verified: 29,  incomplete: 31, rate: '53.30%' },
-    { location: 'Bukidnon', date: 'May 6',  done: true,  registrations: 136, total: 80,  share: '25.90%', verified: 72,  incomplete: 8,  rate: '90.00%' },
-    { location: 'Iloilo',   date: 'May 16', done: true,  registrations: 170, total: 169, share: '54.70%', verified: 164, incomplete: 5,  rate: '87.10%' },
+    { location: 'Manila',   date: 'Mar 28', done: true,  registrations: 128, total: 60,  share: '19.40%', verified: 29,  incomplete: 31, rate: '22.66%' },
+    { location: 'Bukidnon', date: 'May 6',  done: true,  registrations: 136, total: 80,  share: '25.90%', verified: 72,  incomplete: 8,  rate: '52.94%' },
+    { location: 'Iloilo',   date: 'May 16', done: true,  registrations: 170, total: 169, share: '54.70%', verified: 164, incomplete: 5,  rate: '96.47%' },
     { location: 'Laguna',   date: 'May 29', done: false },
     { location: 'Pampanga', date: 'Jun 24', done: false },
     { location: 'Tacloban', date: 'TBD',    done: false },
   ]
-  const SUB = { total: 309, share: '100.00%', verified: 265, incomplete: 44, rate: '85.76%' }
-  const thStyle = { fontSize: '9px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.1em', color: C.muted, padding: '9px 16px', textAlign: 'left' as const, borderBottom: `1px solid ${C.border}`, whiteSpace: 'nowrap' as const }
-  const tdStyle = { fontSize: '11px', padding: '10px 16px', color: C.text, borderBottom: `1px solid rgba(255,255,255,0.04)` }
+  const SUB = { total: 309, share: '100.00%', verified: 265, incomplete: 44, rate: '61.06%' }
+  const p = isMobile ? '6px 10px' : '8px 14px'
+  const thStyle = { fontSize: '8px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.08em', color: C.muted, padding: p, textAlign: 'left' as const, borderBottom: `1px solid ${C.border}`, whiteSpace: 'nowrap' as const }
+  const tdStyle = { fontSize: '11px', padding: p, color: C.text, borderBottom: `1px solid rgba(255,255,255,0.04)` }
   const rateColor = (r: string) => parseFloat(r) >= 80 ? C.teal : '#FBBF24'
+  const bd = (isLast: boolean) => isLast ? 'none' : `1px solid rgba(255,255,255,0.04)`
   return (
-    <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: `1px solid ${C.border}` }}>
-      <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em', color: C.muted, marginBottom: '14px' }}>📊 Submission Summary — All Chapters</div>
-      <div style={{ background: C.surface, borderRadius: '16px', border: `1px solid ${C.border}`, overflow: 'hidden' }}>
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: `1px solid ${C.border}` }}>
+      <div style={{ fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: C.muted, marginBottom: '10px' }}>📊 Submission Summary</div>
+      <div style={{ borderRadius: '12px', border: `1px solid ${C.border}`, overflow: 'hidden' }}>
+        <div style={{ overflowX: 'auto', width: '100%' }}>
+          <table style={{ width: '100%', minWidth: '560px', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ background: 'rgba(255,255,255,0.02)' }}>
-                <th style={thStyle}>Location</th>
-                <th style={{ ...thStyle }}>Event Date</th>
-                <th style={{ ...thStyle, textAlign: 'right' as const }}>Registrations</th>
-                <th style={{ ...thStyle, textAlign: 'right' as const }}>Total Submissions</th>
-                <th style={{ ...thStyle, textAlign: 'right' as const }}>Share of Total %</th>
-                <th style={{ ...thStyle, textAlign: 'right' as const }}>Verified by HQ Count</th>
-                <th style={{ ...thStyle, textAlign: 'right' as const }}>Incomplete Count</th>
-                <th style={{ ...thStyle, textAlign: 'right' as const }}>Verified &amp; Completed Rate %</th>
+                <th style={thStyle}>Chapter</th>
+                <th style={{ ...thStyle, textAlign: 'right' as const }}>Reg.</th>
+                <th style={{ ...thStyle, textAlign: 'right' as const }}>Submissions</th>
+                <th style={{ ...thStyle, textAlign: 'right' as const }}>Share %</th>
+                <th style={{ ...thStyle, textAlign: 'right' as const }}>Verified (HQ)</th>
+                <th style={{ ...thStyle, textAlign: 'right' as const }}>Incomplete</th>
+                <th style={{ ...thStyle, textAlign: 'right' as const }}>Rate % vs Reg.</th>
               </tr>
             </thead>
             <tbody>
               {ROWS.map((r, i) => {
                 const isLast = i === ROWS.length - 1
-                const isDivider = !ROWS[i - 1]?.done && r.done === false && i > 0 && (ROWS[i - 1] as Row).done === true
                 return (
-                  <tr key={r.location} style={{ opacity: r.done ? 1 : 0.5 }}>
-                    <td style={{ ...tdStyle, fontWeight: 700, borderBottom: isLast ? 'none' : `1px solid rgba(255,255,255,0.04)` }}>
-                      {r.done ? '' : <span style={{ fontSize: '8px', color: C.muted, marginRight: '5px' }}>⏳</span>}
+                  <tr key={r.location} style={{ opacity: r.done ? 1 : 0.45 }}>
+                    <td style={{ ...tdStyle, fontWeight: 700, borderBottom: bd(isLast) }}>
+                      {!r.done && <span style={{ fontSize: '8px', color: C.muted, marginRight: '4px' }}>⏳</span>}
                       {r.location}
+                      {isMobile && <div style={{ fontSize: '9px', color: C.muted, fontWeight: 400 }}>{r.date}</div>}
+                      {!isMobile && <span style={{ fontSize: '9px', color: C.muted, fontWeight: 400, marginLeft: '6px' }}>{r.date}</span>}
                     </td>
-                    <td style={{ ...tdStyle, color: C.muted, fontSize: '10px', borderBottom: isLast ? 'none' : `1px solid rgba(255,255,255,0.04)` }}>{r.date}</td>
-                    <td style={{ ...tdStyle, textAlign: 'right' as const, color: r.done ? C.text : C.muted, fontWeight: r.done ? 600 : 400, borderBottom: isLast ? 'none' : `1px solid rgba(255,255,255,0.04)` }}>{r.done ? r.registrations : '—'}</td>
-                    <td style={{ ...tdStyle, textAlign: 'right' as const, color: r.done ? C.cyan : C.muted, fontWeight: r.done ? 600 : 400, borderBottom: isLast ? 'none' : `1px solid rgba(255,255,255,0.04)` }}>{r.done ? r.total : '—'}</td>
-                    <td style={{ ...tdStyle, textAlign: 'right' as const, borderBottom: isLast ? 'none' : `1px solid rgba(255,255,255,0.04)` }}>{r.done ? r.share : '—'}</td>
-                    <td style={{ ...tdStyle, textAlign: 'right' as const, color: r.done ? C.teal : C.muted, fontWeight: r.done ? 600 : 400, borderBottom: isLast ? 'none' : `1px solid rgba(255,255,255,0.04)` }}>{r.done ? r.verified : '—'}</td>
-                    <td style={{ ...tdStyle, textAlign: 'right' as const, color: r.done ? '#F87171' : C.muted, borderBottom: isLast ? 'none' : `1px solid rgba(255,255,255,0.04)` }}>{r.done ? r.incomplete : '—'}</td>
-                    <td style={{ ...tdStyle, textAlign: 'right' as const, fontWeight: r.done ? 700 : 400, color: r.done ? rateColor(r.rate) : C.muted, borderBottom: isLast ? 'none' : `1px solid rgba(255,255,255,0.04)` }}>{r.done ? r.rate : '—'}</td>
+                    <td style={{ ...tdStyle, textAlign: 'right' as const, color: r.done ? C.text : C.muted, borderBottom: bd(isLast) }}>{r.done ? r.registrations : '—'}</td>
+                    <td style={{ ...tdStyle, textAlign: 'right' as const, color: r.done ? C.cyan : C.muted, fontWeight: r.done ? 600 : 400, borderBottom: bd(isLast) }}>{r.done ? r.total : '—'}</td>
+                    <td style={{ ...tdStyle, textAlign: 'right' as const, color: C.muted, borderBottom: bd(isLast) }}>{r.done ? r.share : '—'}</td>
+                    <td style={{ ...tdStyle, textAlign: 'right' as const, color: r.done ? C.teal : C.muted, fontWeight: r.done ? 700 : 400, borderBottom: bd(isLast) }}>{r.done ? r.verified : '—'}</td>
+                    <td style={{ ...tdStyle, textAlign: 'right' as const, color: r.done ? '#F87171' : C.muted, borderBottom: bd(isLast) }}>{r.done ? r.incomplete : '—'}</td>
+                    <td style={{ ...tdStyle, textAlign: 'right' as const, fontWeight: r.done ? 700 : 400, color: r.done ? rateColor(r.rate) : C.muted, borderBottom: bd(isLast) }}>{r.done ? r.rate : '—'}</td>
                   </tr>
                 )
               })}
               <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
-                <td style={{ ...tdStyle, fontWeight: 800, borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>SUBTOTAL <span style={{ fontSize: '8px', fontWeight: 400, color: C.muted }}>(completed)</span></td>
-                <td style={{ ...tdStyle, borderTop: `1px solid ${C.border}`, borderBottom: 'none' }} />
-                <td style={{ ...tdStyle, borderTop: `1px solid ${C.border}`, borderBottom: 'none' }} />
+                <td style={{ ...tdStyle, fontWeight: 800, fontSize: '10px', borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>
+                  SUBTOTAL <span style={{ fontSize: '8px', fontWeight: 400, color: C.muted }}>3 done</span>
+                </td>
+                <td style={{ ...tdStyle, borderTop: `1px solid ${C.border}`, borderBottom: 'none', color: C.muted }}>—</td>
                 <td style={{ ...tdStyle, textAlign: 'right' as const, fontWeight: 800, color: C.cyan, borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>{SUB.total}</td>
                 <td style={{ ...tdStyle, textAlign: 'right' as const, fontWeight: 800, borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>{SUB.share}</td>
                 <td style={{ ...tdStyle, textAlign: 'right' as const, fontWeight: 800, color: C.teal, borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>{SUB.verified}</td>
@@ -983,7 +985,7 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }
             </div>
           ))}
         </div>
-        <SubmissionSummarySection />
+        <SubmissionSummarySection isMobile={isMobile} />
       </div>
 
     </div>
