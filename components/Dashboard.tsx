@@ -451,11 +451,11 @@ function UpcomingMilestonesSection({ chapters }: { chapters: Chapter[] }) {
 // ── Submission Summary ────────────────────────────────────────────────────────
 function SubmissionSummarySection() {
   const ROWS = [
-    { location: 'Iloilo',   total: 163, share: '45.40%', verified: 142, incomplete: 21, rate: '87.10%' },
-    { location: 'Bukidnon', total: 136, share: '37.90%', verified: 72,  incomplete: 64, rate: '52.90%' },
-    { location: 'Manila',   total: 60,  share: '16.70%', verified: 32,  incomplete: 28, rate: '53.30%' },
+    { location: 'Iloilo',   total: 169, share: '54.70%', verified: 164, incomplete: 5,  rate: '87.10%' },
+    { location: 'Bukidnon', total: 80,  share: '25.90%', verified: 72,  incomplete: 8,  rate: '90.00%' },
+    { location: 'Manila',   total: 60,  share: '19.40%', verified: 29,  incomplete: 31, rate: '53.30%' },
   ]
-  const SUB = { total: 359, share: '100.00%', verified: 246, incomplete: 113, rate: '68.50%' }
+  const SUB = { total: 309, share: '100.00%', verified: 265, incomplete: 44, rate: '85.76%' }
   const thStyle = { fontSize: '9px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.1em', color: C.muted, padding: '9px 16px', textAlign: 'left' as const, borderBottom: `1px solid ${C.border}`, whiteSpace: 'nowrap' as const }
   const tdStyle = { fontSize: '11px', padding: '10px 16px', color: C.text, borderBottom: `1px solid rgba(255,255,255,0.04)` }
   const rateColor = (r: string) => parseFloat(r) >= 80 ? C.teal : '#FBBF24'
@@ -737,10 +737,10 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
     { icon: '👥', text: `${kpiMap['total_attendees']?.value ?? '276~'} total attendees reached` },
     { icon: '🧑‍💻', text: `${kpiMap['students_trained']?.value ?? '–'} students trained` },
     { icon: '🚀', text: `${kpiMap['confirmed_deployments']?.value ?? '–'} confirmed Sui deployments` },
-    { icon: '📍', text: 'Manila — 128 registered, 60 submitted projects, 32 valid submissions (Letran, Mar 28)' },
+    { icon: '📍', text: 'Manila — 128 registered, 60 submitted projects, 29 valid submissions (Letran, Mar 28)' },
     { icon: '📍', text: 'Bukidnon — 136 registered, 80 submitted projects, 72 valid submissions (BSU, May 6)' },
     { icon: '🆕', text: 'Bukidnon — first-ever BYOD format + Pre-Installation Day (commitment filter)' },
-    { icon: '📍', text: 'Iloilo — 170 registered, 163 submitted projects, 142 valid submissions (CPU, May 16)' },
+    { icon: '📍', text: 'Iloilo — 170 registered, 169 submitted projects, 164 valid submissions (CPU, May 16)' },
     { icon: '📍', text: 'Laguna — PUP Biñan CITE Campus, May 29 · venue confirmed · took Tacloban slot + merch' },
     { icon: '✅', text: 'Laguna — both dry runs completed · DeepSurge live · seed fund received' },
     { icon: '📣', text: 'Laguna registration posting started May 21 · Tokens received by Lucky' },
@@ -891,36 +891,15 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }
     { label:'Labs Active',          value:kpiMap['computer_labs']?.value          ?? '–',                                    color:C.cyan },
     { label:'Total Attendees',      value:kpiMap['total_attendees']?.value        ?? '434 (Manila + Bukidnon + Iloilo)',      color:C.cyan },
     { label:'Students Trained',      value:kpiMap['students_trained']?.value       ?? '434 (Manila + Bukidnon + Iloilo)',     color:C.teal },
-    { label:'Verified Submissions', value:kpiMap['verified_submissions']?.value   ?? '246 (32 Manila + 72 Bukidnon + 142 Iloilo)',   color:'#2DD4BF' },
+    { label:'Verified Submissions', value:kpiMap['verified_submissions']?.value   ?? '265 (29 Manila + 72 Bukidnon + 164 Iloilo)',   color:'#2DD4BF' },
     { label:'Dev Events',           value:kpiMap['dev_events']?.value             ?? '4 (Bukidnon, Iloilo, Laguna, SHEisDEVCON)', color:C.teal },
     { label:'Days Left Q2',         value:daysLeftStr,                                                                       color:'#f59e0b' },
   ]
 
   return (
-    <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr' : '2.2fr 1fr', gap:'26px', marginTop:'40px', alignItems:'stretch' }}>
+    <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 2.2fr', gap:'26px', marginTop:'40px', alignItems:'stretch' }}>
 
-      {/* Skill corner — 3/4 */}
-      <div style={{ background:C.surface, borderRadius:'28px', padding:'34px', border:`1px solid ${C.border}` }}>
-        <div style={{ marginBottom:'26px' }}>
-          <div style={{ fontSize:'10px', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.15em', color:C.muted, marginBottom:'6px' }}>Program KPIs</div>
-          <h3 style={{ fontSize:'24px', fontWeight:800, color:C.text }}>Build Beyond DEVCON <span style={{ color:C.cyan }}>× Sui</span></h3>
-        </div>
-        <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap:'18px' }}>
-          {skillItems.map(item => (
-            <div key={item.label} style={{ background:C.bg, borderRadius:'18px', padding:'24px', border:`1px solid ${C.border}`, display:'flex', alignItems:'flex-start', gap:'18px', minHeight:'126px' }}>
-              <div style={{ width:'56px', height:'56px', borderRadius:'14px', flexShrink:0, background:`linear-gradient(135deg,${item.color}33,${item.color}11)`, border:`1px solid ${item.color}44`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'24px' }}>
-                {item.icon}
-              </div>
-              <div>
-                <div style={{ fontSize: isMobile ? '22px' : '28px', fontWeight:800, color:item.color, lineHeight:1 }}>{item.value}</div>
-                <div style={{ fontSize:'10px', fontWeight:700, color:C.muted, textTransform:'uppercase', letterSpacing:'0.08em', marginTop:'8px' }}>{item.label}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Right column */}
+      {/* Left column — Quick Stats first */}
       <div style={{ display:'flex', flexDirection:'column', gap:'18px' }}>
 
         {/* Status panel */}
@@ -952,7 +931,7 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }
           ))}
         </div>
 
-        {/* Anonymous / CTA widget */}
+        {/* Q2 Report CTA */}
         <div style={{ background:'linear-gradient(135deg,#0f172a 0%,#020617 100%)', borderRadius:'28px', padding:'26px', border:`1px solid ${C.border}`, position:'relative', overflow:'hidden' }}>
           <div style={{ position:'absolute', right:'-8px', bottom:'-8px', fontSize:'80px', opacity:0.08, pointerEvents:'none', lineHeight:1 }}>👻</div>
           <div style={{ fontSize:'10px', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.15em', color:C.muted, marginBottom:'6px' }}>Q2 Report</div>
@@ -966,6 +945,28 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }
           </button>
         </div>
       </div>
+
+      {/* Right — Program KPIs */}
+      <div style={{ background:C.surface, borderRadius:'28px', padding:'34px', border:`1px solid ${C.border}` }}>
+        <div style={{ marginBottom:'26px' }}>
+          <div style={{ fontSize:'10px', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.15em', color:C.muted, marginBottom:'6px' }}>Program KPIs</div>
+          <h3 style={{ fontSize:'24px', fontWeight:800, color:C.text }}>Build Beyond DEVCON <span style={{ color:C.cyan }}>× Sui</span></h3>
+        </div>
+        <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap:'18px' }}>
+          {skillItems.map(item => (
+            <div key={item.label} style={{ background:C.bg, borderRadius:'18px', padding:'24px', border:`1px solid ${C.border}`, display:'flex', alignItems:'flex-start', gap:'18px', minHeight:'126px' }}>
+              <div style={{ width:'56px', height:'56px', borderRadius:'14px', flexShrink:0, background:`linear-gradient(135deg,${item.color}33,${item.color}11)`, border:`1px solid ${item.color}44`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'24px' }}>
+                {item.icon}
+              </div>
+              <div>
+                <div style={{ fontSize: isMobile ? '22px' : '28px', fontWeight:800, color:item.color, lineHeight:1 }}>{item.value}</div>
+                <div style={{ fontSize:'10px', fontWeight:700, color:C.muted, textTransform:'uppercase', letterSpacing:'0.08em', marginTop:'8px' }}>{item.label}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   )
 }
