@@ -465,7 +465,7 @@ function SubmissionSummarySection() {
   const tdStyle = { fontSize: '11px', padding: '10px 16px', color: C.text, borderBottom: `1px solid rgba(255,255,255,0.04)` }
   const rateColor = (r: string) => parseFloat(r) >= 80 ? C.teal : '#FBBF24'
   return (
-    <div style={{ marginTop: '32px' }}>
+    <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: `1px solid ${C.border}` }}>
       <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em', color: C.muted, marginBottom: '14px' }}>📊 Submission Summary — All Chapters</div>
       <div style={{ background: C.surface, borderRadius: '16px', border: `1px solid ${C.border}`, overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
@@ -983,6 +983,7 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }
             </div>
           ))}
         </div>
+        <SubmissionSummarySection />
       </div>
 
     </div>
@@ -1309,9 +1310,6 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
 
               {/* FW Status per Chapter */}
               <FwStatusSection chapters={chapters} onShowChapter={showChapter} isMobile={isMobile} />
-
-              {/* Submission Summary Table */}
-              <SubmissionSummarySection />
 
               {/* Program Summary — KPI %, Achievements, Risks, Next Steps */}
               <ProgramSummarySection kpis={kpis} risks={risks} chapters={chapters} onSwitch={switchTab} onOpenRisks={() => setRiskPanelOpen(true)} isMobile={isMobile} />
