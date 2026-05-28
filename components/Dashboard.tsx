@@ -900,74 +900,15 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }
     { icon:'📊', label:'Code Camps',           value:kpiMap['code_camps']?.value              ?? '–',       color:C.cyan },
     { icon:'📋', label:'Form Submissions',     value:kpiMap['form_submissions']?.value         ?? '–',       color:C.teal },
     { icon:'🧑‍💻', label:'Mentors Trained',    value:kpiMap['trained_mentors']?.value           ?? '–',       color:C.cyan },
-    { icon:'🚀', label:'Deployments',          value:kpiMap['confirmed_deployments']?.value    ?? '–',       color:C.teal },
+    { icon:'🚀', label:'Mainnet Deployments',   value:kpiMap['confirmed_deployments']?.value    ?? '–',       color:C.teal },
     { icon:'✅', label:'Verified Completions', value:kpiMap['verified_completions']?.value     ?? '265',     color:'#2DD4BF' },
     { icon:'📈', label:'Completion vs Reg.',   value:kpiMap['completion_rate_vs_reg']?.value   ?? '61.06%', color:'#a78bfa' },
   ]
 
-  const statItems = [
-    { label:'Completion Rate',      value:kpiMap['completion_rate']?.value        ?? '–',                                    color:C.cyan },
-    { label:'Chapters Done',        value:`${completedCnt}/${chapters.length}`,                                              color:C.teal },
-    { label:'Open Risks',           value:String(openRisks || '0'),                                                          color:C.rose },
-    { label:'Labs Active',          value:kpiMap['computer_labs']?.value          ?? '–',                                    color:C.cyan },
-    { label:'Total Attendees',      value:kpiMap['total_attendees']?.value        ?? '434 (Manila + Bukidnon + Iloilo)',      color:C.cyan },
-    { label:'Students Trained',      value:kpiMap['students_trained']?.value       ?? '434 (Manila + Bukidnon + Iloilo)',     color:C.teal },
-    { label:'Verified Submissions', value:kpiMap['verified_submissions']?.value   ?? '265 (29 Manila + 72 Bukidnon + 164 Iloilo)',   color:'#2DD4BF' },
-    { label:'Dev Events',           value:kpiMap['dev_events']?.value             ?? '4 (Bukidnon, Iloilo, Laguna, SHEisDEVCON)', color:C.teal },
-    { label:'Days Left Q2',         value:daysLeftStr,                                                                       color:'#f59e0b' },
-  ]
-
   return (
-    <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 2.2fr', gap:'26px', marginTop:'40px', alignItems:'stretch' }}>
+    <div style={{ marginTop:'40px' }}>
 
-      {/* Left column — Quick Stats first */}
-      <div style={{ display:'flex', flexDirection:'column', gap:'18px' }}>
-
-        {/* Status panel */}
-        <div style={{ background:C.surface, borderRadius:'28px', padding:'26px', border:`1px solid ${C.border}`, flex:1 }}>
-          <div style={{ fontSize:'10px', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.15em', color:C.muted, marginBottom:'16px' }}>Quick Stats</div>
-          {statItems.map((item, i) => (
-            <div
-              key={item.label}
-              onClick={item.label === 'Open Risks' ? onOpenRisks : undefined}
-              style={{
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                padding: '10px 0',
-                borderBottom: i < statItems.length - 1 ? `1px solid ${C.border}` : undefined,
-                cursor: item.label === 'Open Risks' ? 'pointer' : 'default',
-                borderRadius: '6px',
-                transition: 'background .15s',
-              }}
-              onMouseEnter={item.label === 'Open Risks' ? e => { (e.currentTarget as HTMLDivElement).style.background = 'rgba(225,29,72,0.06)' } : undefined}
-              onMouseLeave={item.label === 'Open Risks' ? e => { (e.currentTarget as HTMLDivElement).style.background = 'transparent' } : undefined}
-            >
-              <span style={{ fontSize:'12px', color:C.dim }}>
-                {item.label === 'Open Risks'
-                  ? <span style={{ display:'flex', alignItems:'center', gap:'5px' }}>{item.label} <span style={{ fontSize:'9px', opacity:0.6 }}>↗</span></span>
-                  : item.label
-                }
-              </span>
-              <span style={{ fontSize:'16px', fontWeight:800, color:item.color }}>{item.value}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* Q2 Report CTA */}
-        <div style={{ background:'linear-gradient(135deg,#0f172a 0%,#020617 100%)', borderRadius:'28px', padding:'26px', border:`1px solid ${C.border}`, position:'relative', overflow:'hidden' }}>
-          <div style={{ position:'absolute', right:'-8px', bottom:'-8px', fontSize:'80px', opacity:0.08, pointerEvents:'none', lineHeight:1 }}>👻</div>
-          <div style={{ fontSize:'10px', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.15em', color:C.muted, marginBottom:'6px' }}>Q2 Report</div>
-          <div style={{ fontSize:'15px', fontWeight:700, color:C.text, marginBottom:'3px' }}>June 30, 2026</div>
-          <div style={{ fontSize:'11px', color:C.muted, marginBottom:'16px' }}>→ Sui Foundation</div>
-          <button
-            onClick={() => onSwitch('milestones')}
-            style={{ width:'100%', padding:'9px', borderRadius:'10px', background:'rgba(6,182,212,0.1)', backdropFilter:'blur(8px)', border:'1px solid rgba(6,182,212,0.2)', color:C.cyan, fontSize:'11px', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.08em', cursor:'pointer', transition:'all .3s ease-out' }}
-          >
-            View Timeline →
-          </button>
-        </div>
-      </div>
-
-      {/* Right — Program KPIs */}
+      {/* Program KPIs — full width */}
       <div style={{ background:C.surface, borderRadius:'28px', padding:'34px', border:`1px solid ${C.border}` }}>
         <div style={{ marginBottom:'26px' }}>
           <div style={{ fontSize:'10px', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.15em', color:C.muted, marginBottom:'6px' }}>Program KPIs</div>
