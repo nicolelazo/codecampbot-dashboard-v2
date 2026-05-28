@@ -458,7 +458,6 @@ function SubmissionSummarySection({ isMobile }: { isMobile?: boolean }) {
     { location: 'Iloilo',   date: 'May 16', done: true,  registrations: 170, total: 169, share: '54.70%', verified: 164, incomplete: 5,  rate: '96.47%' },
     { location: 'Laguna',   date: 'May 29', done: false },
     { location: 'Pampanga', date: 'Jun 24', done: false },
-    { location: 'Tacloban', date: 'TBD',    done: false },
   ]
   const SUB = { total: 309, share: '100.00%', verified: 265, incomplete: 44, rate: '61.06%' }
   const p = isMobile ? '6px 10px' : '8px 14px'
@@ -898,10 +897,12 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }
   const daysLeftStr = daysLeftQ2 > 0 ? `${daysLeftQ2}d` : '0d'
 
   const skillItems = [
-    { icon:'📊', label:'Code Camps',       value:kpiMap['code_camps']?.value          ?? '–', color:C.cyan },
-    { icon:'📋', label:'Form Submissions', value:kpiMap['form_submissions']?.value     ?? '–', color:C.teal },
-    { icon:'🧑‍💻', label:'Mentors Trained', value:kpiMap['trained_mentors']?.value      ?? '–', color:C.cyan },
-    { icon:'🚀', label:'Deployments',      value:kpiMap['confirmed_deployments']?.value ?? '–', color:C.teal },
+    { icon:'📊', label:'Code Camps',           value:kpiMap['code_camps']?.value              ?? '–',       color:C.cyan },
+    { icon:'📋', label:'Form Submissions',     value:kpiMap['form_submissions']?.value         ?? '–',       color:C.teal },
+    { icon:'🧑‍💻', label:'Mentors Trained',    value:kpiMap['trained_mentors']?.value           ?? '–',       color:C.cyan },
+    { icon:'🚀', label:'Deployments',          value:kpiMap['confirmed_deployments']?.value    ?? '–',       color:C.teal },
+    { icon:'✅', label:'Verified Completions', value:kpiMap['verified_completions']?.value     ?? '265',     color:'#2DD4BF' },
+    { icon:'📈', label:'Completion vs Reg.',   value:kpiMap['completion_rate_vs_reg']?.value   ?? '61.06%', color:'#a78bfa' },
   ]
 
   const statItems = [
@@ -972,15 +973,15 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }
           <div style={{ fontSize:'10px', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.15em', color:C.muted, marginBottom:'6px' }}>Program KPIs</div>
           <h3 style={{ fontSize:'24px', fontWeight:800, color:C.text }}>Build Beyond DEVCON <span style={{ color:C.cyan }}>× Sui</span></h3>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap:'18px' }}>
+        <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3, 1fr)', gap:'14px' }}>
           {skillItems.map(item => (
-            <div key={item.label} style={{ background:C.bg, borderRadius:'18px', padding:'24px', border:`1px solid ${C.border}`, display:'flex', alignItems:'flex-start', gap:'18px', minHeight:'126px' }}>
-              <div style={{ width:'56px', height:'56px', borderRadius:'14px', flexShrink:0, background:`linear-gradient(135deg,${item.color}33,${item.color}11)`, border:`1px solid ${item.color}44`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'24px' }}>
+            <div key={item.label} style={{ background:C.bg, borderRadius:'16px', padding:'20px', border:`1px solid ${C.border}`, display:'flex', alignItems:'flex-start', gap:'14px', minHeight:'110px' }}>
+              <div style={{ width:'44px', height:'44px', borderRadius:'12px', flexShrink:0, background:`linear-gradient(135deg,${item.color}33,${item.color}11)`, border:`1px solid ${item.color}44`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'20px' }}>
                 {item.icon}
               </div>
-              <div>
-                <div style={{ fontSize: isMobile ? '22px' : '28px', fontWeight:800, color:item.color, lineHeight:1 }}>{item.value}</div>
-                <div style={{ fontSize:'10px', fontWeight:700, color:C.muted, textTransform:'uppercase', letterSpacing:'0.08em', marginTop:'8px' }}>{item.label}</div>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontSize: isMobile ? '18px' : '22px', fontWeight:800, color:item.color, lineHeight:1 }}>{item.value}</div>
+                <div style={{ fontSize:'9px', fontWeight:700, color:C.muted, textTransform:'uppercase', letterSpacing:'0.08em', marginTop:'7px', lineHeight:1.3 }}>{item.label}</div>
               </div>
             </div>
           ))}
