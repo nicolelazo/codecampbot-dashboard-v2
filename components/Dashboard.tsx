@@ -448,91 +448,150 @@ function UpcomingMilestonesSection({ chapters }: { chapters: Chapter[] }) {
   )
 }
 
-// ── Full 14-item FW checklist per chapter (standardized, includes Facebook Post + Liquidation)
+// ── Submission Summary ────────────────────────────────────────────────────────
+function SubmissionSummarySection() {
+  const ROWS = [
+    { location: 'Iloilo',   total: 163, share: '45.40%', verified: 142, incomplete: 21, rate: '87.10%' },
+    { location: 'Bukidnon', total: 136, share: '37.90%', verified: 72,  incomplete: 64, rate: '52.90%' },
+    { location: 'Manila',   total: 60,  share: '16.70%', verified: 32,  incomplete: 28, rate: '53.30%' },
+  ]
+  const SUB = { total: 359, share: '100.00%', verified: 246, incomplete: 113, rate: '68.50%' }
+  const thStyle = { fontSize: '9px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.1em', color: C.muted, padding: '9px 16px', textAlign: 'left' as const, borderBottom: `1px solid ${C.border}`, whiteSpace: 'nowrap' as const }
+  const tdStyle = { fontSize: '11px', padding: '10px 16px', color: C.text, borderBottom: `1px solid rgba(255,255,255,0.04)` }
+  const rateColor = (r: string) => parseFloat(r) >= 80 ? C.teal : '#FBBF24'
+  return (
+    <div style={{ marginTop: '32px' }}>
+      <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em', color: C.muted, marginBottom: '14px' }}>📊 Submission Summary</div>
+      <div style={{ background: C.surface, borderRadius: '16px', border: `1px solid ${C.border}`, overflow: 'hidden' }}>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ background: 'rgba(255,255,255,0.02)' }}>
+                <th style={thStyle}>Location</th>
+                <th style={{ ...thStyle, textAlign: 'right' as const }}>Total Submissions</th>
+                <th style={{ ...thStyle, textAlign: 'right' as const }}>Share of Total %</th>
+                <th style={{ ...thStyle, textAlign: 'right' as const }}>Verified by HQ Count</th>
+                <th style={{ ...thStyle, textAlign: 'right' as const }}>Incomplete Count</th>
+                <th style={{ ...thStyle, textAlign: 'right' as const }}>Verified &amp; Completed Rate %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ROWS.map(r => (
+                <tr key={r.location}>
+                  <td style={{ ...tdStyle, fontWeight: 700 }}>{r.location}</td>
+                  <td style={{ ...tdStyle, textAlign: 'right' as const, color: C.cyan, fontWeight: 600 }}>{r.total}</td>
+                  <td style={{ ...tdStyle, textAlign: 'right' as const }}>{r.share}</td>
+                  <td style={{ ...tdStyle, textAlign: 'right' as const, color: C.teal, fontWeight: 600 }}>{r.verified}</td>
+                  <td style={{ ...tdStyle, textAlign: 'right' as const, color: '#F87171' }}>{r.incomplete}</td>
+                  <td style={{ ...tdStyle, textAlign: 'right' as const, fontWeight: 700, color: rateColor(r.rate) }}>{r.rate}</td>
+                </tr>
+              ))}
+              <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
+                <td style={{ ...tdStyle, fontWeight: 800, borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>SUBTOTAL</td>
+                <td style={{ ...tdStyle, textAlign: 'right' as const, fontWeight: 800, color: C.cyan, borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>{SUB.total}</td>
+                <td style={{ ...tdStyle, textAlign: 'right' as const, fontWeight: 800, borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>{SUB.share}</td>
+                <td style={{ ...tdStyle, textAlign: 'right' as const, fontWeight: 800, color: C.teal, borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>{SUB.verified}</td>
+                <td style={{ ...tdStyle, textAlign: 'right' as const, fontWeight: 800, color: '#F87171', borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>{SUB.incomplete}</td>
+                <td style={{ ...tdStyle, textAlign: 'right' as const, fontWeight: 800, color: C.teal, borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>{SUB.rate}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Full 15-item FW checklist per chapter (standardized template)
 // Order: Bukidnon (May 6 ✓) → Iloilo (May 16 ✓) → Laguna (May 29) → Pampanga (Jun 24) → Tacloban (candidate, last)
 const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string }[]> = {
   bukidnon: [
-    { done: true,  label: 'Seed Fund' },
+    { done: true,  label: 'Invitation Letter' },
     { done: true,  label: 'Event Schedule' },
     { done: true,  label: 'DeepSurge Link' },
+    { done: true,  label: 'Promo Materials' },
+    { done: true,  label: 'Volunteers 2+' },
+    { done: true,  label: 'Whitelist' },
+    { done: true,  label: 'Seed Fund' },
     { done: true,  label: 'Slides Prep' },
-    { done: true,  label: 'Slides Report' },
+    { done: true,  label: 'Mentors 10+' },
     { done: true,  label: 'Dry Run 1' },
     { done: true,  label: 'Dry Run 2' },
-    { done: true,  label: 'Mentors 10+' },
-    { done: true,  label: 'Volunteers 2+' },
-    { done: true,  label: 'Promo Materials' },
-    { done: true,  label: 'Whitelist' },
+    { done: true,  label: 'Final Promo Push' },
+    { done: true,  label: 'Post-Event Post' },
     { done: true,  label: 'Post-Report' },
-    { done: true,  label: 'Facebook Post' },
     { done: true,  label: 'Liquidation' },
   ],
   iloilo: [
-    { done: true,  label: 'Seed Fund' },
+    { done: true,  label: 'Invitation Letter' },
     { done: true,  label: 'Event Schedule' },
     { done: true,  label: 'DeepSurge Link' },
+    { done: true,  label: 'Promo Materials' },
+    { done: true,  label: 'Volunteers 2+' },
+    { done: true,  label: 'Whitelist' },
+    { done: true,  label: 'Seed Fund' },
     { done: true,  label: 'Slides Prep' },
-    { done: true,  label: 'Slides Report' },
+    { done: true,  label: 'Mentors 10+' },
     { done: true,  label: 'Dry Run 1' },
     { done: true,  label: 'Dry Run 2' },
-    { done: true,  label: 'Mentors 10+' },
-    { done: true,  label: 'Volunteers 2+' },
-    { done: true,  label: 'Promo Materials' },
-    { done: true,  label: 'Whitelist' },
+    { done: true,  label: 'Final Promo Push' },
+    { done: true,  label: 'Post-Event Post' },
     { done: true,  label: 'Post-Report' },
-    { done: true,  label: 'Facebook Post' },
-    { done: false, label: 'Liquidation',     note: 'Pending — submit liquidation report' },
+    { done: false, label: 'Liquidation',      note: 'Pending — submit liquidation report' },
   ],
   // Laguna — May 29 · took Tacloban's slot + merch · dry runs done · venue confirmed
   laguna: [
-    { done: true,  label: 'Seed Fund' },
+    { done: true,  label: 'Invitation Letter' },
     { done: true,  label: 'Event Schedule' },
     { done: true,  label: 'DeepSurge Link' },
-    { done: false, label: 'Slides Prep',     note: 'Pending' },
-    { done: false, label: 'Slides Report',   note: 'After slides' },
-    { done: true,  label: 'Dry Run 1',       note: 'Completed ✓' },
-    { done: true,  label: 'Dry Run 2',       note: 'Completed ✓' },
-    { done: false, label: 'Mentors 10+',     note: 'Currently 5, target 10' },
-    { done: true,  label: 'Volunteers 2+' },
     { done: true,  label: 'Promo Materials' },
-    { done: false, label: 'Whitelist',       note: 'Confirm with ICT dept May 26–28' },
-    { done: false, label: 'Post-Report',     note: 'After event' },
-    { done: false, label: 'Facebook Post',   note: 'After event' },
-    { done: false, label: 'Liquidation',     note: 'After event' },
+    { done: true,  label: 'Volunteers 2+' },
+    { done: false, label: 'Whitelist',         note: 'Confirm with ICT dept May 26–28' },
+    { done: true,  label: 'Seed Fund',         note: 'Received ✓' },
+    { done: false, label: 'Slides Prep',       note: 'Pending' },
+    { done: true,  label: 'Mentors 10+',       note: 'Finalized ✓' },
+    { done: true,  label: 'Dry Run 1',         note: 'Completed ✓' },
+    { done: true,  label: 'Dry Run 2',         note: 'Completed ✓' },
+    { done: false, label: 'Final Promo Push',  note: 'In progress' },
+    { done: false, label: 'Post-Event Post',   note: 'After event' },
+    { done: false, label: 'Post-Report',       note: 'After event' },
+    { done: false, label: 'Liquidation',       note: 'After event' },
   ],
   // Pampanga — Jun 24 · venue confirmed · mentors in training · pending dry runs
   angeles: [
-    { done: false, label: 'Seed Fund',       note: 'Submit 1–2 wks before Jun 24' },
-    { done: true,  label: 'Event Schedule',  note: 'Venue confirmed ✓' },
-    { done: false, label: 'DeepSurge Link',  note: 'Before promos' },
-    { done: false, label: 'Slides Prep',     note: 'Before training' },
-    { done: false, label: 'Slides Report',   note: 'After review' },
-    { done: false, label: 'Dry Run 1',       note: 'Pending — schedule soon' },
-    { done: false, label: 'Dry Run 2',       note: 'Pending — after Dry Run 1' },
-    { done: false, label: 'Mentors 10+',     note: 'Trained ×2 but not yet 10 — recruit more' },
-    { done: false, label: 'Volunteers 2+',   note: 'Photos/videos + publication' },
-    { done: false, label: 'Promo Materials', note: 'Canva + branding guidelines' },
-    { done: false, label: 'Whitelist',       note: 'sui.io, github, vercel, youtube…' },
-    { done: false, label: 'Post-Report',     note: 'EOD after event' },
-    { done: false, label: 'Facebook Post',   note: 'After event' },
-    { done: false, label: 'Liquidation',     note: 'After event' },
+    { done: false, label: 'Invitation Letter', note: 'Prepare before promos' },
+    { done: true,  label: 'Event Schedule',    note: 'Venue confirmed ✓' },
+    { done: false, label: 'DeepSurge Link',    note: 'Before promos' },
+    { done: false, label: 'Promo Materials',   note: 'Canva + branding guidelines' },
+    { done: false, label: 'Volunteers 2+',     note: 'Photos/videos + publication' },
+    { done: false, label: 'Whitelist',         note: 'sui.io, github, vercel, youtube…' },
+    { done: false, label: 'Seed Fund',         note: 'Submit 1–2 wks before Jun 24' },
+    { done: false, label: 'Slides Prep',       note: 'Before training' },
+    { done: false, label: 'Mentors 10+',       note: 'Trained ×2 but not yet 10 — recruit more' },
+    { done: false, label: 'Dry Run 1',         note: 'Pending — schedule soon' },
+    { done: false, label: 'Dry Run 2',         note: 'Pending — after Dry Run 1' },
+    { done: false, label: 'Final Promo Push',  note: 'In progress' },
+    { done: false, label: 'Post-Event Post',   note: 'After event' },
+    { done: false, label: 'Post-Report',       note: 'EOD after event' },
+    { done: false, label: 'Liquidation',       note: 'After event' },
   ],
   // Tacloban — CANDIDATE CHAPTER · under cancellation discussion · no date · no reply
   tacloban: [
-    { done: false, label: 'Seed Fund',       note: '⛔ Cancellation discussion — no date' },
-    { done: false, label: 'Event Schedule',  note: '⛔ No reply from venue' },
-    { done: false, label: 'DeepSurge Link',  note: 'Blocked — candidate only' },
-    { done: false, label: 'Slides Prep',     note: 'Blocked' },
-    { done: false, label: 'Slides Report',   note: 'Blocked' },
-    { done: false, label: 'Dry Run 1',       note: 'Blocked' },
-    { done: false, label: 'Dry Run 2',       note: 'Blocked' },
-    { done: false, label: 'Mentors 10+',     note: 'Blocked' },
-    { done: false, label: 'Volunteers 2+',   note: 'Blocked' },
-    { done: false, label: 'Promo Materials', note: 'Blocked' },
-    { done: false, label: 'Whitelist',       note: 'Blocked' },
-    { done: false, label: 'Post-Report',     note: 'Blocked' },
-    { done: false, label: 'Facebook Post',   note: 'Blocked' },
-    { done: false, label: 'Liquidation',     note: 'Blocked' },
+    { done: false, label: 'Invitation Letter', note: '⛔ Cancellation discussion — no date' },
+    { done: false, label: 'Event Schedule',    note: '⛔ No reply from venue' },
+    { done: false, label: 'DeepSurge Link',    note: 'Blocked — candidate only' },
+    { done: false, label: 'Promo Materials',   note: 'Blocked' },
+    { done: false, label: 'Volunteers 2+',     note: 'Blocked' },
+    { done: false, label: 'Whitelist',         note: 'Blocked' },
+    { done: false, label: 'Seed Fund',         note: 'Blocked' },
+    { done: false, label: 'Slides Prep',       note: 'Blocked' },
+    { done: false, label: 'Mentors 10+',       note: 'Blocked' },
+    { done: false, label: 'Dry Run 1',         note: 'Blocked' },
+    { done: false, label: 'Dry Run 2',         note: 'Blocked' },
+    { done: false, label: 'Final Promo Push',  note: 'Blocked' },
+    { done: false, label: 'Post-Event Post',   note: 'Blocked' },
+    { done: false, label: 'Post-Report',       note: 'Blocked' },
+    { done: false, label: 'Liquidation',       note: 'Blocked' },
   ],
 }
 
@@ -1231,6 +1290,9 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
 
               {/* FW Status per Chapter */}
               <FwStatusSection chapters={chapters} onShowChapter={showChapter} isMobile={isMobile} />
+
+              {/* Submission Summary Table */}
+              <SubmissionSummarySection />
 
               {/* Program Summary — KPI %, Achievements, Risks, Next Steps */}
               <ProgramSummarySection kpis={kpis} risks={risks} chapters={chapters} onSwitch={switchTab} onOpenRisks={() => setRiskPanelOpen(true)} isMobile={isMobile} />
