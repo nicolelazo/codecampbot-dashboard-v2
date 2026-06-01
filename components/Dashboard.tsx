@@ -360,7 +360,8 @@ function UpcomingMilestonesSection({ chapters }: { chapters: Chapter[] }) {
     { date: new Date('2026-05-29'), label: 'Laguna Code Camp — PUP Biñan CITE Campus', chapter: 'Laguna', type: 'event' as const },
     // Pampanga
     { date: new Date('2026-06-10'), label: 'Pampanga — Seed fund request deadline (2 wks before)', chapter: 'Pampanga', type: 'deadline' as const },
-    { date: new Date('2026-06-17'), label: 'Pampanga — Slides & dry runs should be underway', chapter: 'Pampanga', type: 'prep' as const },
+    { date: new Date('2026-06-08'), label: 'Pampanga — First dry run (Jun 8)', chapter: 'Pampanga', type: 'prep' as const },
+    { date: new Date('2026-06-17'), label: 'Pampanga — Slides & second dry run should be underway', chapter: 'Pampanga', type: 'prep' as const },
     { date: new Date('2026-06-22'), label: 'Pampanga — Final dry run (T-2)', chapter: 'Pampanga', type: 'prep' as const },
     { date: new Date('2026-06-24'), label: 'Pampanga Code Camp — Jun 24', chapter: 'Pampanga', type: 'event' as const },
     // Program
@@ -587,7 +588,7 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: false, label: 'Seed Fund',         note: 'Submit 1–2 wks before Jun 24' },
     { done: false, label: 'Slides Prep',       note: 'Before training' },
     { done: false, label: 'Mentors 10+',       note: 'Trained ×2 but not yet 10 — recruit more' },
-    { done: false, label: 'Dry Run 1',         note: 'Pending — schedule soon' },
+    { done: false, label: 'Dry Run 1',         note: 'Jun 8' },
     { done: false, label: 'Dry Run 2',         note: 'Pending — after Dry Run 1' },
     { done: false, label: 'Final Promo Push',  note: 'In progress' },
     { done: false, label: 'Post-Event Post',   note: 'After event' },

@@ -97,25 +97,25 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
   ],
   pampanga: [
     // 4 Weeks Before
-    { tCode: 'W-4',    task: 'Invitation Letter from HQ — request/send official invitation for Chapter and Code Camp Lead; secure partner school confirmations', date: 'May 27, 2026', status: 'upcoming' },
-    { tCode: 'W-4',    task: 'Finalize Event Schedule — include date, time, venue/location, partner schools/organizations',                                       date: 'May 27, 2026', status: 'done' },
-    { tCode: 'W-3',    task: 'DeepSurge Link Creation — create and finalize registration/event links before promotions begin; test registration flow',           date: 'Jun 3, 2026',  status: 'upcoming' },
-    { tCode: 'W-4',    task: 'Promotional Materials — create publication materials/posters using Canva; follow branding guidelines; prepare captions/schedule',  date: 'May 27, 2026', status: 'upcoming' },
-    { tCode: 'W-4',    task: 'Volunteer Requirements — recruit at least 2 volunteers for photos/videos; invite school publication; assign documentation roles',   date: 'May 27, 2026', status: 'upcoming' },
-    { tCode: 'W-2',    task: 'Whitelist Required Websites — sui.io, suiscan.xyz, github.com, vercel.app, youtube.com, docs.google.com',                         date: 'Jun 10, 2026', status: 'upcoming' },
+    { tCode: 'W-4',    task: 'Invitation Letter from HQ — request/send the official invitation letter from HQ for the Chapter and Code Camp Lead; send invitation letters to partner schools/organizations for venue reservation and coordination; secure confirmations from partner schools/organizations; reference: https://docs.google.com/document/d/1o8B95DQ87B3DESudHYmAhai_LfQHn1eX0E14b61FE90/edit?usp=drivesdk', date: 'May 27, 2026', status: 'upcoming' },
+    { tCode: 'W-4',    task: 'Finalize Event Schedule — include date, time, venue/location, partner schools/organizations involved',                               date: 'May 27, 2026', status: 'done' },
+    { tCode: 'W-3',    task: 'DeepSurge Link Creation — create and finalize DeepSurge registration/event links before promotions begin; test registration flow and accessibility', date: 'Jun 3, 2026',  status: 'upcoming' },
+    { tCode: 'W-4',    task: 'Promotional Materials — create publication materials/posters using Canva; follow official branding guidelines; prepare captions and publication schedules', date: 'May 27, 2026', status: 'upcoming' },
+    { tCode: 'W-4',    task: 'Volunteer Requirements — recruit at least 2 volunteers for photos/videos; invite school/student publication for event coverage; assign documentation roles early', date: 'May 27, 2026', status: 'upcoming' },
+    { tCode: 'W-2',    task: 'Whitelist/Allow Required Websites — sui.io, suiscan.xyz, github.com, vercel.app, youtube.com, docs.google.com',                    date: 'Jun 10, 2026', status: 'upcoming' },
     // 2 Weeks Before
     { tCode: 'W-2',    task: 'Seed Fund Request — submit request 1–2 weeks before the Code Camp; follow up approval/status if needed',                           date: 'Jun 10, 2026', status: 'upcoming' },
-    { tCode: 'W-2',    task: 'Slides Preparation — prepare and finalize all presentation slides; ensure all links and embedded materials are working; test demos', date: 'Jun 10, 2026', status: 'upcoming' },
-    { tCode: 'W-2',    task: 'Mentor Requirements — minimum 10 mentors; attend required mentor training; submit Sui smart contract as proof of learning',        date: 'Jun 10, 2026', status: 'upcoming' },
-    { tCode: 'W-2',    task: 'First Dry Run — check overall flow and technical issues; test internet stability, audio/visual setup, and facilitator coordination', date: 'Jun 10, 2026', status: 'upcoming' },
-    { tCode: 'W-1',    task: 'Second Dry Run — final timing check; speaker transitions; participant support flow; final technical validation',                    date: 'Jun 17, 2026', status: 'upcoming' },
-    { tCode: 'W-1',    task: 'Final Promotions Push — release final promotional materials; remind participants to register; coordinate confirmations',             date: 'Jun 17, 2026', status: 'upcoming' },
+    { tCode: 'W-2',    task: 'Slides Preparation — prepare and finalize all presentation slides before training proper; ensure all links and embedded materials are working; test demos and coding exercises beforehand', date: 'Jun 10, 2026', status: 'upcoming' },
+    { tCode: 'W-2',    task: 'Mentor Requirements — minimum 10 mentors; attend required mentor training; assist participants during the Code Camp; submit a Sui smart contract as proof of learning/output', date: 'Jun 10, 2026', status: 'upcoming' },
+    { tCode: 'W-2',    task: 'First Dry Run — check overall flow and technical issues; test internet stability, audio/visual setup, and facilitator coordination', date: 'Jun 8, 2026',  status: 'upcoming' },
+    { tCode: 'W-1',    task: 'Second Dry Run — final timing check; speaker transitions and facilitation flow; participant support flow; final technical validation', date: 'Jun 17, 2026', status: 'upcoming' },
+    { tCode: 'W-1',    task: 'Final Promotions Push — release final promotional materials; remind participants to register; coordinate attendance confirmations with partner schools', date: 'Jun 17, 2026', status: 'upcoming' },
     // Event Day
     { tCode: 'T-0 ☻', task: 'EVENT DAY — Pampanga Code Camp · CCA',                                                                                            date: 'Jun 24, 2026', status: 'upcoming', isEvent: true },
     // After Event
-    { tCode: 'T+2',    task: 'Post-Event Promotional Materials — create and publish posts; upload photos/videos and participant highlights; coordinate with partner schools', date: 'Jun 26, 2026', status: 'upcoming' },
-    { tCode: 'T+5',    task: 'Post-Code Camp Report (EOD) — include participant profile, attendees count, projects submitted, highlights, photos/videos, social media posts', date: 'Jun 29, 2026', status: 'upcoming' },
-    { tCode: 'T+7',    task: 'Liquidation — collect and organize all receipts; submit complete liquidation report; ensure all supporting documents are complete', date: 'Jul 1, 2026',  status: 'upcoming' },
+    { tCode: 'T+2',    task: 'Post-Event Promotional Materials — create and publish promotional posts after the event; upload photos/videos and participant highlights; coordinate publication with partner schools', date: 'Jun 26, 2026', status: 'upcoming' },
+    { tCode: 'T+5',    task: 'Post-Code Camp Report (EOD) — include participant profile (year/course), number of attendees, number of projects submitted, what worked well, areas for improvement, photos and videos, social media posts/documentation', date: 'Jun 29, 2026', status: 'upcoming' },
+    { tCode: 'T+7',    task: 'Liquidation — collect and organize all receipts, reimbursements, and expense documentation; submit complete liquidation report after the Code Camp; ensure all supporting documents are complete before submission', date: 'Jul 1, 2026',  status: 'upcoming' },
   ],
   laguna: [
     // 4 Weeks Before
