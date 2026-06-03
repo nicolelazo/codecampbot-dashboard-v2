@@ -2,6 +2,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { CHECKLIST_TEMPLATE } from '@/lib/checklist-data'
 import type { ChecklistTemplateItem } from '@/lib/checklist-data'
+import { getSubmissionTotals } from '@/lib/submission-data'
 
 async function generateChapterStatusSummary(data: {
   chapterName: string
@@ -413,7 +414,20 @@ export async function buildDsuOverview() {
   const openTasks = tasks ?? []
   const allRisks = risksData ?? []
   const urgentTasks = openTasks.filter(t => t.status === 'urgent')
-  const kpiMap = Object.fromEntries((kpis ?? []).map(k => [k.key, k.value]))
+  const kpiMapRaw = Object.fromEntries((kpis ?? []).map(k => [k.key, k.value]))
+  // Merge: computed submission totals (from lib/submission-data) override stale Supabase values
+  const sub = getSubmissionTotals()
+  const kpiMap = {
+    ...kpiMapRaw,
+    // form_submissions = total DeepSurge submissions across done chapters
+    form_submissions:        String(sub.totalSubs),        // 368
+    // confirmed_deployments = same (mainnet deploys = form submissions in this program)
+    confirmed_deployments:   String(sub.totalSubs),        // 368
+    // verified_completions = HQ-verified (public Vercel + Object ID)
+    verified_completions:    String(sub.totalVerified),    // 322
+    // completion rate vs registrations
+    completion_rate_vs_reg:  sub.completionRate,           // 59.96%
+  }
   const checklistOverrides = parseChecklistOverrides(checklistRow?.value)
 
   function readKpi(candidates: string[], fallback = '–') {
@@ -660,7 +674,8 @@ export async function buildDsuOverview() {
 • Completion Form Submissions: <b>${readKpi(['form_submissions'])}</b>
 • Mentors Trained and Deployed: <b>${readKpi(['trained_mentors'])}</b>
 • Students Trained: <b>${readKpi(['trained_students', 'students_trained', 'students_trained_deployed'])}</b>
-• Verified Vercel and Mainnet Deployments: <b>${readKpi(['confirmed_deployments', 'verified_deployments'])}</b>
+• Mainnet Deployments and Form Submissions: <b>${readKpi(['confirmed_deployments', 'verified_deployments'])}</b>
+• Verified Completions (HQ · Vercel + Object ID): <b>${readKpi(['verified_completions'])}</b> (${readKpi(['completion_rate_vs_reg'])} vs reg · ${sub.doneCount} chapters)
 • Completion Rate: <b>${(() => { const v = readKpi(['completion_rate']); return v !== '–' && !v.endsWith('%') ? `${v}%` : v })()} </b>
 • Labs Installed and Activated: <b>${readKpi(['computer_labs', 'labs_installed'])}</b>
 

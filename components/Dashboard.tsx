@@ -910,7 +910,7 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }
     { icon:'📊', label:'Code Camps',           value:kpiMap['code_camps']?.value           ?? '–',  color:C.cyan },
     { icon:'📋', label:'Code Camp Attendees',  value:kpiMap['form_submissions']?.value     ?? '–',  color:C.teal },
     { icon:'🧑‍💻', label:'Mentors Trained',   value:kpiMap['trained_mentors']?.value      ?? '–',  color:C.cyan },
-    { icon:'🚀', label:'Mainnet Deployments and Form Submissions', value:kpiMap['confirmed_deployments']?.value ?? '–', color:C.teal },
+    { icon:'🚀', label:'Mainnet Deployments and Form Submissions', value: String(sub.totalSubs), color:C.teal },
     { icon:'✅', label:'Verified Completion (Public Vercel + Object ID Provided)', value: String(sub.totalVerified), color:'#2DD4BF' },
     { icon:'📈', label:'Completion vs Reg.',   value: sub.completionRate,                           color:'#a78bfa' },
   ]
