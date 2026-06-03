@@ -124,19 +124,19 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
     { tCode: 'W-3',    task: 'DeepSurge Link Creation — create and finalize registration/event links before promotions begin; test registration flow',           date: 'May 8, 2026',  status: 'done' },
     { tCode: 'W-4',    task: 'Promotional Materials — create publication materials/posters using Canva; follow branding guidelines; prepare captions/schedule',  date: 'May 1, 2026',  status: 'done' },
     { tCode: 'W-4',    task: 'Volunteer Requirements — recruit at least 2 volunteers for photos/videos; invite school publication; assign documentation roles',   date: 'May 1, 2026',  status: 'done' },
-    { tCode: 'W-2',    task: 'Whitelist Required Websites — sui.io, suiscan.xyz, github.com, vercel.app, youtube.com, docs.google.com',                         date: 'May 15, 2026', status: 'upcoming' },
+    { tCode: 'W-2',    task: 'Whitelist Required Websites — sui.io, suiscan.xyz, github.com, vercel.app, youtube.com, docs.google.com',                         date: 'May 15, 2026', status: 'done' },
     // 2 Weeks Before
     { tCode: 'W-2',    task: 'Seed Fund Request — submit request 1–2 weeks before the Code Camp; follow up approval/status if needed',                           date: 'May 15, 2026', status: 'done' },
-    { tCode: 'W-2',    task: 'Slides Preparation — prepare and finalize all presentation slides; ensure all links and embedded materials are working; test demos', date: 'May 15, 2026', status: 'upcoming' },
+    { tCode: 'W-2',    task: 'Slides Preparation — prepare and finalize all presentation slides; ensure all links and embedded materials are working; test demos', date: 'May 15, 2026', status: 'done' },
     { tCode: 'W-2',    task: 'Mentor Requirements — minimum 10 mentors; attend required mentor training; submit Sui smart contract as proof of learning',        date: 'May 15, 2026', status: 'done' },
     { tCode: 'W-2',    task: 'First Dry Run — check overall flow and technical issues; test internet stability, audio/visual setup, and facilitator coordination', date: 'May 15, 2026', status: 'done' },
     { tCode: 'W-1',    task: 'Second Dry Run — final timing check; speaker transitions; participant support flow; final technical validation',                    date: 'May 22, 2026', status: 'done' },
-    { tCode: 'W-1',    task: 'Final Promotions Push — release final promotional materials; remind participants to register; coordinate confirmations',             date: 'May 22, 2026', status: 'in_progress' },
+    { tCode: 'W-1',    task: 'Final Promotions Push — release final promotional materials; remind participants to register; coordinate confirmations',             date: 'May 22, 2026', status: 'done' },
     // Event Day
-    { tCode: 'T-0 ☻', task: 'EVENT DAY — Laguna Code Camp · PUP Biñan CITE Campus',                                                                            date: 'May 29, 2026', status: 'upcoming', isEvent: true },
+    { tCode: 'T-0 ☻', task: 'EVENT DAY — Laguna Code Camp · PUP Biñan CITE Campus · 103 reg · 59 submitted · 57 verified',                                    date: 'May 29, 2026', status: 'executed', isEvent: true },
     // After Event
-    { tCode: 'T+2',    task: 'Post-Event Promotional Materials — create and publish posts; upload photos/videos and participant highlights; coordinate with partner schools', date: 'May 31, 2026', status: 'upcoming' },
-    { tCode: 'T+5',    task: 'Post-Code Camp Report (EOD) — include participant profile, attendees count, projects submitted, highlights, photos/videos, social media posts', date: 'Jun 3, 2026',  status: 'upcoming' },
+    { tCode: 'T+2',    task: 'Post-Event Promotional Materials — create and publish posts; upload photos/videos and participant highlights; coordinate with partner schools', date: 'May 31, 2026', status: 'done' },
+    { tCode: 'T+5',    task: 'Post-Code Camp Report (EOD) — include participant profile, attendees count, projects submitted, highlights, photos/videos, social media posts', date: 'Jun 3, 2026',  status: 'in_progress' },
     { tCode: 'T+7',    task: 'Liquidation — collect and organize all receipts; submit complete liquidation report; ensure all supporting documents are complete', date: 'Jun 5, 2026',  status: 'upcoming' },
   ],
 }

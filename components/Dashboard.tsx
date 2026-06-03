@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
+import { SUBMISSION_ROWS, getSubmissionTotals } from '@/lib/submission-data'
 import { fetchChapters, fetchKpis, fetchRisks, fetchContacts, fetchMerchItems, fetchLinks } from '@/lib/supabase/queries'
 import { createClient as createSupabaseClient } from '@/lib/supabase/client'
 import type { Chapter, Kpi, Risk, Contact, MerchItem, ResourceLink } from '@/lib/types'
@@ -54,6 +55,12 @@ function getCat(num: string | number) {
   if (n <= 2) return { label: 'Academic', color: C.cyan,  bg: 'rgba(6,182,212,0.15)' }
   if (n <= 4) return { label: 'Cultural', color: C.rose,  bg: 'rgba(225,29,72,0.15)' }
   return            { label: 'Startup',  color: C.teal,  bg: 'rgba(20,184,166,0.15)' }
+}
+
+// Normalise legacy "Angeles" DB value → display as "Pampanga" everywhere.
+// Remove once the chapters DB record has city = 'Pampanga'.
+function displayCity(city: string): string {
+  return city.toLowerCase() === 'angeles' ? 'Pampanga' : city
 }
 
 function formatChapterStatus(status: string) {
@@ -451,16 +458,14 @@ function UpcomingMilestonesSection({ chapters }: { chapters: Chapter[] }) {
 
 // ── Submission Summary ────────────────────────────────────────────────────────
 function SubmissionSummarySection({ isMobile }: { isMobile?: boolean }) {
-  type Row = { location: string; date: string; done: true; registrations: number; total: number; share: string; verified: number; incomplete: number; rate: string }
-           | { location: string; date: string; done: false }
-  const ROWS: Row[] = [
-    { location: 'Manila',   date: 'Mar 28', done: true,  registrations: 128, total: 60,  share: '19.40%', verified: 29,  incomplete: 31, rate: '22.66%' },
-    { location: 'Bukidnon', date: 'May 6',  done: true,  registrations: 136, total: 80,  share: '25.90%', verified: 72,  incomplete: 8,  rate: '52.94%' },
-    { location: 'Iloilo',   date: 'May 16', done: true,  registrations: 170, total: 169, share: '54.70%', verified: 164, incomplete: 5,  rate: '96.47%' },
-    { location: 'Laguna',   date: 'May 29', done: false },
-    { location: 'Pampanga', date: 'Jun 24', done: false },
-  ]
-  const SUB = { total: 309, share: '100.00%', verified: 265, incomplete: 44, rate: '61.06%' }
+  const sub = getSubmissionTotals()
+  const SUB = {
+    total: sub.totalSubs,
+    share: '100.00%',
+    verified: sub.totalVerified,
+    incomplete: sub.totalIncomplete,
+    rate: sub.completionRate,
+  }
   const p = isMobile ? '6px 10px' : '8px 14px'
   const thStyle = { fontSize: '8px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.08em', color: C.muted, padding: p, textAlign: 'left' as const, borderBottom: `1px solid ${C.border}`, whiteSpace: 'nowrap' as const }
   const tdStyle = { fontSize: '11px', padding: p, color: C.text, borderBottom: `1px solid rgba(255,255,255,0.04)` }
@@ -484,8 +489,8 @@ function SubmissionSummarySection({ isMobile }: { isMobile?: boolean }) {
               </tr>
             </thead>
             <tbody>
-              {ROWS.map((r, i) => {
-                const isLast = i === ROWS.length - 1
+              {SUBMISSION_ROWS.map((r, i) => {
+                const isLast = i === SUBMISSION_ROWS.length - 1
                 return (
                   <tr key={r.location} style={{ opacity: r.done ? 1 : 0.45 }}>
                     <td style={{ ...tdStyle, fontWeight: 700, borderBottom: bd(isLast) }}>
@@ -505,7 +510,7 @@ function SubmissionSummarySection({ isMobile }: { isMobile?: boolean }) {
               })}
               <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
                 <td style={{ ...tdStyle, fontWeight: 800, fontSize: '10px', borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>
-                  SUBTOTAL <span style={{ fontSize: '8px', fontWeight: 400, color: C.muted }}>3 done</span>
+                  SUBTOTAL <span style={{ fontSize: '8px', fontWeight: 400, color: C.muted }}>{sub.doneCount} done</span>
                 </td>
                 <td style={{ ...tdStyle, borderTop: `1px solid ${C.border}`, borderBottom: 'none', color: C.muted }}>—</td>
                 <td style={{ ...tdStyle, textAlign: 'right' as const, fontWeight: 800, color: C.cyan, borderTop: `1px solid ${C.border}`, borderBottom: 'none' }}>{SUB.total}</td>
@@ -559,26 +564,26 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: true,  label: 'Post-Report' },
     { done: false, label: 'Liquidation',      note: 'Pending — submit liquidation report' },
   ],
-  // Laguna — May 29 · took Tacloban's slot + merch · dry runs done · venue confirmed
+  // Laguna — May 29 ✓ COMPLETED · 103 reg · 59 submitted · 57 verified
   laguna: [
     { done: true,  label: 'Invitation Letter' },
     { done: true,  label: 'Event Schedule' },
     { done: true,  label: 'DeepSurge Link' },
     { done: true,  label: 'Promo Materials' },
     { done: true,  label: 'Volunteers 2+' },
-    { done: false, label: 'Whitelist',         note: 'Confirm with ICT dept May 26–28' },
-    { done: true,  label: 'Seed Fund',         note: 'Received ✓' },
-    { done: false, label: 'Slides Prep',       note: 'Pending' },
-    { done: true,  label: 'Mentors 10+',       note: 'Finalized ✓' },
-    { done: true,  label: 'Dry Run 1',         note: 'Completed ✓' },
-    { done: true,  label: 'Dry Run 2',         note: 'Completed ✓' },
-    { done: false, label: 'Final Promo Push',  note: 'In progress' },
-    { done: false, label: 'Post-Event Post',   note: 'After event' },
-    { done: false, label: 'Post-Report',       note: 'After event' },
-    { done: false, label: 'Liquidation',       note: 'After event' },
+    { done: true,  label: 'Whitelist',        note: 'Done ✓' },
+    { done: true,  label: 'Seed Fund',        note: 'Received ✓' },
+    { done: true,  label: 'Slides Prep',      note: 'Done ✓' },
+    { done: true,  label: 'Mentors 10+',      note: 'Finalized ✓' },
+    { done: true,  label: 'Dry Run 1',        note: 'Completed ✓' },
+    { done: true,  label: 'Dry Run 2',        note: 'Completed ✓' },
+    { done: true,  label: 'Final Promo Push', note: 'Done ✓' },
+    { done: true,  label: 'Post-Event Post',  note: 'Published ✓' },
+    { done: false, label: 'Post-Report',      note: 'In progress — due Jun 3' },
+    { done: false, label: 'Liquidation',      note: 'Upcoming — due Jun 5' },
   ],
   // Pampanga — Jun 24 · venue confirmed · mentors in training · pending dry runs
-  angeles: [
+  pampanga: [
     { done: false, label: 'Invitation Letter', note: 'Prepare before promos' },
     { done: true,  label: 'Event Schedule',    note: 'Venue confirmed ✓' },
     { done: false, label: 'DeepSurge Link',    note: 'Before promos' },
@@ -641,7 +646,9 @@ function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chap
         {sorted.map(c => {
           const badge      = getChapterStatusBadge(c.status)
           const pct        = c.progress_percent ?? 0
-          const cityKey    = c.city.toLowerCase()
+          const rawCityKey = c.city.toLowerCase()
+          // Normalise legacy 'angeles' DB value → 'pampanga' key
+          const cityKey    = rawCityKey === 'angeles' ? 'pampanga' : rawCityKey
           const isTacloban = cityKey.includes('tacloban')
           const fwItems    = FW_CHECKLIST[cityKey] ?? []
           const fwDone     = fwItems.filter(i => i.done).length
@@ -659,7 +666,7 @@ function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chap
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, flex: 1 }}>
                       {isTacloban && <span style={{ fontSize: '12px', flexShrink: 0 }}>⚠️</span>}
                       <div style={{ minWidth: 0 }}>
-                        <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Ch{c.number} · {c.city}</div>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Ch{c.number} · {displayCity(c.city)}</div>
                         {isTacloban
                           ? <div style={{ fontSize: '9px', color: '#FBBF24', fontWeight: 700, marginTop: '1px' }}>🔴 Cancellation · No date · No reply</div>
                           : c.date_text ? <div style={{ fontSize: '9px', color: C.muted, marginTop: '1px' }}>{c.date_text}</div> : null}
@@ -683,7 +690,7 @@ function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chap
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
                     {isTacloban && <span style={{ fontSize: '13px', flexShrink: 0 }}>⚠️</span>}
                     <div style={{ minWidth: 0 }}>
-                      <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Ch{c.number} · {c.city}</div>
+                      <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Ch{c.number} · {displayCity(c.city)}</div>
                       {isTacloban
                         ? <div style={{ fontSize: '9px', color: '#FBBF24', fontWeight: 700, marginTop: '1px' }}>🔴 CANCELLATION DISCUSSION · Candidate · No date · No reply</div>
                         : c.date_text ? <div style={{ fontSize: '9px', color: C.muted, marginTop: '1px' }}>{c.date_text}</div> : null}
@@ -757,19 +764,19 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
     { icon: '👥', text: `${kpiMap['total_attendees']?.value ?? '276~'} total attendees reached` },
     { icon: '🧑‍💻', text: `${kpiMap['students_trained']?.value ?? '–'} students trained` },
     { icon: '🚀', text: `${kpiMap['confirmed_deployments']?.value ?? '–'} confirmed Sui deployments` },
-    { icon: '📍', text: 'Manila — 128 registered, 60 submitted projects, 29 valid submissions (Letran, Mar 28)' },
-    { icon: '📍', text: 'Bukidnon — 136 registered, 80 submitted projects, 72 valid submissions (BSU, May 6)' },
+    { icon: '📍', text: 'Manila — 128 registered, 60 submitted, 29 verified (Letran, Mar 28)' },
+    { icon: '📍', text: 'Bukidnon — 136 registered, 80 submitted, 72 verified (BSU, May 6)' },
     { icon: '🆕', text: 'Bukidnon — first-ever BYOD format + Pre-Installation Day (commitment filter)' },
-    { icon: '📍', text: 'Iloilo — 170 registered, 169 submitted projects, 164 valid submissions (CPU, May 16)' },
-    { icon: '📍', text: 'Laguna — PUP Biñan CITE Campus, May 29 · venue confirmed · took Tacloban slot + merch' },
-    { icon: '✅', text: 'Laguna — both dry runs completed · DeepSurge live · seed fund received' },
-    { icon: '📣', text: 'Laguna registration posting started May 21 · Tokens received by Lucky' },
+    { icon: '📍', text: 'Iloilo — 170 registered, 169 submitted, 164 verified (CPU, May 16)' },
+    { icon: '✅', text: 'Laguna — PUP Biñan CITE Campus, May 29 ✓ · 103 registered · 59 submitted · 57 verified (55.34% rate)' },
+    { icon: '📊', text: '4 chapters completed · 368 total submissions · 322 verified across all done chapters' },
+    { icon: '📣', text: 'Laguna — post-event report in progress · liquidation due Jun 5' },
   ]
 
   const KEY_RISKS = [
     { text: 'Tacloban — under cancellation discussion · candidate chapter · no date · no reply', urgent: true,  high: true  },
-    { text: 'Laguna — installation day-before (May 28) · high risk if ICT dept not ready on time', urgent: true,  high: true  },
-    { text: 'Laguna — no prof incentives · students may skip camp with no academic credit or grade incentive', urgent: false, high: true  },
+    { text: 'Laguna — post-report due Jun 3 · liquidation due Jun 5 · ensure completion', urgent: false, high: true  },
+    { text: 'Pampanga — mentors not yet 10 · seed fund pending · dry runs needed before Jun 24', urgent: false, high: true  },
     { text: 'CDO (Cagayan de Oro) — Jumpstart request by Kenshin · not active · no venue · training TBC', urgent: false, high: true  },
     ...highRisks.filter(r => !(r.chapter_tag ?? '').toLowerCase().includes('tacloban')).slice(0, 2)
       .map(r => ({ text: `${r.chapter_tag ? r.chapter_tag + ' — ' : ''}${r.title}`, urgent: false, high: true })),
@@ -780,12 +787,11 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
 
   const KEY_NEXT_STEPS = [
     { urgent: true,  text: 'Tacloban — cancellation discussion · decide to activate or formally remove' },
-    { urgent: true,  text: 'Laguna (May 29) — finalize slides, confirm 10+ mentors, whitelist ICT dept' },
-    { urgent: true,  text: 'Laguna — May 28 install day · coordinate ICT dept access ahead of time' },
-    { urgent: false, text: 'Laguna — seed fund: submit 1–2 wks before camp (VP Finance Steph, ₱5k)' },
+    { urgent: true,  text: 'Laguna — post-camp report due Jun 3 · liquidation due Jun 5' },
     { urgent: false, text: 'Iloilo — submit liquidation report (pending)' },
     { urgent: false, text: 'Iloilo — resolve 19 flagged submissions (17 private Vercel links)' },
-    { urgent: false, text: 'Pampanga (Jun 24) — venue ✓ · mentors in training (not yet 10) · next: seed fund, DeepSurge, dry runs' },
+    { urgent: false, text: 'Pampanga (Jun 24) — venue ✓ · mentors in training · next: seed fund, DeepSurge link, dry runs Jun 8 & 17' },
+    { urgent: false, text: 'Pampanga — seed fund request deadline Jun 10 (2 wks before camp)' },
     { urgent: false, text: 'CDO — assess Kenshin / Jumpstart request · confirm venue & training before activating' },
     { urgent: false, text: 'All chapters — whitelist: sui.io, suiscan.xyz, github.com, vercel.app, youtube.com' },
     { urgent: false, text: 'Q2 report — finalize all data for Sui Foundation (due Jun 30)' },
@@ -819,7 +825,7 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
         <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' }}>
           {chapters.map(c => (
             <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '8px', color: C.muted, width: '46px', flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.city}</span>
+              <span style={{ fontSize: '8px', color: C.muted, width: '46px', flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{displayCity(c.city)}</span>
               <div style={{ flex: 1, height: '3px', background: 'rgba(255,255,255,0.06)', borderRadius: '999px', overflow: 'hidden' }}>
                 <div style={{ height: '100%', width: `${c.progress_percent}%`, borderRadius: '999px',
                   background: c.city.toLowerCase().includes('tacloban') ? '#F87171' : 'linear-gradient(90deg,#06b6d4,#14b8a6)' }} />
@@ -897,13 +903,16 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }
   const daysLeftQ2 = Math.ceil((q2End.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
   const daysLeftStr = daysLeftQ2 > 0 ? `${daysLeftQ2}d` : '0d'
 
+  // Computed from SUBMISSION_ROWS — synced with event discovery table
+  const sub = getSubmissionTotals()
+
   const skillItems = [
-    { icon:'📊', label:'Code Camps',           value:kpiMap['code_camps']?.value              ?? '–',       color:C.cyan },
-    { icon:'📋', label:'Code Camp Attendees',                          value:kpiMap['form_submissions']?.value         ?? '–',       color:C.teal },
-    { icon:'🧑‍💻', label:'Mentors Trained',                          value:kpiMap['trained_mentors']?.value           ?? '–',       color:C.cyan },
-    { icon:'🚀', label:'Mainnet Deployments and Form Submissions',    value:kpiMap['confirmed_deployments']?.value    ?? '–',       color:C.teal },
-    { icon:'✅', label:'Verified Completion (Public Vercel + Object ID Provided)', value:kpiMap['verified_completions']?.value ?? '265', color:'#2DD4BF' },
-    { icon:'📈', label:'Completion vs Reg.',   value:kpiMap['completion_rate_vs_reg']?.value   ?? '61.06%', color:'#a78bfa' },
+    { icon:'📊', label:'Code Camps',           value:kpiMap['code_camps']?.value           ?? '–',  color:C.cyan },
+    { icon:'📋', label:'Code Camp Attendees',  value:kpiMap['form_submissions']?.value     ?? '–',  color:C.teal },
+    { icon:'🧑‍💻', label:'Mentors Trained',   value:kpiMap['trained_mentors']?.value      ?? '–',  color:C.cyan },
+    { icon:'🚀', label:'Mainnet Deployments and Form Submissions', value:kpiMap['confirmed_deployments']?.value ?? '–', color:C.teal },
+    { icon:'✅', label:'Verified Completion (Public Vercel + Object ID Provided)', value: String(sub.totalVerified), color:'#2DD4BF' },
+    { icon:'📈', label:'Completion vs Reg.',   value: sub.completionRate,                           color:'#a78bfa' },
   ]
 
   return (
@@ -1000,7 +1009,7 @@ function Sidebar({ activeTab, activeChapterId, chapters, onSwitch, onShowChapter
                   style={{ display:'flex', alignItems:'center', gap:'8px', width:'100%', padding:'8px 10px', borderRadius:'10px', background:isActive ? 'rgba(6,182,212,0.1)' : 'transparent', border:'none', cursor:'pointer', color:isActive ? C.cyan : C.dim, fontSize:'12px', fontWeight:isActive ? 600 : 400, transition:'all .2s', textAlign:'left', marginBottom:'2px' }}
                 >
                   <div style={{ width:'6px', height:'6px', borderRadius:'50%', background:cat.color, flexShrink:0 }} />
-                  Ch{c.number} {c.city}
+                  Ch{c.number} {displayCity(c.city)}
                 </button>
               )
             })}

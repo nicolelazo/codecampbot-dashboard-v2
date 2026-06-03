@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { CHECKLIST_TEMPLATE } from '@/lib/checklist-data'
+import { getSubmissionTotals } from '@/lib/submission-data'
 
 const noStoreFetch: typeof fetch = (input, init) => {
   return fetch(input, {
@@ -54,7 +55,16 @@ export async function buildDsuMessage(): Promise<string> {
     sb.from('kpis').select('key, value'),
   ])
 
-  const kpiMap = Object.fromEntries((kpis ?? []).map(k => [k.key, k.value]))
+  const kpiMapRaw = Object.fromEntries((kpis ?? []).map(k => [k.key, k.value]))
+
+  // Merge: computed submission totals override stale Supabase values for these three metrics
+  const sub = getSubmissionTotals()
+  const kpiMap = {
+    ...kpiMapRaw,
+    verified_completions:    String(sub.totalVerified),   // 322 — always from real data
+    completion_rate_vs_reg:  sub.completionRate,           // 59.96% — always from real data
+    form_submissions:        kpiMapRaw['form_submissions'] ?? String(sub.totalSubs),
+  }
 
   function sortChapters<T extends { status: string; date_iso: string | null }>(rows: T[]): T[] {
     const active = rows.filter(c => c.status !== 'completed' && c.status !== 'tbc' && c.status !== 'rescheduling')
@@ -84,6 +94,7 @@ export async function buildDsuMessage(): Promise<string> {
     `• Deployments: <b>${kpiMap['confirmed_deployments'] ?? '–'}</b>`,
     `• Completion Rate: <b>${kpiMap['completion_rate'] ?? '–'}</b>`,
     `• Labs Activated: <b>${kpiMap['computer_labs'] ?? '–'}</b>`,
+    `• Verified Completions: <b>${kpiMap['verified_completions']}</b> (${kpiMap['completion_rate_vs_reg']} vs reg — ${sub.doneCount} chapters done)`,
   ].join('\n')
 
   const statusIcon: Record<string, string> = {

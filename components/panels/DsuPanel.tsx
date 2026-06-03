@@ -130,7 +130,7 @@ export default function DsuPanel({ chapters, kpis, onShowChapter }: Props) {
               <div key={chapter.id} className="bg-[#0f172a] border border-[#1e293b] rounded-3xl p-6" style={{ borderLeft: `3px solid ${accentColor}` }}>
                 <div className="flex justify-between items-start gap-2 mb-2">
                   <div>
-                    <div className="text-[13px] font-extrabold text-[#cfd5dd]">{chapter.city}</div>
+                    <div className="text-[13px] font-extrabold text-[#cfd5dd]">{chapter.city.toLowerCase() === 'angeles' ? 'Pampanga' : chapter.city}</div>
                     <div className="text-[10px] text-[#64748b] mt-0.5">{chapter.venue.split(',')[0]} · Lead: {chapter.lead_name.split('&')[0].trim()}</div>
                   </div>
                   <Badge variant={b.variant} size="sm">{b.label}</Badge>
@@ -215,7 +215,7 @@ export default function DsuPanel({ chapters, kpis, onShowChapter }: Props) {
                 className="px-3.5 py-2 rounded-xl text-[11px] font-bold border transition-all hover:opacity-80 hover:-translate-y-px"
                 style={{ background: `${accentColor}18`, border: `1px solid ${accentColor}44`, color: accentColor }}
               >
-                Ch{c.number} {c.city}{icon}
+                Ch{c.number} {c.city.toLowerCase() === 'angeles' ? 'Pampanga' : c.city}{icon}
               </button>
             )
           })}
