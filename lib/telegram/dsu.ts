@@ -63,7 +63,7 @@ export async function buildDsuMessage(): Promise<string> {
     ...kpiMapRaw,
     verified_completions:    String(sub.totalVerified),   // 322 — always from real data
     completion_rate_vs_reg:  sub.completionRate,           // 59.96% — always from real data
-    form_submissions:        kpiMapRaw['form_submissions'] ?? String(sub.totalSubs),
+    form_submissions:        String(sub.totalRegistrations), // 537 — total registrations (Code Camp Attendees)
   }
 
   function sortChapters<T extends { status: string; date_iso: string | null }>(rows: T[]): T[] {

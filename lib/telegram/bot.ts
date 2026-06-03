@@ -419,10 +419,10 @@ export async function buildDsuOverview() {
   const sub = getSubmissionTotals()
   const kpiMap = {
     ...kpiMapRaw,
-    // form_submissions = total DeepSurge submissions across done chapters
-    form_submissions:        String(sub.totalSubs),        // 368
-    // confirmed_deployments = same (mainnet deploys = form submissions in this program)
-    confirmed_deployments:   String(sub.totalSubs),        // 368
+    // form_submissions = total registrations (Code Camp Attendees)
+    form_submissions:        String(sub.totalRegistrations), // 537
+    // confirmed_deployments = total project submissions (Mainnet Deployments and Form Submissions)
+    confirmed_deployments:   String(sub.totalSubs),          // 368
     // verified_completions = HQ-verified (public Vercel + Object ID)
     verified_completions:    String(sub.totalVerified),    // 322
     // completion rate vs registrations
