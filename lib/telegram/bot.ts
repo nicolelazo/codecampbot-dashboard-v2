@@ -419,14 +419,11 @@ export async function buildDsuOverview() {
   const sub = getSubmissionTotals()
   const kpiMap = {
     ...kpiMapRaw,
-    // form_submissions = total registrations (Code Camp Attendees)
-    form_submissions:        String(sub.totalRegistrations), // 537
-    // confirmed_deployments = total project submissions (Mainnet Deployments and Form Submissions)
-    confirmed_deployments:   String(sub.totalSubs),          // 368
-    // verified_completions = HQ-verified (public Vercel + Object ID)
-    verified_completions:    String(sub.totalVerified),    // 322
-    // completion rate vs registrations
-    completion_rate_vs_reg:  sub.completionRate,           // 59.96%
+    form_submissions:        String(sub.totalRegistrations),
+    confirmed_deployments:   String(sub.totalSubs),
+    verified_completions:    String(sub.totalVerified),
+    completion_rate_vs_reg:  sub.completionRate,
+    completion_rate:         sub.completionRate.replace('%', ''),
   }
   const checklistOverrides = parseChecklistOverrides(checklistRow?.value)
 
@@ -673,10 +670,9 @@ export async function buildDsuOverview() {
 • Total Attendees: <b>${readKpi(['total_attendees', 'attendees_total'], attendeesFromChapters > 0 ? String(attendeesFromChapters) : '–')}</b>
 • Completion Form Submissions: <b>${readKpi(['form_submissions'])}</b>
 • Mentors Trained and Deployed: <b>${readKpi(['trained_mentors'])}</b>
-• Students Trained: <b>${readKpi(['trained_students', 'students_trained', 'students_trained_deployed'])}</b>
-• Mainnet Deployments and Form Submissions: <b>${readKpi(['confirmed_deployments', 'verified_deployments'])}</b>
-• Verified Completions (HQ · Vercel + Object ID): <b>${readKpi(['verified_completions'])}</b> (${readKpi(['completion_rate_vs_reg'])} vs reg · ${sub.doneCount} chapters)
-• Completion Rate: <b>${(() => { const v = readKpi(['completion_rate']); return v !== '–' && !v.endsWith('%') ? `${v}%` : v })()} </b>
+• Students Trained and Deployed: <b>${readKpi(['trained_students', 'students_trained', 'students_trained_deployed'])}</b>
+• Verified Vercel and Mainnet Deployments: <b>${readKpi(['verified_completions'])}</b>
+• Completion Rate: <b>${readKpi(['completion_rate'])}</b>
 • Labs Installed and Activated: <b>${readKpi(['computer_labs', 'labs_installed'])}</b>
 
 <b>🏕 Chapter Progress</b>
