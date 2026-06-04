@@ -23,19 +23,19 @@ export type PendingRow = {
 export type SubmissionRow = DoneRow | PendingRow
 
 export const SUBMISSION_ROWS: SubmissionRow[] = [
-  { location: 'Manila',   date: 'Mar 28', done: true, registrations: 128, total: 60,  share: '16.44%', verified: 29,  incomplete: 31, rate: '22.66%' },
-  { location: 'Bukidnon', date: 'May 6',  done: true, registrations: 136, total: 80,  share: '21.92%', verified: 72,  incomplete: 8,  rate: '52.94%' },
-  { location: 'Iloilo',   date: 'May 16', done: true, registrations: 170, total: 169, share: '46.30%', verified: 164, incomplete: 5,  rate: '96.47%' },
-  { location: 'Laguna',   date: 'May 29', done: true, registrations: 103, total: 56,  share: '15.34%', verified: 56,  incomplete: 0,  rate: '54.37%' },
+  { location: 'Manila',   date: 'Mar 28', done: true, registrations: 128, total: 60,  share: '16.26%', verified: 29,  incomplete: 31, rate: '22.66%' },
+  { location: 'Bukidnon', date: 'May 6',  done: true, registrations: 136, total: 80,  share: '21.68%', verified: 72,  incomplete: 8,  rate: '52.94%' },
+  { location: 'Iloilo',   date: 'May 16', done: true, registrations: 170, total: 169, share: '45.80%', verified: 164, incomplete: 5,  rate: '96.47%' },
+  { location: 'Laguna',   date: 'May 29', done: true, registrations: 80,  total: 60,  share: '16.26%', verified: 56,  incomplete: 4,  rate: '70.00%' },
   { location: 'Pampanga', date: 'Jun 24', done: false },
 ]
 
 export interface SubmissionTotals {
-  totalSubs: number           // 365
+  totalSubs: number           // 369
   totalVerified: number       // 321
-  totalRegistrations: number  // 537
-  totalIncomplete: number     // 44
-  completionRate: string      // '59.78%'
+  totalRegistrations: number  // 514
+  totalIncomplete: number     // 48
+  completionRate: string      // '62.45%'
   doneCount: number           // 4
 }
 
