@@ -15,6 +15,8 @@ const statusBadge: Record<string, { variant: BadgeVariant; label: string }> = {
   pencil_booked: { variant: 'warn',    label: 'Pencil Booked'   },
   tbc:           { variant: 'tbc',     label: 'TBC / At Risk'   },
   activating:    { variant: 'warn',    label: 'Activating'      },
+  declined:      { variant: 'risk',    label: 'Declined'        },
+  applicant:     { variant: 'tbc',     label: 'Applicant'       },
 }
 
 function getMerchBadge(s: string): { variant: BadgeVariant; label: string } {
@@ -67,8 +69,8 @@ export default function ChaptersPanel({ chapters, onShowChapter, onRefresh }: { 
   }
   const done   = chapters.filter(c => c.status === 'completed').length
   const active = chapters.filter(c => ['in_progress','activating','pencil_booked'].includes(c.status)).length
-  const resch  = chapters.filter(c => c.status === 'rescheduling').length
-  const tbc    = chapters.filter(c => c.status === 'tbc').length
+  const resch  = chapters.filter(c => ['rescheduling','declined'].includes(c.status)).length
+  const tbc    = chapters.filter(c => ['tbc','applicant'].includes(c.status)).length
 
   const stats = [
     { n: done,         lbl: 'Completed',    dot: '🟢' },

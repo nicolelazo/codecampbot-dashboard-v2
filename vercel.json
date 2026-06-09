@@ -3,5 +3,11 @@
   "buildCommand": "next build",
   "outputDirectory": ".next",
   "installCommand": "npm install",
-  "regions": ["sin1"]
+  "regions": ["sin1"],
+  "crons": [
+    {
+      "path": "/api/cron/dsu",
+      "schedule": "0 2 * * 2"
+    }
+  ]
 }

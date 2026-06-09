@@ -13,6 +13,8 @@ const statusBadge: Record<string, { variant: BadgeVariant; label: string }> = {
   pencil_booked: { variant: 'warn',    label: 'Pencil Booked'   },
   tbc:           { variant: 'tbc',     label: 'TBC'             },
   activating:    { variant: 'warn',    label: 'Activating'      },
+  declined:      { variant: 'risk',    label: 'Declined'        },
+  applicant:     { variant: 'tbc',     label: 'Applicant'       },
 }
 
 const accentOf = (c: Chapter) =>
@@ -41,7 +43,7 @@ export default function KpiPanel({ kpis, chapters, setKpis, isMobile }: { kpis: 
   }
   const done    = chapters.filter(c => c.status === 'completed').length
   const active  = chapters.filter(c => ['in_progress','activating','pencil_booked'].includes(c.status)).length
-  const atRisk  = chapters.filter(c => ['rescheduling','tbc'].includes(c.status)).length
+  const atRisk  = chapters.filter(c => ['rescheduling','tbc','declined','applicant'].includes(c.status)).length
 
   return (
     <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>

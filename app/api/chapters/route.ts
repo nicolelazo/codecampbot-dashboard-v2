@@ -8,7 +8,7 @@ function db() {
   )
 }
 
-const ALLOWED_STATUSES = ['completed', 'rescheduling', 'in_progress', 'activating', 'pencil_booked', 'tbc']
+const ALLOWED_STATUSES = ['completed', 'rescheduling', 'in_progress', 'activating', 'pencil_booked', 'tbc', 'declined', 'applicant']
 
 function dateTextFromIso(iso: string): string {
   const date = new Date(`${iso}T00:00:00Z`)
@@ -80,6 +80,38 @@ export async function PATCH(req: NextRequest) {
 
   const supabase = db()
   const { error } = await supabase.from('chapters').update(allowed).eq('id', id)
+  if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 })
+  return NextResponse.json({ ok: true })
+}
+
+export async function POST(req: NextRequest) {
+  const body = await req.json()
+  const { id, name, city, region, venue, lead_name, number, status, date_iso, date_text, pax_target, color } = body
+
+  if (!id || !name || !city || !region || !venue || !lead_name || !number) {
+    return NextResponse.json({ ok: false, error: 'id, name, city, region, venue, lead_name, number are required' }, { status: 400 })
+  }
+
+  const row: Record<string, unknown> = {
+    id: id.toLowerCase().trim(),
+    name: name.trim(),
+    city: city.trim(),
+    region: region.trim(),
+    venue: venue.trim(),
+    lead_name: lead_name.trim(),
+    number: String(number).trim(),
+    status: ALLOWED_STATUSES.includes(status) ? status : 'tbc',
+    date_iso: date_iso ?? null,
+    date_text: date_text ?? (date_iso ? dateTextFromIso(date_iso) : 'TBD'),
+    color: color ?? 'blue',
+    progress_percent: 0,
+    merch_status: 'TBC',
+    countdown_text: 'TBD',
+    pax_target: pax_target ?? null,
+  }
+
+  const supabase = db()
+  const { error } = await supabase.from('chapters').insert(row)
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 })
   return NextResponse.json({ ok: true })
 }

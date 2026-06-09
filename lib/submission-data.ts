@@ -27,7 +27,8 @@ export const SUBMISSION_ROWS: SubmissionRow[] = [
   { location: 'Bukidnon', date: 'May 6',  done: true, registrations: 136, total: 80,  share: '21.68%', verified: 72,  incomplete: 8,  rate: '52.94%' },
   { location: 'Iloilo',   date: 'May 16', done: true, registrations: 170, total: 169, share: '45.80%', verified: 164, incomplete: 5,  rate: '96.47%' },
   { location: 'Laguna',   date: 'May 29', done: true, registrations: 80,  total: 60,  share: '16.26%', verified: 56,  incomplete: 4,  rate: '70.00%' },
-  { location: 'Pampanga', date: 'Jun 24', done: false },
+  { location: 'Pampanga', date: 'Declined', done: false },
+  { location: 'CDO Jumpstart', date: 'TBD', done: false },
 ]
 
 export interface SubmissionTotals {

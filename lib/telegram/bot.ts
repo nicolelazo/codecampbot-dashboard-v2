@@ -368,8 +368,9 @@ async function sendOrEdit(
 }
 
 function sortChaptersForDsu<T extends { status: string; date_iso: string | null }>(rows: T[]): T[] {
-  const active = rows.filter(c => c.status !== 'completed' && c.status !== 'tbc' && c.status !== 'rescheduling')
-  const tbc = rows.filter(c => c.status === 'tbc' || c.status === 'rescheduling')
+  const INACTIVE_STATUSES = ['completed', 'tbc', 'rescheduling', 'declined', 'applicant']
+  const active = rows.filter(c => !INACTIVE_STATUSES.includes(c.status))
+  const tbc = rows.filter(c => ['tbc', 'rescheduling', 'declined', 'applicant'].includes(c.status))
   const done = rows.filter(c => c.status === 'completed')
   active.sort((a, b) => {
     if (a.date_iso && b.date_iso) return a.date_iso.localeCompare(b.date_iso)
@@ -465,6 +466,8 @@ export async function buildDsuOverview() {
     pencil_booked: '📌',
     tbc: '🟣',
     activating: '🟡',
+    declined: '❌',
+    applicant: '📋',
   }
 
   const chapterTaskMap = openTasks.reduce<Record<string, typeof openTasks>>((acc, task) => {
@@ -686,7 +689,7 @@ ${nextStepsBlock}
 
 <i>Tap a chapter shortcut below for detailed chapter status.</i>
 <b>🌐 Full Dashboard:</b>
-<a href="https://codecampbot-dashboard-v2.vercel.app/">Dashboard</a>`
+<a href="https://codecampbot-dashboard-v2.vercel.app/dashboard">Dashboard</a>`
 
   const keyboard = buildDsuChaptersKeyboard(chapterRows)
   return { text, keyboard }
@@ -1201,7 +1204,7 @@ async function cmdKpis(chatId: number, page = 0, editTarget?: { messageId: numbe
 
 const CHAPTER_CODES: Record<string, string> = {
   manila: 'MNL', tacloban: 'TCL', iloilo: 'ILO',
-  bukidnon: 'BKD', pampanga: 'PMP', laguna: 'LGN',
+  bukidnon: 'BKD', pampanga: 'PMP', laguna: 'LGN', cdo: 'CDO',
 }
 
 async function generateShortId(sb: ReturnType<typeof db>, chapter_id: string): Promise<string> {
