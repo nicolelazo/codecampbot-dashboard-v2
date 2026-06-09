@@ -109,6 +109,26 @@ async function send(chatId: number, text: string, replyMarkup?: InlineKeyboardMa
   })
 }
 
+const TELEGRAM_MAX = 4096
+
+async function sendSplit(chatId: number, text: string, replyMarkup?: InlineKeyboardMarkup) {
+  if (text.length <= TELEGRAM_MAX) {
+    await send(chatId, text, replyMarkup)
+    return
+  }
+  // Split at "Urgent Tasks" boundary — keeps KPI + chapters in part 1
+  const marker = '\n\n<b>✅ Urgent Tasks</b>'
+  const markerIdx = text.indexOf(marker)
+  const splitAt = (markerIdx > 0 && markerIdx < TELEGRAM_MAX)
+    ? markerIdx
+    : text.slice(0, TELEGRAM_MAX).lastIndexOf('\n\n')
+  const cut = splitAt > 1000 ? splitAt : TELEGRAM_MAX
+  const part1 = text.slice(0, cut)
+  const part2 = text.slice(cut).replace(/^\n+/, '')
+  await send(chatId, part1)
+  if (part2) await send(chatId, part2, replyMarkup)
+}
+
 async function editMessage(chatId: number, messageId: number, text: string, replyMarkup?: InlineKeyboardMarkup) {
   await fetch(`https://api.telegram.org/bot${TOKEN}/editMessageText`, {
     method: 'POST',
@@ -858,7 +878,7 @@ async function handleCallbackQuery(cb: TgCallbackQuery) {
     if (dsuPayload) {
       if (dsuPayload.kind === 'overview') {
         const overview = await buildDsuOverview()
-        await sendOrEdit(chatId, overview.text, overview.keyboard, { messageId })
+        await sendSplit(chatId, overview.text, overview.keyboard)
       } else {
         const detail = await buildChapterDetailStatus(dsuPayload.chapterId)
         await sendOrEdit(chatId, detail.text, detail.keyboard, { messageId })
@@ -1022,7 +1042,7 @@ Categories: <code>Drive</code> · <code>Sheets</code> · <code>Docs</code> · <c
 
 async function cmdStatus(chatId: number) {
   const overview = await buildDsuOverview()
-  await send(chatId, overview.text, overview.keyboard)
+  await sendSplit(chatId, overview.text, overview.keyboard)
 }
 
 // Legacy compact dashboard renderer retained for callback paging compatibility.

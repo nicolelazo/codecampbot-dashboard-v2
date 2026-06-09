@@ -186,7 +186,7 @@ function CalendarModal({ chapters, onClose, isMobile }: { chapters: Chapter[]; o
       onClick={onClose}
     >
       <div
-        style={{ width: isMobile ? '100%' : 'min(980px, calc(100vw - 360px))', maxHeight:'calc(100vh - 120px)', background:C.border, borderRadius: isMobile ? '16px' : '24px', boxShadow:'0 25px 80px rgba(0,0,0,0.9)', display:'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(300px,340px) 1fr', overflow:'hidden', animation:'slideDown .3s ease-out' }}
+        style={{ width: isMobile ? '100%' : 'min(980px, calc(100vw - 360px))', maxHeight:'calc(100vh - 80px)', background:C.border, borderRadius: isMobile ? '16px' : '24px', boxShadow:'0 25px 80px rgba(0,0,0,0.9)', display:'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(300px,340px) 1fr', overflowY:'auto', overflowX:'hidden', animation:'slideDown .3s ease-out' }}
         onClick={e => e.stopPropagation()}
       >
         {/* Left — date selector */}
@@ -286,11 +286,11 @@ function EventCard({ chapter, onSelect }: { chapter: Chapter; onSelect: (id: str
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '430px',
+        minHeight: 'auto',
       }}
     >
       {/* Image / gradient area */}
-      <div style={{ height:'212px', position:'relative', overflow:'hidden', background:grad, flexShrink:0 }}>
+      <div style={{ height:'180px', position:'relative', overflow:'hidden', background:grad, flexShrink:0 }}>
         <div style={{ position:'absolute', inset:0, background:'rgba(2,6,23,0.5)' }} />
         <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', transform:hovered ? 'scale(1.05)' : 'scale(1)', transition:'transform .5s ease-out' }}>
           <span style={{ fontSize:'68px', fontWeight:800, color:'rgba(255,255,255,0.12)', letterSpacing:'-0.05em' }}>CH{chapter.number}</span>
@@ -403,7 +403,7 @@ function UpcomingMilestonesSection({ chapters }: { chapters: Chapter[] }) {
       <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em', color: C.muted, marginBottom: '14px' }}>
         📅 Upcoming Key Milestones
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '8px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: '8px' }}>
         {upcoming.map((m, i) => {
           const ts = TYPE_STYLE[m.type]
           const chColor = CHAPTER_COLOR[m.chapter] ?? C.muted
@@ -720,7 +720,7 @@ function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chap
                   <span style={{ fontSize: '9px', color: fwPct === 100 ? C.teal : fwPct >= 90 ? '#FBBF24' : C.muted, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginRight: '4px' }}>
                     FW {fwDone}/{fwItems.length} {fwPct === 100 ? '✓' : `(${fwPct}%)`}
                   </span>
-                  {fwItems.map((item, idx) => (
+                  {(isMobile ? fwItems.slice(0, 8) : fwItems).map((item, idx) => (
                     <span key={idx}
                       title={item.note ?? ''}
                       style={{ fontSize: '9px', fontWeight: 600, padding: '2px 7px', borderRadius: '999px',
@@ -732,6 +732,11 @@ function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chap
                       {item.done ? '✓ ' : ''}{item.label}
                     </span>
                   ))}
+                  {isMobile && fwItems.length > 8 && (
+                    <span style={{ fontSize: '9px', color: C.muted, padding: '2px 7px', borderRadius: '999px', background: 'rgba(100,116,139,0.08)', border: '1px solid rgba(100,116,139,0.15)' }}>
+                      +{fwItems.length - 8} more
+                    </span>
+                  )}
                 </div>
               )}
             </div>
@@ -941,6 +946,34 @@ function BentoSection({ kpis, risks, chapters, onSwitch, onOpenRisks, isMobile }
       </div>
 
     </div>
+  )
+}
+
+// ── Mobile Bottom Nav ─────────────────────────────────────────────────────────
+function MobileBottomNav({ activeTab, onSwitch }: { activeTab: TabId; onSwitch: (t: TabId) => void }) {
+  const items: { id: TabId; icon: string; label: string }[] = [
+    { id: 'overview',  icon: '◈', label: 'Overview'  },
+    { id: 'kpi',       icon: '◉', label: 'KPI'       },
+    { id: 'chapters',  icon: '⊞', label: 'Chapters'  },
+    { id: 'risks',     icon: '⚠', label: 'Risks'     },
+    { id: 'settings',  icon: '⚙', label: 'Settings'  },
+  ]
+  return (
+    <nav style={{ position:'fixed', bottom:0, left:0, right:0, zIndex:195, height:'60px', background:'rgba(15,23,42,0.98)', backdropFilter:'blur(16px)', borderTop:'1px solid #1e293b', display:'flex', alignItems:'center' }}>
+      {items.map(item => {
+        const isActive = activeTab === item.id
+        return (
+          <button
+            key={item.id}
+            onClick={() => onSwitch(item.id)}
+            style={{ flex:1, height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'3px', background:'none', border:'none', cursor:'pointer', color: isActive ? C.cyan : C.muted, transition:'color .2s' }}
+          >
+            <span style={{ fontSize:'16px', lineHeight:1 }}>{item.icon}</span>
+            <span style={{ fontSize:'9px', fontWeight: isActive ? 700 : 400, textTransform:'uppercase', letterSpacing:'0.05em' }}>{item.label}</span>
+          </button>
+        )
+      })}
+    </nav>
   )
 }
 
@@ -1233,7 +1266,7 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
 
         <TopHeader calendarOpen={calendarOpen} onToggleCalendar={() => setCalendarOpen(v => !v)} isMobile={isMobile} onToggleSidebar={() => setSidebarOpen(v => !v)} />
 
-        <main style={{ flex:1, padding: isMobile ? '20px 16px 40px' : '46px 48px 54px', overflowX:'hidden' }}>
+        <main style={{ flex:1, padding: isMobile ? '20px 16px 80px' : '46px 48px 54px', overflowX:'hidden' }}>
           {initialChapterId ? (
             chapters.length === 0 ? (
               <div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'400px', color:'#475569', fontSize:'13px' }}>
@@ -1280,7 +1313,7 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
                   </div>
                   <div style={{ fontSize:'12px', color:C.muted }}>{chapters.length} events · Q2 2026</div>
                 </div>
-                <div style={{ display:'grid', gridTemplateColumns:`repeat(auto-fit,minmax(${isMobile ? '260px' : '320px'},1fr))`, gap: isMobile ? '16px' : '24px' }}>
+                <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit,minmax(320px,1fr))', gap: isMobile ? '16px' : '24px' }}>
                   {chapters.length > 0
                     ? chapters.map(c => <EventCard key={c.id} chapter={c} onSelect={showChapter} />)
                     : Array.from({ length: 6 }).map((_,i) => (
@@ -1295,11 +1328,11 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
             <div className="animate-fade-in">
               {activeTab === 'kpi'        && <KpiPanel kpis={kpis} chapters={chapters} setKpis={setKpis} isMobile={isMobile} />}
               {activeTab === 'milestones' && <MilestonesPanel />}
-              {activeTab === 'chapters'   && <ChaptersPanel chapters={chapters} onShowChapter={showChapter} onRefresh={refresh} />}
-              {activeTab === 'risks'      && <RisksPanel risks={risks} setRisks={setRisks} onRefresh={refresh} />}
-              {activeTab === 'merch'      && <MerchPanel merch_items={merchItems} chapters={chapters} onRefresh={refresh} />}
-              {activeTab === 'links'      && <LinksPanel links={links} chapters={chapters} contacts={contacts} onShowChapter={showChapter} setLinks={setLinks} onRefresh={refresh} />}
-              {activeTab === 'contacts'   && <ContactsPanel contacts={contacts} onRefresh={refresh} />}
+              {activeTab === 'chapters'   && <ChaptersPanel chapters={chapters} onShowChapter={showChapter} onRefresh={refresh} isMobile={isMobile} />}
+              {activeTab === 'risks'      && <RisksPanel risks={risks} setRisks={setRisks} onRefresh={refresh} isMobile={isMobile} />}
+              {activeTab === 'merch'      && <MerchPanel merch_items={merchItems} chapters={chapters} onRefresh={refresh} isMobile={isMobile} />}
+              {activeTab === 'links'      && <LinksPanel links={links} chapters={chapters} contacts={contacts} onShowChapter={showChapter} setLinks={setLinks} onRefresh={refresh} isMobile={isMobile} />}
+              {activeTab === 'contacts'   && <ContactsPanel contacts={contacts} onRefresh={refresh} isMobile={isMobile} />}
               {activeTab === 'content'    && <ContentPanel />}
               {activeTab === 'settings'   && <SettingsPanel />}
             </div>
@@ -1311,6 +1344,8 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
           <span style={{ color:'#f59e0b' }}>June 30, 2026</span> → Sui Foundation
         </footer>
       </div>
+
+      {isMobile && <MobileBottomNav activeTab={activeTab} onSwitch={switchTab} />}
 
       {calendarOpen && <CalendarModal chapters={chapters} onClose={() => setCalendarOpen(false)} isMobile={isMobile} />}
 

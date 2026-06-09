@@ -57,18 +57,30 @@ export async function GET() {
 
   const overview = await buildDsuOverview()
 
-  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: overview.text,
-      parse_mode: 'HTML',
-      reply_markup: overview.keyboard,
-    }),
-  })
+  async function tgSend(text: string, replyMarkup?: object) {
+    const r = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML', ...(replyMarkup ? { reply_markup: replyMarkup } : {}) }),
+    })
+    return r.json() as Promise<{ ok: boolean; description?: string }>
+  }
 
-  const result = await res.json()
+  const TELEGRAM_MAX = 4096
+  let result: { ok: boolean; description?: string }
+
+  if (overview.text.length <= TELEGRAM_MAX) {
+    result = await tgSend(overview.text, overview.keyboard)
+  } else {
+    const marker = '\n\n<b>✅ Urgent Tasks</b>'
+    const markerIdx = overview.text.indexOf(marker)
+    const splitAt = (markerIdx > 0 && markerIdx < TELEGRAM_MAX)
+      ? markerIdx
+      : overview.text.slice(0, TELEGRAM_MAX).lastIndexOf('\n\n')
+    const cut = splitAt > 1000 ? splitAt : TELEGRAM_MAX
+    await tgSend(overview.text.slice(0, cut))
+    result = await tgSend(overview.text.slice(cut).replace(/^\n+/, ''), overview.keyboard)
+  }
 
   if (!result.ok) {
     return NextResponse.json(
