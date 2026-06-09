@@ -40,7 +40,7 @@ function ContactRow({ c, accent, onEdit, onDelete }: { c: Contact; accent: strin
   )
 }
 
-export default function ContactsPanel({ contacts, onRefresh }: { contacts: Contact[]; onRefresh: () => Promise<void> }) {
+export default function ContactsPanel({ contacts, onRefresh }: { contacts: Contact[]; onRefresh: () => Promise<void>; isMobile?: boolean }) {
   const [slideOpen, setSlideOpen] = useState(false)
   const [editContact, setEditContact] = useState<Contact | null>(null)
   const [form, setForm] = useState(BLANK_FORM)

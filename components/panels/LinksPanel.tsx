@@ -173,6 +173,7 @@ export default function LinksPanel({
   onShowChapter: (id: string) => void
   setLinks: React.Dispatch<React.SetStateAction<ResourceLink[]>>
   onRefresh: () => Promise<void>
+  isMobile?: boolean
 }) {
   const keyContacts = contacts.filter(c => c.team === 'sui_foundation')
 

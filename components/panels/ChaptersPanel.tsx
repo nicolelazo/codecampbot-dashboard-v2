@@ -39,7 +39,7 @@ const STAT_COLORS = [
   { color: '#a78bfa', bg: 'rgba(167,139,250,0.06)', border: 'rgba(167,139,250,0.2)' },
 ]
 
-export default function ChaptersPanel({ chapters, onShowChapter, onRefresh }: { chapters: Chapter[]; onShowChapter: (id: string) => void; onRefresh: () => Promise<void> }) {
+export default function ChaptersPanel({ chapters, onShowChapter, onRefresh, isMobile }: { chapters: Chapter[]; onShowChapter: (id: string) => void; onRefresh: () => Promise<void>; isMobile?: boolean }) {
   const [editChapter, setEditChapter] = useState<Chapter | null>(null)
   const [form, setForm] = useState({ status: '', pax_actual: '', progress_percent: '' })
   const [saving, setSaving] = useState(false)

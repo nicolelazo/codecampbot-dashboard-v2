@@ -24,6 +24,7 @@ interface Props {
   risks: Risk[]
   setRisks: React.Dispatch<React.SetStateAction<Risk[]>>
   onRefresh: () => Promise<void>
+  isMobile?: boolean
 }
 
 export default function RisksPanel({ risks, setRisks, onRefresh }: Props) {

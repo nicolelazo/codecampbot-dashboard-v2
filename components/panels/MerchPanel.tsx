@@ -70,7 +70,7 @@ function ItemRows({ items, icon, onEdit, onDelete }: { items: MerchItem[]; icon:
 const BLANK = { name: '', quantity: '1', distribution: '', status: 'pending', category: 'jcr' }
 const CHAPTER_MERCH_STATUSES = ['not sent', 'pending', 'in transit', 'received'] as const
 
-export default function MerchPanel({ merch_items, chapters, onRefresh }: { merch_items: MerchItem[]; chapters: Chapter[]; onRefresh: () => Promise<void> }) {
+export default function MerchPanel({ merch_items, chapters, onRefresh }: { merch_items: MerchItem[]; chapters: Chapter[]; onRefresh: () => Promise<void>; isMobile?: boolean }) {
   const [slideOpen, setSlideOpen] = useState(false)
   const [editItem, setEditItem] = useState<MerchItem | null>(null)
   const [form, setForm] = useState(BLANK)
