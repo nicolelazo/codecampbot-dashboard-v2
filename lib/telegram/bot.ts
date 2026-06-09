@@ -435,7 +435,8 @@ export async function buildDsuOverview() {
   ])
 
   const chapterRows = sortChaptersForDsu(chapters ?? [])
-  const openTasks = tasks ?? []
+  // Exclude tasks from chapters removed from DSU (tacloban = applicant/removed)
+  const openTasks = (tasks ?? []).filter(t => t.chapter_id.toLowerCase() !== 'tacloban')
   const allRisks = risksData ?? []
   const urgentTasks = openTasks.filter(t => t.status === 'urgent')
   const kpiMapRaw = Object.fromEntries((kpis ?? []).map(k => [k.key, k.value]))
@@ -636,13 +637,15 @@ export async function buildDsuOverview() {
 
           // TBC chapters (date still pending): only show top task, no checklist noise
           const isTbc = ch.status === 'tbc'
+          // Declined/rescheduling chapters: suppress overdue warnings (event isn't happening)
+          const isIssue = ['declined', 'rescheduling'].includes(ch.status)
           const bullets = isTbc
             ? (topTask
                 ? `• ${topTask.owner}: ${topTask.description}`
                 : '• No open tasks')
             : [
                 topTask
-                  ? `• ${topTask.owner}: ${topTask.description}${topTaskSuffix}`
+                  ? `• ${topTask.owner}: ${topTask.description}${isIssue ? '' : topTaskSuffix}`
                   : '• No open tasks',
                 `• Checklist: ${checklistSummary}`,
                 `• ${statusSummary}`,
@@ -663,7 +666,7 @@ export async function buildDsuOverview() {
           const chapter = chapterRows.find(ch => ch.id.toLowerCase() === t.chapter_id.toLowerCase())
           const chapterCode = chapter ? chapterShortcut(chapter.id, chapter.name) : t.chapter_id.toUpperCase()
           const icon = t.status === 'urgent' ? '🔴' : '🔵'
-          const desc = t.description.length > 70 ? t.description.slice(0, 67) + '…' : t.description
+          const desc = t.description.length > 100 ? t.description.slice(0, 97) + '…' : t.description
           return `${icon} <b>${chapterCode}</b> · ${t.owner}: ${desc}`
         })
         .join('\n')

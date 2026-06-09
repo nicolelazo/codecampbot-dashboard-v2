@@ -18,7 +18,7 @@ INSERT INTO chapter_tasks (short_id, chapter_id, owner, description, status)
 VALUES (
   'PMP-decline',
   'pampanga',
-  'Nicole',
+  'Joash',
   'PMP declined: school undergoing leadership transition (new president), compressed 4-week summer schedule — find new host school for next run',
   'pending'
 )
