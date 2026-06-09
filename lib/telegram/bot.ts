@@ -637,14 +637,14 @@ export async function buildDsuOverview() {
           // TBC chapters (date still pending): only show top task, no checklist noise
           const isTbc = ch.status === 'tbc'
           const bullets = isTbc
-            ? [topTask
+            ? (topTask
                 ? `• ${topTask.owner}: ${topTask.description}`
-                : '• No open tasks']
-              .join('\n')
+                : '• No open tasks')
             : [
                 topTask
                   ? `• ${topTask.owner}: ${topTask.description}${topTaskSuffix}`
                   : '• No open tasks',
+                `• Checklist: ${checklistSummary}`,
                 `• ${statusSummary}`,
               ].join('\n')
 

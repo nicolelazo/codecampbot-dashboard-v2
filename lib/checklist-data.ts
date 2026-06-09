@@ -93,7 +93,7 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
     // After Event
     { tCode: 'T+2',    task: 'Post-Event Promotional Materials — create and publish posts; upload photos/videos and participant highlights; coordinate with partner schools', date: 'May 8, 2026',  status: 'done' },
     { tCode: 'T+5',    task: 'Post-Code Camp Report (EOD) — include participant profile, attendees count, projects submitted, highlights, photos/videos, social media posts', date: 'May 11, 2026', status: 'done' },
-    { tCode: 'T+7',    task: 'Liquidation — collect and organize all receipts; submit complete liquidation report; ensure all supporting documents are complete', date: 'May 13, 2026', status: 'upcoming' },
+    { tCode: 'T+7',    task: 'Liquidation — collect and organize all receipts; submit complete liquidation report; ensure all supporting documents are complete', date: 'May 13, 2026', status: 'done' },
   ],
   pampanga: [
     // 4 Weeks Before

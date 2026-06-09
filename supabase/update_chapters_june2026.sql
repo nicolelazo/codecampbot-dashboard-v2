@@ -102,13 +102,35 @@ ON CONFLICT (short_id) DO UPDATE SET
 DELETE FROM chapter_tasks
 WHERE chapter_id = 'cdo' AND short_id IS NULL;
 
--- 4. Laguna — post-report submitted, progress updated to 90%
+-- 4. Laguna — post-report (EOD) submitted → 90%; liquidation still pending
 UPDATE chapters SET
   progress_percent = 90,
   updated_at       = now()
 WHERE id = 'laguna';
 
--- 5. Update the KPI label to reflect the changes
+-- Mark Laguna EOD/post-report task as done (liquidation still open)
+UPDATE chapter_tasks SET
+  status     = 'done',
+  updated_at = now()
+WHERE chapter_id = 'laguna'
+  AND status != 'done'
+  AND (description ILIKE '%EOD%' OR description ILIKE '%post-report%' OR description ILIKE '%post report%');
+
+-- 5. Bukidnon — liquidation done, all complete → 100%
+UPDATE chapters SET
+  progress_percent = 100,
+  status           = 'completed',
+  updated_at       = now()
+WHERE id = 'bukidnon';
+
+-- Mark all remaining open Bukidnon tasks as done
+UPDATE chapter_tasks SET
+  status     = 'done',
+  updated_at = now()
+WHERE chapter_id = 'bukidnon'
+  AND status != 'done';
+
+-- 6. Update the KPI label to reflect the changes
 UPDATE kpis SET
   label      = 'Committed Code Camps',
   sublabel   = 'PMP declined · CDO probable 5th slot (Jul 4, tentative) · TCL applicant',
