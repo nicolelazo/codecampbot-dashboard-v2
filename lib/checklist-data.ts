@@ -140,26 +140,23 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
     { tCode: 'T+7',    task: 'Liquidation — collect and organize all receipts; submit complete liquidation report; ensure all supporting documents are complete', date: 'Jun 5, 2026',  status: 'upcoming' },
   ],
   cdo: [
-    // 4 Weeks Before (relative to tentative Jul 4, 2026)
-    { tCode: 'W-4',    task: 'Invitation Letter from HQ — request/send official invitation for Chapter and Code Camp Lead; secure partner school confirmations', date: 'Jun 6, 2026',  status: 'pending' },
-    { tCode: 'W-4',    task: 'Finalize Event Schedule — include date, time, venue/location, partner schools/organizations',                                       date: 'Jun 6, 2026',  status: 'pending' },
-    { tCode: 'W-3',    task: 'DeepSurge Link Creation — create and finalize registration/event links before promotions begin; test registration flow',           date: 'Jun 13, 2026', status: 'pending' },
-    { tCode: 'W-4',    task: 'Promotional Materials — create publication materials/posters using Canva; follow branding guidelines; prepare captions/schedule',  date: 'Jun 6, 2026',  status: 'pending' },
-    { tCode: 'W-4',    task: 'Volunteer Requirements — recruit at least 2 volunteers for photos/videos; invite school publication; assign documentation roles',   date: 'Jun 6, 2026',  status: 'pending' },
-    { tCode: 'W-2',    task: 'Whitelist Required Websites — sui.io, suiscan.xyz, github.com, vercel.app, youtube.com, docs.google.com',                         date: 'Jun 20, 2026', status: 'pending' },
-    // 2 Weeks Before
-    { tCode: 'W-2',    task: 'Seed Fund Request — submit request 1–2 weeks before the Code Camp; follow up approval/status if needed',                           date: 'Jun 20, 2026', status: 'pending' },
-    { tCode: 'W-2',    task: 'Slides Preparation — prepare and finalize all presentation slides; ensure all links and embedded materials are working; test demos', date: 'Jun 20, 2026', status: 'pending' },
-    { tCode: 'W-2',    task: 'Mentor Requirements — minimum 10 mentors; attend required mentor training; submit Sui smart contract as proof of learning',        date: 'Jun 20, 2026', status: 'pending' },
-    { tCode: 'W-2',    task: 'First Dry Run — check overall flow and technical issues; test internet stability, audio/visual setup, and facilitator coordination', date: 'Jun 20, 2026', status: 'pending' },
-    { tCode: 'W-1',    task: 'Second Dry Run — final timing check; speaker transitions; participant support flow; final technical validation',                    date: 'Jun 27, 2026', status: 'pending' },
-    { tCode: 'W-1',    task: 'Final Promotions Push — release final promotional materials; remind participants to register; coordinate confirmations',             date: 'Jun 27, 2026', status: 'pending' },
-    // Event Day
-    { tCode: 'T-0 ☻', task: 'EVENT DAY — CDO Code Camp · DICT Region X Training Center (tentative) · BYOD setup · 30–40 pax',                                  date: 'Jul 4, 2026',  status: 'upcoming', isEvent: true },
-    // After Event
-    { tCode: 'T+2',    task: 'Post-Event Promotional Materials — create and publish posts; upload photos/videos and participant highlights; coordinate with partner schools', date: 'Jul 6, 2026',  status: 'pending' },
-    { tCode: 'T+5',    task: 'Post-Code Camp Report (EOD) — include participant profile, attendees count, projects submitted, highlights, photos/videos, social media posts', date: 'Jul 9, 2026',  status: 'pending' },
-    { tCode: 'T+7',    task: 'Liquidation — collect and organize all receipts; submit complete liquidation report; ensure all supporting documents are complete', date: 'Jul 11, 2026', status: 'pending' },
+    // All dates TBD — event details are tentative, pending Kenshin confirmation
+    { tCode: 'W-4',    task: 'Invitation Letter from HQ — request/send official invitation for Chapter and Code Camp Lead; secure partner school confirmations', date: 'TBD', status: 'pending' },
+    { tCode: 'W-4',    task: 'Finalize Event Schedule — include date, time, venue/location, partner schools/organizations',                                       date: 'TBD', status: 'pending' },
+    { tCode: 'W-3',    task: 'DeepSurge Link Creation — create and finalize registration/event links before promotions begin; test registration flow',           date: 'TBD', status: 'pending' },
+    { tCode: 'W-4',    task: 'Promotional Materials — create publication materials/posters using Canva; follow branding guidelines; prepare captions/schedule',  date: 'TBD', status: 'pending' },
+    { tCode: 'W-4',    task: 'Volunteer Requirements — recruit at least 2 volunteers for photos/videos; invite school publication; assign documentation roles',   date: 'TBD', status: 'pending' },
+    { tCode: 'W-2',    task: 'Whitelist Required Websites — sui.io, suiscan.xyz, github.com, vercel.app, youtube.com, docs.google.com',                         date: 'TBD', status: 'pending' },
+    { tCode: 'W-2',    task: 'Seed Fund Request — submit request 1–2 weeks before the Code Camp; follow up approval/status if needed',                           date: 'TBD', status: 'pending' },
+    { tCode: 'W-2',    task: 'Slides Preparation — prepare and finalize all presentation slides; ensure all links and embedded materials are working; test demos', date: 'TBD', status: 'pending' },
+    { tCode: 'W-2',    task: 'Mentor Requirements — minimum 10 mentors; attend required mentor training; submit Sui smart contract as proof of learning',        date: 'TBD', status: 'pending' },
+    { tCode: 'W-2',    task: 'First Dry Run — check overall flow and technical issues; test internet stability, audio/visual setup, and facilitator coordination', date: 'TBD', status: 'pending' },
+    { tCode: 'W-1',    task: 'Second Dry Run — final timing check; speaker transitions; participant support flow; final technical validation',                    date: 'TBD', status: 'pending' },
+    { tCode: 'W-1',    task: 'Final Promotions Push — release final promotional materials; remind participants to register; coordinate confirmations',             date: 'TBD', status: 'pending' },
+    { tCode: 'T-0 ☻', task: 'EVENT DAY — CDO Code Camp · DICT Region X Training Center (tentative) · BYOD setup · 30–40 pax',                                  date: 'TBD', status: 'upcoming', isEvent: true },
+    { tCode: 'T+2',    task: 'Post-Event Promotional Materials — create and publish posts; upload photos/videos and participant highlights; coordinate with partner schools', date: 'TBD', status: 'pending' },
+    { tCode: 'T+5',    task: 'Post-Code Camp Report (EOD) — include participant profile, attendees count, projects submitted, highlights, photos/videos, social media posts', date: 'TBD', status: 'pending' },
+    { tCode: 'T+7',    task: 'Liquidation — collect and organize all receipts; submit complete liquidation report; ensure all supporting documents are complete', date: 'TBD', status: 'pending' },
   ],
 }
 

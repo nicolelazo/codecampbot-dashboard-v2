@@ -368,10 +368,12 @@ async function sendOrEdit(
 }
 
 function sortChaptersForDsu<T extends { status: string; date_iso: string | null }>(rows: T[]): T[] {
-  const INACTIVE_STATUSES = ['completed', 'tbc', 'rescheduling', 'declined', 'applicant']
-  const active = rows.filter(c => !INACTIVE_STATUSES.includes(c.status))
-  const tbc = rows.filter(c => ['tbc', 'rescheduling', 'declined', 'applicant'].includes(c.status))
-  const done = rows.filter(c => c.status === 'completed')
+  const filtered = rows.filter(c => c.status !== 'applicant')
+  const ISSUE_STATUSES = ['tbc', 'rescheduling', 'declined']
+  const active = filtered.filter(c => c.status !== 'completed' && !ISSUE_STATUSES.includes(c.status))
+  const tbc    = filtered.filter(c => c.status === 'tbc')
+  const issues = filtered.filter(c => ['rescheduling', 'declined'].includes(c.status))
+  const done   = filtered.filter(c => c.status === 'completed')
   active.sort((a, b) => {
     if (a.date_iso && b.date_iso) return a.date_iso.localeCompare(b.date_iso)
     if (a.date_iso) return -1
@@ -384,7 +386,7 @@ function sortChaptersForDsu<T extends { status: string; date_iso: string | null 
     if (b.date_iso) return 1
     return 0
   })
-  return [...active, ...tbc, ...done]
+  return [...active, ...tbc, ...issues, ...done]
 }
 
 function buildDsuChaptersKeyboard(chapters: { id: string; name: string }[]): InlineKeyboardMarkup {

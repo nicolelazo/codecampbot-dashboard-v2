@@ -50,7 +50,7 @@ ON CONFLICT (short_id) DO UPDATE SET
   status      = EXCLUDED.status,
   updated_at  = now();
 
--- 3. CDO — probable 5th slot (all details tentative, pending confirmation)
+-- 3. CDO — probable 5th slot (all details tentative, date_iso NULL so no checklist deadlines fire)
 INSERT INTO chapters (
   id, number, name, city, region, venue, lead_name,
   date_text, date_iso, status, color,
@@ -65,7 +65,7 @@ VALUES (
   'DICT Region X Training Center (tentative)',
   'Kenshin',
   'Jul 4, 2026 (tentative)',
-  '2026-07-04',
+  NULL,
   'tbc',
   'blue',
   0,
@@ -84,14 +84,23 @@ ON CONFLICT (id) DO UPDATE SET
   status       = EXCLUDED.status,
   updated_at   = now();
 
--- CDO follow-up task with all known tentative details
-INSERT INTO chapter_tasks (chapter_id, owner, description, status)
+-- Single CDO follow-up task for Nicole (upsert to avoid duplicates)
+INSERT INTO chapter_tasks (short_id, chapter_id, owner, description, status)
 VALUES (
+  'CDO-t1',
   'cdo',
   'Nicole',
-  'Confirm CDO details with Kenshin — all tentative: venue DICT Region X Training Center, date Jul 4 2026, BYOD setup, 30–40 pax (single classroom). Follow up for final confirmation.',
+  'Follow up with Kenshin — CDO details all tentative: venue DICT Region X Training Center, date Jul 4 2026, BYOD setup, 30–40 pax (single classroom). Confirm for official 5th slot.',
   'urgent'
-);
+)
+ON CONFLICT (short_id) DO UPDATE SET
+  description = EXCLUDED.description,
+  status      = EXCLUDED.status,
+  updated_at  = now();
+
+-- Remove any duplicate CDO tasks created without a short_id
+DELETE FROM chapter_tasks
+WHERE chapter_id = 'cdo' AND short_id IS NULL;
 
 -- 4. Laguna — post-report submitted, progress updated to 90%
 UPDATE chapters SET
