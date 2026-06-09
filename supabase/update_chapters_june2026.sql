@@ -27,7 +27,7 @@ ON CONFLICT (short_id) DO UPDATE SET
   status      = EXCLUDED.status,
   updated_at  = now();
 
--- 2. Tacloban — removed from official 5, reclassified as applicant chapter
+-- 2. Tacloban — removed from official 5 code camp slots, reclassified as applicant chapter
 UPDATE chapters SET
   status         = 'applicant',
   date_text      = 'Applicant Chapter — Date TBD',
@@ -36,48 +36,72 @@ UPDATE chapters SET
   updated_at     = now()
 WHERE id = 'tacloban';
 
--- 3. CDO Jumpstart Internship Code Camp — probable 5th slot, pending Kenshin info
+-- Note the reason for TCL removal
+INSERT INTO chapter_tasks (short_id, chapter_id, owner, description, status)
+VALUES (
+  'TCL-removed',
+  'tacloban',
+  'HQ',
+  'TCL removed from official 5 code camp slots: President on AWOL and no update after several follow-ups. TCL reclassified as applicant chapter.',
+  'pending'
+)
+ON CONFLICT (short_id) DO UPDATE SET
+  description = EXCLUDED.description,
+  status      = EXCLUDED.status,
+  updated_at  = now();
+
+-- 3. CDO — probable 5th slot (all details tentative, pending confirmation)
 INSERT INTO chapters (
   id, number, name, city, region, venue, lead_name,
   date_text, date_iso, status, color,
-  progress_percent, countdown_text, merch_status
+  progress_percent, pax_target, countdown_text, merch_status
 )
 VALUES (
   'cdo',
   '6',
-  'CDO Jumpstart',
+  'CDO',
   'Cagayan de Oro',
   'Northern Mindanao',
-  'TBD',
+  'DICT Region X Training Center (tentative)',
   'Kenshin',
-  'TBD',
-  NULL,
+  'Jul 4, 2026 (tentative)',
+  '2026-07-04',
   'tbc',
   'blue',
   0,
+  40,
   'TBD',
   'TBC'
 )
 ON CONFLICT (id) DO UPDATE SET
   name         = EXCLUDED.name,
   city         = EXCLUDED.city,
+  venue        = EXCLUDED.venue,
   lead_name    = EXCLUDED.lead_name,
+  date_text    = EXCLUDED.date_text,
+  date_iso     = EXCLUDED.date_iso,
+  pax_target   = EXCLUDED.pax_target,
   status       = EXCLUDED.status,
   updated_at   = now();
 
--- Add a follow-up task for CDO
+-- CDO follow-up task with all known tentative details
 INSERT INTO chapter_tasks (chapter_id, owner, description, status)
 VALUES (
   'cdo',
   'Nicole',
-  'Follow up with Kenshin — CDO Jumpstart Internship Code Camp details (venue, date, pax target). Probable 5th slot.',
+  'Confirm CDO details with Kenshin — all tentative: venue DICT Region X Training Center, date Jul 4 2026, BYOD setup, 30–40 pax (single classroom). Follow up for final confirmation.',
   'urgent'
 );
 
--- 4. Update the KPI label to reflect the change in committed code camps
--- (Optional — run if you want to update the label displayed in the bot/dashboard)
+-- 4. Laguna — post-report submitted, progress updated to 90%
+UPDATE chapters SET
+  progress_percent = 90,
+  updated_at       = now()
+WHERE id = 'laguna';
+
+-- 5. Update the KPI label to reflect the changes
 UPDATE kpis SET
-  label    = 'Committed Code Camps',
-  sublabel = 'PMP declined · CDO probable 5th slot · TCL applicant',
+  label      = 'Committed Code Camps',
+  sublabel   = 'PMP declined · CDO probable 5th slot (Jul 4, tentative) · TCL applicant',
   updated_at = now()
 WHERE key = 'code_camps';
