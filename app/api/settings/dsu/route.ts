@@ -40,19 +40,33 @@ export async function POST() {
   if (!chatId) return NextResponse.json({ ok: false, error: 'No chat ID configured' }, { status: 400 })
 
   const overview = await buildDsuOverview()
-  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: overview.text,
-      parse_mode: 'HTML',
-      reply_markup: overview.keyboard,
-    }),
-  })
-  const data = await res.json()
 
-  if (!data.ok) return NextResponse.json({ ok: false, error: data.description }, { status: 500 })
+  async function tgSend(text: string, replyMarkup?: object) {
+    const r = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML', ...(replyMarkup ? { reply_markup: replyMarkup } : {}) }),
+    })
+    return r.json() as Promise<{ ok: boolean; description?: string }>
+  }
+
+  const TELEGRAM_MAX = 4096
+  let result: { ok: boolean; description?: string }
+
+  if (overview.text.length <= TELEGRAM_MAX) {
+    result = await tgSend(overview.text, overview.keyboard)
+  } else {
+    const marker = '\n\n<b>✅ Urgent Tasks</b>'
+    const markerIdx = overview.text.indexOf(marker)
+    const splitAt = (markerIdx > 0 && markerIdx < TELEGRAM_MAX)
+      ? markerIdx
+      : overview.text.slice(0, TELEGRAM_MAX).lastIndexOf('\n\n')
+    const cut = splitAt > 1000 ? splitAt : TELEGRAM_MAX
+    await tgSend(overview.text.slice(0, cut))
+    result = await tgSend(overview.text.slice(cut).replace(/^\n+/, ''), overview.keyboard)
+  }
+
+  if (!result.ok) return NextResponse.json({ ok: false, error: result.description }, { status: 500 })
 
   return NextResponse.json({ ok: true })
 }

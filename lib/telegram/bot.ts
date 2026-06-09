@@ -387,8 +387,9 @@ async function sendOrEdit(
   await send(chatId, text, replyMarkup)
 }
 
-function sortChaptersForDsu<T extends { status: string; date_iso: string | null }>(rows: T[]): T[] {
-  const filtered = rows.filter(c => c.status !== 'applicant')
+function sortChaptersForDsu<T extends { id?: string; status: string; date_iso: string | null }>(rows: T[]): T[] {
+  // Exclude applicant chapters and Tacloban (removed from official slots)
+  const filtered = rows.filter(c => c.status !== 'applicant' && (c as { id?: string }).id?.toLowerCase() !== 'tacloban')
   const ISSUE_STATUSES = ['tbc', 'rescheduling', 'declined']
   const active = filtered.filter(c => c.status !== 'completed' && !ISSUE_STATUSES.includes(c.status))
   const tbc    = filtered.filter(c => c.status === 'tbc')
@@ -633,15 +634,19 @@ export async function buildDsuOverview() {
             })(),
           })
 
-          const bullets = [
-            `• Upcoming Checklist Tasks: ${upcomingChecklistSummary}`,
-            topTask
-              ? `• Top Task: ${topTask.owner}: ${topTask.description}${topTaskSuffix}`
-              : '• Top Task: none open',
-            ...extraItemLines,
-            `• Checklist Progress: ${checklistSummary}`,
-            `• Status: ${statusSummary}`,
-          ].join('\n')
+          // TBC chapters (date still pending): only show top task, no checklist noise
+          const isTbc = ch.status === 'tbc'
+          const bullets = isTbc
+            ? [topTask
+                ? `• ${topTask.owner}: ${topTask.description}`
+                : '• No open tasks']
+              .join('\n')
+            : [
+                topTask
+                  ? `• ${topTask.owner}: ${topTask.description}${topTaskSuffix}`
+                  : '• No open tasks',
+                `• ${statusSummary}`,
+              ].join('\n')
 
           const displayedProgress = ch.progress_percent === 100 && chapterTasks.length > 0 ? 90 : ch.progress_percent
           return `${statusIcon[displayStatusKey] ?? '•'} <b>${shortcut}</b> ${displayedProgress}% · ${status}${weeks}\n${bullets}`
@@ -652,66 +657,40 @@ export async function buildDsuOverview() {
   const urgentBlock = openTasks.length
     ? openTasks
         .slice()
-        .sort((a, b) => {
-          const aw = a.status === 'urgent' ? 0 : 1
-          const bw = b.status === 'urgent' ? 0 : 1
-          return aw - bw
-        })
-        .slice(0, 10)
+        .sort((a, b) => (a.status === 'urgent' ? 0 : 1) - (b.status === 'urgent' ? 0 : 1))
+        .slice(0, 5)
         .map(t => {
           const chapter = chapterRows.find(ch => ch.id.toLowerCase() === t.chapter_id.toLowerCase())
           const chapterCode = chapter ? chapterShortcut(chapter.id, chapter.name) : t.chapter_id.toUpperCase()
           const icon = t.status === 'urgent' ? '🔴' : '🔵'
-          return `${icon} <b>${chapterCode}</b> · <b>${t.owner}</b>: ${t.description}`
+          const desc = t.description.length > 70 ? t.description.slice(0, 67) + '…' : t.description
+          return `${icon} <b>${chapterCode}</b> · ${t.owner}: ${desc}`
         })
         .join('\n')
     : 'None'
 
-  const nextSteps = openTasks
-    .slice()
-    .sort((a, b) => {
-      const aw = a.status === 'urgent' ? 0 : 1
-      const bw = b.status === 'urgent' ? 0 : 1
-      return aw - bw
-    })
-    .slice(0, 3)
-    .map(t => {
-      const chapter = chapterRows.find(ch => ch.id.toLowerCase() === t.chapter_id.toLowerCase())
-      const chapterCode = chapter ? chapterShortcut(chapter.id, chapter.name) : t.chapter_id.toUpperCase()
-      return `${chapterCode} · ${t.owner}: ${t.description}`
-    })
-
-  const nextStepsBlock = nextSteps.length ? nextSteps.join('\n') : 'No open tasks.'
-
   const attendeesFromChapters = chapterRows.reduce((sum, ch) => sum + (Number.isFinite(ch.pax_actual) ? Number(ch.pax_actual) : 0), 0)
 
-  const text = `<b>Sui Build Beyond Weekly Report Recap</b>
+  const text = `<b>Sui Build Beyond Weekly Report</b>
 <i>${now}</i>
 ━━━━━━━━━━━━━━━━━━━━
 
-<b>📊 KPI Snapshot</b>
-• 5 Committed Code Camps: <b>${readKpi(['code_camps'])}</b>
-• Dev Events or Secondary Code Camp Slots : <b>${readKpi(['dev_events', 'dev_events_secondary_slots', 'dev_events_slots'])}</b>
-• Total Attendees: <b>${readKpi(['total_attendees', 'attendees_total'], attendeesFromChapters > 0 ? String(attendeesFromChapters) : '–')}</b>
-• Completion Form Submissions: <b>${readKpi(['form_submissions'])}</b>
-• Mentors Trained and Deployed: <b>${readKpi(['trained_mentors'])}</b>
-• Students Trained and Deployed: <b>${readKpi(['trained_students', 'students_trained', 'students_trained_deployed'])}</b>
-• Verified Vercel and Mainnet Deployments: <b>${readKpi(['verified_completions'])}</b>
+<b>📊 KPIs</b>
+• Code Camps: <b>${readKpi(['code_camps'])}</b>
+• Dev Events: <b>${readKpi(['dev_events', 'dev_events_secondary_slots', 'dev_events_slots'])}</b>
+• Attendees: <b>${readKpi(['total_attendees', 'attendees_total'], attendeesFromChapters > 0 ? String(attendeesFromChapters) : '–')}</b>
+• Submissions: <b>${readKpi(['form_submissions'])}</b>
+• Verified Deployments: <b>${readKpi(['verified_completions'])}</b>
 • Completion Rate: <b>${readKpi(['completion_rate'])}</b>
-• Labs Installed and Activated: <b>${readKpi(['computer_labs', 'labs_installed'])}</b>
+• Labs: <b>${readKpi(['computer_labs', 'labs_installed'])}</b>
 
 <b>🏕 Chapter Progress</b>
 ${chapterProgress}
 
-<b>✅ Urgent Tasks</b> (${urgentTasks.length} urgent · ${openTasks.length} total open)
+<b>✅ Action Items</b> (${urgentTasks.length} urgent · ${openTasks.length} open)
 ${urgentBlock}
 
-<b>KEY NEXT STEPS FOR HQ & COHORT 4:</b>
-${nextStepsBlock}
-
-<i>Tap a chapter shortcut below for detailed chapter status.</i>
-<b>🌐 Full Dashboard:</b>
-<a href="https://codecampbot-dashboard-v2.vercel.app/dashboard">Dashboard</a>`
+<i>Tap chapter shortcut for details · <a href="https://codecampbot-dashboard-v2.vercel.app/dashboard">Dashboard</a></i>`
 
   const keyboard = buildDsuChaptersKeyboard(chapterRows)
   return { text, keyboard }
