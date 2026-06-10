@@ -669,7 +669,7 @@ function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chap
           const pct        = c.progress_percent ?? 0
           const rawCityKey = c.city.toLowerCase()
           // Normalise legacy 'angeles' DB value → 'pampanga' key
-          const cityKey    = rawCityKey === 'angeles' ? 'pampanga' : rawCityKey
+          const cityKey    = rawCityKey === 'angeles' ? 'pampanga' : rawCityKey === 'cagayan de oro' ? 'cdo' : rawCityKey
           const isTacloban = cityKey.includes('tacloban')
           const fwItems    = FW_CHECKLIST[cityKey] ?? []
           const fwDone     = fwItems.filter(i => i.done).length
