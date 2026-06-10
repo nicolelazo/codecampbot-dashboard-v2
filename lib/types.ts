@@ -5,6 +5,8 @@ export type ChapterStatus =
   | 'activating'
   | 'pencil_booked'
   | 'tbc'
+  | 'declined'
+  | 'applicant'
 
 export type TaskStatus = 'pending' | 'done' | 'urgent'
 export type RiskSeverity = 'high' | 'medium' | 'low'
