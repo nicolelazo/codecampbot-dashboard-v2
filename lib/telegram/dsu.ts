@@ -67,8 +67,9 @@ export async function buildDsuMessage(): Promise<string> {
   }
 
   function sortChapters<T extends { status: string; date_iso: string | null }>(rows: T[]): T[] {
-    const active = rows.filter(c => c.status !== 'completed' && c.status !== 'tbc' && c.status !== 'rescheduling')
+    const active = rows.filter(c => c.status !== 'completed' && c.status !== 'tbc' && c.status !== 'rescheduling' && c.status !== 'declined')
     const tbc = rows.filter(c => c.status === 'tbc' || c.status === 'rescheduling')
+    const declined = rows.filter(c => c.status === 'declined')
     const done = rows.filter(c => c.status === 'completed')
     active.sort((a, b) => {
       if (a.date_iso && b.date_iso) return a.date_iso.localeCompare(b.date_iso)
@@ -76,7 +77,13 @@ export async function buildDsuMessage(): Promise<string> {
       if (b.date_iso) return 1
       return 0
     })
-    return [...active, ...tbc, ...done]
+    done.sort((a, b) => {
+      if (a.date_iso && b.date_iso) return b.date_iso.localeCompare(a.date_iso)
+      if (a.date_iso) return -1
+      if (b.date_iso) return 1
+      return 0
+    })
+    return [...active, ...tbc, ...done, ...declined]
   }
 
   const now = new Date().toLocaleDateString('en-PH', {

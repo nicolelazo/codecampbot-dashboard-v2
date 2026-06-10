@@ -407,7 +407,7 @@ function sortChaptersForDsu<T extends { id?: string; status: string; date_iso: s
     if (b.date_iso) return 1
     return 0
   })
-  return [...active, ...tbc, ...issues, ...done]
+  return [...active, ...tbc, ...done, ...issues]
 }
 
 function buildDsuChaptersKeyboard(chapters: { id: string; name: string }[]): InlineKeyboardMarkup {
