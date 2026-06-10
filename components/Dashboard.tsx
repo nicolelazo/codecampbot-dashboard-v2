@@ -618,15 +618,36 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: false, label: 'Post-Report',       note: 'Blocked' },
     { done: false, label: 'Liquidation',       note: 'Blocked' },
   ],
+  // CDO — probable 5th slot · all details tentative · nothing started yet
+  cdo: [
+    { done: false, label: 'Invitation Letter', note: 'Pending — details tentative' },
+    { done: false, label: 'Event Schedule',    note: 'Jul 4 tentative · DICT Region X (tentative)' },
+    { done: false, label: 'DeepSurge Link',    note: 'Pending' },
+    { done: false, label: 'Promo Materials',   note: 'Pending' },
+    { done: false, label: 'Volunteers 2+',     note: 'Pending' },
+    { done: false, label: 'Whitelist',         note: 'Pending' },
+    { done: false, label: 'Seed Fund',         note: 'Pending' },
+    { done: false, label: 'Slides Prep',       note: 'Pending' },
+    { done: false, label: 'Mentors 10+',       note: 'Pending' },
+    { done: false, label: 'Dry Run 1',         note: 'Pending' },
+    { done: false, label: 'Dry Run 2',         note: 'Pending' },
+    { done: false, label: 'Final Promo Push',  note: 'Pending' },
+    { done: false, label: 'Post-Event Post',   note: 'Pending' },
+    { done: false, label: 'Post-Report',       note: 'Pending' },
+    { done: false, label: 'Liquidation',       note: 'Pending' },
+  ],
 }
 
-// Sort order: by event date ascending, Tacloban (no date / TBD) always last
+// Sort order: active/completed by date → declined → tbc/no-date → Tacloban (applicant) always last
 function sortChaptersForFw(chapters: Chapter[]): Chapter[] {
+  function tier(c: Chapter): number {
+    if (c.city.toLowerCase().includes('tacloban') || c.status === 'applicant') return 3
+    if (c.status === 'declined') return 2
+    return 1
+  }
   return [...chapters].sort((a, b) => {
-    const aTacloban = a.city.toLowerCase().includes('tacloban')
-    const bTacloban = b.city.toLowerCase().includes('tacloban')
-    if (aTacloban && !bTacloban) return 1
-    if (!aTacloban && bTacloban) return -1
+    const ta = tier(a), tb = tier(b)
+    if (ta !== tb) return ta - tb
     const aDate = a.date_iso ? new Date(a.date_iso).getTime() : Infinity
     const bDate = b.date_iso ? new Date(b.date_iso).getTime() : Infinity
     return aDate - bDate
