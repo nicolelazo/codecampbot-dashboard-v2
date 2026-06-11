@@ -250,7 +250,7 @@ function CalendarModal({ chapters, onClose, isMobile }: { chapters: Chapter[]; o
                     <div style={{ width:'48px', height:'48px', borderRadius:'10px', background:grad, flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'20px' }}>🎓</div>
                     <div>
                       <div style={{ fontSize:'10px', fontWeight:700, color:cat.color, textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'3px' }}>{cat.label}</div>
-                      <div style={{ fontSize:'13px', fontWeight:600, color:C.text }}>{c.status !== 'tbc' && c.status !== 'applicant' ? `Ch${c.number} — ` : ''}{c.name}</div>
+                      <div style={{ fontSize:'13px', fontWeight:600, color:C.text }}>{c.id !== 'cdo' ? `Ch${c.number} — ` : ''}{c.name}</div>
                       <div style={{ fontSize:'11px', color:C.muted, marginTop:'2px' }}>📍 {c.venue || c.city} · {c.date_text}</div>
                     </div>
                   </div>
@@ -705,7 +705,7 @@ function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chap
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
                     {isTacloban && <span style={{ fontSize: '13px', flexShrink: 0 }}>⚠️</span>}
                     <div style={{ minWidth: 0 }}>
-                      <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Ch{c.number} · {displayCity(c.city)}</div>
+                      <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.id !== 'cdo' ? `Ch${c.number} · ` : ''}{displayCity(c.city)}</div>
                       {isTacloban
                         ? <div style={{ fontSize: '9px', color: '#FBBF24', fontWeight: 700, marginTop: '1px' }}>🔴 CANCELLATION DISCUSSION · Candidate · No date · No reply</div>
                         : c.date_text ? <div style={{ fontSize: '9px', color: C.muted, marginTop: '1px' }}>{c.date_text}</div> : null}
