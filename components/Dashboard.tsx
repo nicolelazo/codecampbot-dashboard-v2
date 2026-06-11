@@ -365,12 +365,6 @@ function UpcomingMilestonesSection({ chapters }: { chapters: Chapter[] }) {
     { date: new Date('2026-05-27'), label: 'Laguna — Onsite install visit (Day 2)', chapter: 'Laguna', type: 'risk' as const },
     { date: new Date('2026-05-28'), label: 'Laguna — Onsite install visit (Day 3) + ICT dept comms', chapter: 'Laguna', type: 'risk' as const },
     { date: new Date('2026-05-29'), label: 'Laguna Code Camp — PUP Biñan CITE Campus', chapter: 'Laguna', type: 'event' as const },
-    // Pampanga
-    { date: new Date('2026-06-10'), label: 'Pampanga — Seed fund request deadline (2 wks before)', chapter: 'Pampanga', type: 'deadline' as const },
-    { date: new Date('2026-06-08'), label: 'Pampanga — First dry run (Jun 8)', chapter: 'Pampanga', type: 'prep' as const },
-    { date: new Date('2026-06-17'), label: 'Pampanga — Slides & second dry run should be underway', chapter: 'Pampanga', type: 'prep' as const },
-    { date: new Date('2026-06-22'), label: 'Pampanga — Final dry run (T-2)', chapter: 'Pampanga', type: 'prep' as const },
-    { date: new Date('2026-06-24'), label: 'Pampanga Code Camp — Jun 24', chapter: 'Pampanga', type: 'event' as const },
     // Program
     { date: new Date('2026-06-30'), label: 'Q2 Report due → Sui Foundation', chapter: 'Program', type: 'deadline' as const },
   ]
@@ -802,8 +796,7 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
   const KEY_RISKS = [
     { text: 'Tacloban — under cancellation discussion · candidate chapter · no date · no reply', urgent: true,  high: true  },
     { text: 'Laguna — post-report due Jun 3 · liquidation due Jun 5 · ensure completion', urgent: false, high: true  },
-    { text: 'Pampanga — mentors not yet 10 · seed fund pending · dry runs needed before Jun 24', urgent: false, high: true  },
-    { text: 'CDO (Cagayan de Oro) — Jumpstart request by Kenshin · not active · no venue · training TBC', urgent: false, high: true  },
+    { text: 'CDO — all details tentative · venue & date (Jul 4) unconfirmed · no official 5th slot yet · BYOD setup TBD · pending Nicole follow-up with Kenshin', urgent: false, high: true  },
     ...highRisks.filter(r => !(r.chapter_tag ?? '').toLowerCase().includes('tacloban')).slice(0, 2)
       .map(r => ({ text: `${r.chapter_tag ? r.chapter_tag + ' — ' : ''}${r.title}`, urgent: false, high: true })),
     ...openRisks.filter(r => r.severity === 'medium').slice(0, 2)
@@ -849,7 +842,7 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
         <div style={{ fontSize: '10px', color: C.dim, textAlign: 'center' }}>avg chapter progress</div>
         <div style={{ fontSize: '11px', fontWeight: 700, color: C.teal, textAlign: 'center' }}>{completionRateVal} completion</div>
         <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' }}>
-          {chapters.map(c => (
+          {[...chapters].sort((a, b) => b.progress_percent - a.progress_percent).map(c => (
             <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <span style={{ fontSize: '8px', color: C.muted, width: '46px', flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{displayCity(c.city)}</span>
               <div style={{ flex: 1, height: '3px', background: 'rgba(255,255,255,0.06)', borderRadius: '999px', overflow: 'hidden' }}>

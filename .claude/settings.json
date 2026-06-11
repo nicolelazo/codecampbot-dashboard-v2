@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\LENOVO\\\\Downloads\\\\codecampbot-main\\\\codecampbot-main\" -Force)",
+      "Bash(Select-Object Name, FullName)"
+    ]
+  }
+}
