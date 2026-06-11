@@ -250,7 +250,7 @@ function CalendarModal({ chapters, onClose, isMobile }: { chapters: Chapter[]; o
                     <div style={{ width:'48px', height:'48px', borderRadius:'10px', background:grad, flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'20px' }}>🎓</div>
                     <div>
                       <div style={{ fontSize:'10px', fontWeight:700, color:cat.color, textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'3px' }}>{cat.label}</div>
-                      <div style={{ fontSize:'13px', fontWeight:600, color:C.text }}>Ch{c.number} — {c.name}</div>
+                      <div style={{ fontSize:'13px', fontWeight:600, color:C.text }}>{c.status !== 'tbc' && c.status !== 'applicant' ? `Ch${c.number} — ` : ''}{c.name}</div>
                       <div style={{ fontSize:'11px', color:C.muted, marginTop:'2px' }}>📍 {c.venue || c.city} · {c.date_text}</div>
                     </div>
                   </div>
@@ -293,7 +293,7 @@ function EventCard({ chapter, onSelect }: { chapter: Chapter; onSelect: (id: str
       <div style={{ height:'180px', position:'relative', overflow:'hidden', background:grad, flexShrink:0 }}>
         <div style={{ position:'absolute', inset:0, background:'rgba(2,6,23,0.5)' }} />
         <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', transform:hovered ? 'scale(1.05)' : 'scale(1)', transition:'transform .5s ease-out' }}>
-          <span style={{ fontSize:'68px', fontWeight:800, color:'rgba(255,255,255,0.12)', letterSpacing:'-0.05em' }}>CH{chapter.number}</span>
+          <span style={{ fontSize:'68px', fontWeight:800, color:'rgba(255,255,255,0.12)', letterSpacing:'-0.05em' }}>{chapter.id !== 'cdo' ? `CH${chapter.number}` : chapter.name.toUpperCase()}</span>
         </div>
         {/* Category badge */}
         <div style={{ position:'absolute', top:'12px', left:'12px', background:cat.bg, color:cat.color, padding:'3px 10px', borderRadius:'999px', fontSize:'10px', fontWeight:700, textTransform:'uppercase', letterSpacing:'0.08em', backdropFilter:'blur(8px)' }}>
@@ -309,7 +309,7 @@ function EventCard({ chapter, onSelect }: { chapter: Chapter; onSelect: (id: str
       {/* Body */}
       <div style={{ padding:'24px', display:'flex', flexDirection:'column', flex:1 }}>
         <h3 style={{ fontSize:'19px', fontWeight:700, color:hovered ? C.cyan : C.text, marginBottom:'12px', transition:'color .3s ease-out', lineHeight:1.3 }}>
-          Ch{chapter.number} — {chapter.name}
+          {chapter.id !== 'cdo' ? `Ch${chapter.number} — ` : ''}{chapter.name}
         </h3>
 
         <div style={{ display:'flex', flexDirection:'column', gap:'6px', marginBottom:'20px' }}>
@@ -681,7 +681,7 @@ function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chap
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, flex: 1 }}>
                       {isTacloban && <span style={{ fontSize: '12px', flexShrink: 0 }}>⚠️</span>}
                       <div style={{ minWidth: 0 }}>
-                        <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Ch{c.number} · {displayCity(c.city)}</div>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.id !== 'cdo' ? `Ch${c.number} · ` : ''}{displayCity(c.city)}</div>
                         {isTacloban
                           ? <div style={{ fontSize: '9px', color: '#FBBF24', fontWeight: 700, marginTop: '1px' }}>🔴 Cancellation · No date · No reply</div>
                           : c.date_text ? <div style={{ fontSize: '9px', color: C.muted, marginTop: '1px' }}>{c.date_text}</div> : null}
@@ -1060,7 +1060,7 @@ function Sidebar({ activeTab, activeChapterId, chapters, onSwitch, onShowChapter
                   style={{ display:'flex', alignItems:'center', gap:'8px', width:'100%', padding:'8px 10px', borderRadius:'10px', background:isActive ? 'rgba(6,182,212,0.1)' : 'transparent', border:'none', cursor:'pointer', color:isActive ? C.cyan : C.dim, fontSize:'12px', fontWeight:isActive ? 600 : 400, transition:'all .2s', textAlign:'left', marginBottom:'2px' }}
                 >
                   <div style={{ width:'6px', height:'6px', borderRadius:'50%', background:cat.color, flexShrink:0 }} />
-                  Ch{c.number} {displayCity(c.city)}
+                  {c.id !== 'cdo' ? `Ch${c.number} ` : ''}{displayCity(c.city)}
                 </button>
               )
             })}
