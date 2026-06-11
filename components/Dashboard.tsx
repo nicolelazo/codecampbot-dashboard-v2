@@ -794,24 +794,22 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
   ]
 
   const KEY_RISKS = [
-    { text: 'Tacloban — under cancellation discussion · candidate chapter · no date · no reply', urgent: true,  high: true  },
-    { text: 'Laguna — post-report due Jun 3 · liquidation due Jun 5 · ensure completion', urgent: false, high: true  },
     { text: 'CDO — all details tentative · venue & date (Jul 4) unconfirmed · no official 5th slot yet · BYOD setup TBD · pending Nicole follow-up with Kenshin', urgent: false, high: true  },
-    ...highRisks.filter(r => !(r.chapter_tag ?? '').toLowerCase().includes('tacloban')).slice(0, 2)
+    { text: 'Laguna — EOD/post-report done ✓ · liquidation still pending', urgent: false, high: true  },
+    ...highRisks.filter(r => !(r.chapter_tag ?? '').toLowerCase().includes('tacloban') && !(r.chapter_tag ?? '').toLowerCase().includes('cdo') && !(r.chapter_tag ?? '').toLowerCase().includes('laguna')).slice(0, 2)
       .map(r => ({ text: `${r.chapter_tag ? r.chapter_tag + ' — ' : ''}${r.title}`, urgent: false, high: true })),
     ...openRisks.filter(r => r.severity === 'medium').slice(0, 2)
       .map(r => ({ text: `${r.chapter_tag ? r.chapter_tag + ' — ' : ''}${r.title}`, urgent: false, high: false })),
     { text: 'Iloilo — 19 submissions flagged (17 private Vercel links, follow-up needed)', urgent: false, high: false },
+    { text: 'Tacloban — under cancellation discussion · candidate chapter · no date · no reply', urgent: true,  high: true  },
   ]
 
   const KEY_NEXT_STEPS = [
+    { urgent: true,  text: 'CDO — follow up with Kenshin · confirm venue (DICT Region X), date (Jul 4), BYOD setup, pax count · lock in as official 5th slot' },
+    { urgent: false, text: 'Laguna — liquidation still pending · ensure completion' },
     { urgent: true,  text: 'Tacloban — cancellation discussion · decide to activate or formally remove' },
-    { urgent: true,  text: 'Laguna — post-camp report due Jun 3 · liquidation due Jun 5' },
     { urgent: false, text: 'Iloilo — submit liquidation report (pending)' },
     { urgent: false, text: 'Iloilo — resolve 19 flagged submissions (17 private Vercel links)' },
-    { urgent: false, text: 'Pampanga (Jun 24) — venue ✓ · mentors in training · next: seed fund, DeepSurge link, dry runs Jun 8 & 17' },
-    { urgent: false, text: 'Pampanga — seed fund request deadline Jun 10 (2 wks before camp)' },
-    { urgent: false, text: 'CDO — assess Kenshin / Jumpstart request · confirm venue & training before activating' },
     { urgent: false, text: 'All chapters — whitelist: sui.io, suiscan.xyz, github.com, vercel.app, youtube.com' },
     { urgent: false, text: 'Q2 report — finalize all data for Sui Foundation (due Jun 30)' },
   ]
@@ -842,7 +840,13 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
         <div style={{ fontSize: '10px', color: C.dim, textAlign: 'center' }}>avg chapter progress</div>
         <div style={{ fontSize: '11px', fontWeight: 700, color: C.teal, textAlign: 'center' }}>{completionRateVal} completion</div>
         <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' }}>
-          {[...chapters].sort((a, b) => b.progress_percent - a.progress_percent).map(c => (
+          {[...chapters].sort((a, b) => {
+            if (b.progress_percent !== a.progress_percent) return b.progress_percent - a.progress_percent
+            const isCdo = (c: Chapter) => c.city.toLowerCase().includes('cagayan') || c.id === 'cdo'
+            if (isCdo(a) && !isCdo(b)) return -1
+            if (isCdo(b) && !isCdo(a)) return 1
+            return 0
+          }).map(c => (
             <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <span style={{ fontSize: '8px', color: C.muted, width: '46px', flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{displayCity(c.city)}</span>
               <div style={{ flex: 1, height: '3px', background: 'rgba(255,255,255,0.06)', borderRadius: '999px', overflow: 'hidden' }}>
