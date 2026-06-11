@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\LENOVO\\\\Downloads\\\\codecampbot-main\\\\codecampbot-main\" -Force)",
-      "Bash(Select-Object Name, FullName)"
+      "Bash(Select-Object Name, FullName)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\LENOVO\\\\Downloads\\\\codecampbot-main\\\\codecampbot-main\" -Recurse -Depth 2)",
+      "Bash(Format-Table -AutoSize)"
     ]
   }
 }
