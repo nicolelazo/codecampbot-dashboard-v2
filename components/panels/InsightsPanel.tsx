@@ -68,7 +68,7 @@ const CHAPTERS: ChapterInsight[] = [
     ],
     opportunities: [
       'The TinyURL shared-doc approach (improvised during the event) should be standardised across all future camps as a core workflow',
-      'Iloilo's CS cohort throughput (2 hrs) suggests the curriculum can be compressed for advanced cohorts — create a fast-track track',
+      "Iloilo's CS cohort throughput (2 hrs) suggests the curriculum can be compressed for advanced cohorts — create a fast-track track",
       'Strong local mentor ecosystem — consider recruiting Iloilo-based mentors as regional leads',
     ],
     color: C.cyan,
@@ -179,7 +179,7 @@ const CROSS_CUTTING_IMPROVEMENTS = [
     icon: '🔗',
     color: '#8b5cf6',
     insight:
-      'Iloilo's TinyURL shared-doc approach and PUP Biñan's automated Python validator were improvised on-the-ground wins. Both should be packaged as reusable camp assets and included in the facilitator kit for all future camps.',
+      "Iloilo's TinyURL shared-doc approach and PUP Biñan's automated Python validator were improvised on-the-ground wins. Both should be packaged as reusable camp assets and included in the facilitator kit for all future camps.",
   },
   {
     theme: 'No-Show & Drop-off',
