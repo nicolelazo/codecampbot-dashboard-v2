@@ -2,7 +2,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { CHECKLIST_TEMPLATE } from '@/lib/checklist-data'
 import type { ChecklistTemplateItem } from '@/lib/checklist-data'
-import { getSubmissionTotals } from '@/lib/submission-data'
+import { getSubmissionTotals, MAINNET_DEPLOYMENTS } from '@/lib/submission-data'
 
 async function generateChapterStatusSummary(data: {
   chapterName: string
@@ -444,9 +444,10 @@ export async function buildDsuOverview() {
   const sub = getSubmissionTotals()
   const kpiMap = {
     ...kpiMapRaw,
-    form_submissions:        String(sub.totalRegistrations),
-    confirmed_deployments:   String(sub.totalSubs),
-    verified_completions:    String(sub.totalVerified),
+    total_attendees:         String(sub.totalRegistrations), // 508
+    form_submissions:        String(sub.totalSubs),          // 362
+    mainnet_deployments:     String(MAINNET_DEPLOYMENTS),    // 321
+    verified_completions:    String(sub.totalVerified),      // 302
     completion_rate_vs_reg:  sub.completionRate,
     completion_rate:         sub.completionRate.replace('%', ''),
   }
@@ -681,10 +682,11 @@ export async function buildDsuOverview() {
 <b>📊 KPIs</b>
 • Code Camps: <b>${readKpi(['code_camps'])}</b>
 • Dev Events: <b>${readKpi(['dev_events', 'dev_events_secondary_slots', 'dev_events_slots'])}</b>
-• Attendees: <b>${readKpi(['total_attendees', 'attendees_total'], attendeesFromChapters > 0 ? String(attendeesFromChapters) : '–')}</b>
+• Attendees: <b>${readKpi(['total_attendees'])}</b>
 • Submissions: <b>${readKpi(['form_submissions'])}</b>
-• Verified Deployments: <b>${readKpi(['verified_completions'])}</b>
-• Completion Rate: <b>${readKpi(['completion_rate'])}</b>
+• Mainnet Deployments: <b>${readKpi(['mainnet_deployments'])}</b>
+• Verified w/ Public Vercel: <b>${readKpi(['verified_completions'])}</b>
+• Completion Rate: <b>${readKpi(['completion_rate'])}%</b>
 • Labs: <b>${readKpi(['computer_labs', 'labs_installed'])}</b>
 
 <b>🏕 Chapter Progress</b>
@@ -692,6 +694,11 @@ ${chapterProgress}
 
 <b>✅ Action Items</b> (${urgentTasks.length} urgent · ${openTasks.length} open)
 ${urgentBlock}
+
+<b>💡 Camp Insights (${sub.doneCount} chapters done)</b>
+✅ <b>Works:</b> BYOD pre-install day · TinyURL command sheets · dedicated mentor splits · automated validation scripts
+⚠️ <b>Recurring:</b> OBJECT ID confusion depletes gas · private Vercel links fail HQ check · GitHub not set up pre-event · tool version mismatches in labs
+🎯 <b>Next camps:</b> lock tool versions 2 wks ahead · budget 0.05–0.07 SUI/pax · 48-hr post-event submission window · 3-touch confirmation to cut no-shows
 
 <i>Tap chapter shortcut for details · <a href="https://codecampbot-dashboard-v2.vercel.app/dashboard">Dashboard</a></i>`
 
