@@ -11,17 +11,65 @@ const C = {
   dim: '#8899aa',
 }
 
+interface ChapterInsight {
+  id: number
+  name: string
+  location: string
+  date: string
+  stats: { attendees: number; submitted: number; verified: number; verificationRate: number }
+  profile: string
+  format: string
+  whatWorked: string[]
+  improvements: string[]
+  opportunities: string[]
+  color: string
+}
+
 const CHAPTERS: ChapterInsight[] = [
   {
     id: 1,
+    name: 'Letran Manila Code Camp',
+    location: 'Colegio de San Juan de Letrán, Manila',
+    date: 'March 28, 2026',
+    stats: {
+      attendees: 128,
+      submitted: 60,
+      verified: 29,
+      verificationRate: 48,
+    },
+    profile: 'SHS to 4th Year | Mostly BSIT · Strong GitHub & web dev baseline',
+    format: '1:7 mentor-to-student ratio · Sui Slush token distribution',
+    whatWorked: [
+      '15 mentors at a 1:7 ratio enabled fast, targeted troubleshooting throughout the session',
+      'Sui Slush token distribution helped participants cover gas fees for Mainnet deployment',
+      'Improved forms and presentation materials led to a smoother overall workflow',
+      'High post-session curiosity and peer collaboration; strong motivation to continue exploring blockchain',
+    ],
+    improvements: [
+      'WSL version mismatches (1.44.x) across lab computers caused compatibility issues — standardise WSL version in the pre-event venue checklist',
+      'Some participants missed the Mainnet/Testnet switch step — add a prominent network-switch checkpoint in the workshop flow',
+      'Sui client updates during the session caused unexpected disruptions — pre-installation must lock the Sui client version',
+      'NPM compatibility issues required mid-session reinstallation — add NPM version check to the pre-install checklist',
+      'GitHub accounts not prepared in advance caused delays — make GitHub account setup a hard prerequisite in registration confirmation',
+      'Sui Slush token budget was insufficient given high gas fees — budget 0.05–0.07 SUI per participant for future camps',
+    ],
+    opportunities: [
+      'Venue lab standardisation checklist (WSL, Node, NPM, Sui version) should become a mandatory pre-event deliverable sent to hosts 2 weeks before camp day',
+      'The 0.05–0.07 SUI/participant gas fee guideline should be formalised into the camp budget template',
+      'Strong BSIT cohort with web dev background — ideal test bed for an advanced-track curriculum (skip basics, jump to contract logic)',
+    ],
+    color: C.rose,
+  },
+  {
+    id: 2,
     name: 'Bukidnon Code Camp',
     location: 'Bukidnon State University, Malaybalay City',
     date: 'May 6, 2025',
     stats: {
-      attendees: 149,
-      submitted: 81,
-      verified: 71,
-      verificationRate: 88,
+      attendees: 136,
+      submitted: 80,
+      verified: 73,
+      verificationRate: 91,
     },
     profile: '2nd and 3rd year IT students; Entertainment/Multimedia Computing',
     format: 'BYOD + Pre-Installation Day (first time)',
@@ -45,15 +93,15 @@ const CHAPTERS: ChapterInsight[] = [
     color: C.teal,
   },
   {
-    id: 2,
+    id: 3,
     name: 'Iloilo Code Camp',
     location: 'Iloilo City',
     date: 'May 16 – May 23, 2025',
     stats: {
       attendees: 164,
       submitted: 162,
-      verified: 142,
-      verificationRate: 88,
+      verified: 144,
+      verificationRate: 89,
     },
     profile: '159 3rd year · 5 4th year | 74 CS · 90 IT',
     format: 'Two-day split session',
@@ -74,15 +122,15 @@ const CHAPTERS: ChapterInsight[] = [
     color: C.cyan,
   },
   {
-    id: 3,
+    id: 4,
     name: 'PUP Biñan Code Camp',
     location: 'Polytechnic University of the Philippines, Biñan Campus, Laguna',
     date: 'May 29, 2025',
     stats: {
-      attendees: 103,
-      submitted: 59,
+      attendees: 86,
+      submitted: 60,
       verified: 56,
-      verificationRate: 95,
+      verificationRate: 93,
     },
     profile: '22 1st Year · 6 2nd Year · 24 3rd Year · 5 4th Year | 36 IT · 10 CS · 10 CpE',
     format: 'Lab-based + personal laptop hybrid with dedicated mentor split',
@@ -92,7 +140,7 @@ const CHAPTERS: ChapterInsight[] = [
       'High verification rate (95%) among those who submitted shows strong submission quality',
     ],
     improvements: [
-      'Large submission gap: only 59 of 103 registrants submitted, with 30+ submissions reportedly still pending — implement a post-event follow-up window with a hard deadline',
+      'Large submission gap: only 59 of 103 registrants submitted, with 30+ still pending — implement a post-event follow-up window with a hard deadline',
       'Several participants submitted the SuiScan wallet URL instead of the raw wallet address — add a visual callout in the submission form distinguishing wallet address vs. SuiScan link',
     ],
     opportunities: [
@@ -102,102 +150,57 @@ const CHAPTERS: ChapterInsight[] = [
     ],
     color: '#8b5cf6',
   },
-  {
-    id: 4,
-    name: 'Letran Manila Code Camp',
-    location: 'Colegio de San Juan de Letrán, Manila',
-    date: 'March 28, 2026',
-    stats: {
-      attendees: 128,
-      submitted: 60,
-      verified: 29,
-      verificationRate: 48,
-    },
-    profile: 'SHS to 4th Year | Mostly BSIT · Strong GitHub & web dev baseline',
-    format: '1:7 mentor-to-student ratio · Sui Slush token distribution',
-    whatWorked: [
-      '15 mentors at a 1:7 ratio enabled fast, targeted troubleshooting throughout the session',
-      'Sui Slush token distribution helped participants cover gas fees for Mainnet deployment',
-      'Improved forms and presentation materials led to a smoother overall workflow',
-      'High post-session curiosity and peer collaboration; strong motivation to continue exploring blockchain',
-    ],
-    improvements: [
-      'WSL version mismatches (1.44.x) across lab computers caused compatibility issues — standardise WSL version in pre-event venue checklist',
-      'Some participants missed the Mainnet/Testnet switch step — add a prominent network-switch checkpoint in the workshop flow',
-      'Sui client updates during the session caused unexpected disruptions — pre-installation must lock the Sui client version',
-      'NPM compatibility issues required mid-session reinstallation — add NPM version check to the pre-install checklist',
-      'GitHub accounts not prepared in advance caused delays — make GitHub account setup a hard prerequisite in registration confirmation',
-      'Sui Slush token budget was insufficient at high gas fees — budget 0.05–0.07 SUI per participant for future camps',
-    ],
-    opportunities: [
-      'Venue lab standardisation checklist (WSL, Node, NPM, Sui version) should become a mandatory pre-event deliverable sent to hosts 2 weeks before camp day',
-      'The 0.05–0.07 SUI/participant gas fee guideline should be formalised into the camp budget template',
-      'Strong BSIT cohort with web dev background — ideal test bed for an advanced-track curriculum (skip basics, jump to contract logic)',
-    ],
-    color: C.rose,
-  },
 ]
 
-interface ChapterInsight {
-  id: number
-  name: string
-  location: string
-  date: string
-  stats: { attendees: number; submitted: number; verified: number; verificationRate: number }
-  profile: string
-  format: string
-  whatWorked: string[]
-  improvements: string[]
-  opportunities: string[]
-  color: string
-}
-
-const CROSS_CUTTING_IMPROVEMENTS = [
+const FUTURE_IMPROVEMENTS: { category: string; color: string; items: string[] }[] = [
   {
-    theme: 'Pre-Installation & Setup',
-    icon: '⚙',
+    category: 'Pre-Event Preparation',
     color: C.cyan,
-    insight:
-      'Every camp surfaced setup-related delays. A locked-version pre-install checklist (Sui CLI, WSL, Node, NPM) sent to participants and venues 1–2 weeks before the event should be a hard prerequisite for all future camps.',
+    items: [
+      'Send a locked-version pre-install checklist (Sui CLI, WSL, Node, NPM versions) to participants and host venues at least 2 weeks before camp day — make it a hard registration prerequisite.',
+      'Require GitHub account setup as part of the registration confirmation flow, not on the day of the camp.',
+      'Mandate a Pre-Installation Day (separate from the main event) for BYOD camps to ensure all participants arrive setup-ready.',
+      'Deliver a venue readiness checklist to schools covering lab computer specs, WSL version, and network access — follow up 1 week out to confirm compliance.',
+    ],
   },
   {
-    theme: 'Submission Quality',
-    icon: '✓',
+    category: 'During the Camp',
     color: C.teal,
-    insight:
-      'Wallet address confusion (SuiScan URL vs. raw address), private Vercel links, and incomplete project content are recurring submission errors. Embedding inline validators and visual callouts in the submission form will reduce these without mentor intervention.',
+    items: [
+      'Provide a TinyURL short-link at the start of the session pointing to a shared doc with all commands, links, and copy-paste materials — eliminates manual transcription errors.',
+      'Add explicit checkpoints in the workshop flow: network switch (Testnet → Mainnet), OBJECT ID retrieval, and post-publish content update.',
+      'Split mentor assignments by hardware setup (lab computers vs. personal laptops) so all participants receive targeted, relevant support.',
+      'Deploy an automated validation script to reduce manual submission review overhead and provide instant feedback on common errors.',
+    ],
   },
   {
-    theme: 'Gas Fee Budgeting',
-    icon: '⛽',
-    color: C.amber,
-    insight:
-      'Insufficient gas token allocation (Bukidnon, Letran) led to participants depleting tokens on failed publishes. Standardise the budget at 0.05–0.07 SUI per participant, and include a pre-publish OBJECT ID checkpoint to minimise wasted transactions.',
-  },
-  {
-    theme: 'Resource Sharing',
-    icon: '🔗',
+    category: 'Submission & Verification',
     color: '#8b5cf6',
-    insight:
-      "Iloilo's TinyURL shared-doc approach and PUP Biñan's automated Python validator were improvised on-the-ground wins. Both should be packaged as reusable camp assets and included in the facilitator kit for all future camps.",
+    items: [
+      'Add inline validators to the submission form to catch common errors: SuiScan URL vs. raw wallet address, private vs. public Vercel links, empty project content.',
+      'Open a 48-hour post-event submission window with automated reminders to recover participants who did not submit on the day.',
+      'Include an explicit "set Vercel project to public" step in the workshop checklist and submission form instructions.',
+      'Add a post-publish checklist requiring participants to verify their deployed content is updated and visible before submitting.',
+    ],
   },
   {
-    theme: 'No-Show & Drop-off',
-    icon: '👥',
-    color: C.rose,
-    insight:
-      'Registration-to-attendance gaps persist across camps. A three-touch confirmation sequence (1 week out, 3 days out, day before) combined with an accountability buddy system should be standard in the run-of-show template.',
+    category: 'Gas Fees & Token Budget',
+    color: C.amber,
+    items: [
+      'Budget 0.05–0.07 SUI per participant for gas fees — formalise this into the camp budget template.',
+      'Add a pre-publish OBJECT ID checkpoint so participants confirm the correct object before spending gas on a transaction.',
+      'Distribute Sui Slush tokens before the deployment session, not during, to avoid delays when participants are ready to publish.',
+    ],
   },
-]
-
-const FUTURE_OPPORTUNITIES = [
-  'Replicate the BYOD + Pre-Install Day format in venues without dedicated labs — low setup overhead, high day-of readiness.',
-  'Develop an advanced-track curriculum for cohorts with strong CS/web dev backgrounds (Letran, Iloilo CS) — skip basics, focus on contract logic and deployment.',
-  'Build a reusable facilitator kit: TinyURL shared-doc template, Python validator script, pre-install checklist, and submission form with inline validators.',
-  'Explore regional mentor leads (e.g. Iloilo) to reduce central coordination overhead and deepen local Web3 ecosystems.',
-  'A 48-hour post-event submission window with automated reminders can recover the 20–30% of registrants who do not submit on the day.',
-  'Standardise a venue readiness checklist (WSL, Node, NPM, Sui CLI versions) delivered to host schools 2 weeks before camp day.',
-  'Consider a return camp in Bukidnon — strong regional appetite and an established BYOD model make it a high-ROI repeat venue.',
+  {
+    category: 'No-Shows & Drop-offs',
+    color: C.rose,
+    items: [
+      'Implement a three-touch confirmation sequence: 1 week out, 3 days out, and the day before the event.',
+      'Introduce an accountability buddy system at registration to improve attendance commitment.',
+      'Use the pre-install requirement as a natural commitment filter — participants who complete setup are far more likely to attend and finish.',
+    ],
+  },
 ]
 
 function StatBadge({ label, value, color }: { label: string; value: string | number; color: string }) {
@@ -274,50 +277,40 @@ export default function InsightsPanel() {
 
           {/* Three columns */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0', padding: '20px 24px 24px' }}>
-
             <div style={{ paddingRight: '24px', borderRight: `1px solid ${C.border}` }}>
               <SectionLabel color={C.teal}>What Worked</SectionLabel>
               <BulletList items={chapter.whatWorked} color={C.teal} />
             </div>
-
             <div style={{ padding: '0 24px', borderRight: `1px solid ${C.border}` }}>
               <SectionLabel color={C.rose}>Areas for Improvement</SectionLabel>
               <BulletList items={chapter.improvements} color={C.rose} />
             </div>
-
             <div style={{ paddingLeft: '24px' }}>
               <SectionLabel color={C.amber}>Opportunities</SectionLabel>
               <BulletList items={chapter.opportunities} color={C.amber} />
             </div>
-
           </div>
         </div>
       ))}
 
-      {/* Cross-cutting themes */}
+      {/* Improvements for future code camps */}
       <div>
-        <div style={{ fontSize: '13px', fontWeight: 700, color: C.text, marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-          Cross-Cutting Improvement Themes
+        <div style={{ fontSize: '13px', fontWeight: 700, color: C.text, marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          Improvements for Future Code Camps
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '14px' }}>
-          {CROSS_CUTTING_IMPROVEMENTS.map(item => (
-            <div key={item.theme} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: '14px', padding: '18px 20px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                <span style={{ fontSize: '18px' }}>{item.icon}</span>
-                <span style={{ fontSize: '13px', fontWeight: 700, color: item.color }}>{item.theme}</span>
+        <div style={{ fontSize: '13px', color: C.dim, marginBottom: '20px', lineHeight: 1.6 }}>
+          Consolidated action items derived from all four completed camps. Apply these before, during, and after each future chapter.
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          {FUTURE_IMPROVEMENTS.map(group => (
+            <div key={group.category} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: '16px', padding: '20px 22px' }}>
+              <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.09em', color: group.color, marginBottom: '14px' }}>
+                {group.category}
               </div>
-              <p style={{ margin: 0, fontSize: '13px', color: C.dim, lineHeight: 1.6 }}>{item.insight}</p>
+              <BulletList items={group.items} color={group.color} />
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Future opportunities */}
-      <div style={{ background: 'rgba(245,158,11,0.04)', border: '1px solid rgba(245,158,11,0.18)', borderRadius: '18px', padding: '22px 24px' }}>
-        <div style={{ fontSize: '13px', fontWeight: 700, color: C.amber, marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-          Opportunities for Future Code Camps
-        </div>
-        <BulletList items={FUTURE_OPPORTUNITIES} color={C.amber} />
       </div>
 
     </div>
