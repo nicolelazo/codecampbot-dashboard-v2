@@ -265,7 +265,6 @@ export default function InsightsPanel() {
               <StatBadge label="Attendees" value={chapter.stats.attendees} color={chapter.color} />
               <StatBadge label="Submitted" value={chapter.stats.submitted} color={chapter.color} />
               <StatBadge label="Verified" value={chapter.stats.verified} color={chapter.color} />
-              <StatBadge label="Verify Rate" value={`${chapter.stats.verificationRate}%`} color={chapter.stats.verificationRate >= 80 ? C.teal : C.amber} />
             </div>
           </div>
 

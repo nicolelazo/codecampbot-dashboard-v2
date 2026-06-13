@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { CHECKLIST_TEMPLATE } from '@/lib/checklist-data'
-import { getSubmissionTotals } from '@/lib/submission-data'
+import { getSubmissionTotals, MAINNET_DEPLOYMENTS } from '@/lib/submission-data'
 
 const noStoreFetch: typeof fetch = (input, init) => {
   return fetch(input, {
@@ -57,13 +57,15 @@ export async function buildDsuMessage(): Promise<string> {
 
   const kpiMapRaw = Object.fromEntries((kpis ?? []).map(k => [k.key, k.value]))
 
-  // Merge: computed submission totals override stale Supabase values for these three metrics
+  // Merge: computed submission totals always override stale Supabase values
   const sub = getSubmissionTotals()
   const kpiMap = {
     ...kpiMapRaw,
-    verified_completions:    String(sub.totalVerified),   // 322 — always from real data
-    completion_rate_vs_reg:  sub.completionRate,           // 59.96% — always from real data
-    form_submissions:        String(sub.totalRegistrations), // 537 — total registrations (Code Camp Attendees)
+    total_attendees:         String(sub.totalRegistrations), // 508
+    form_submissions:        String(sub.totalSubs),          // 362
+    mainnet_deployments:     String(MAINNET_DEPLOYMENTS),    // 321
+    verified_completions:    String(sub.totalVerified),      // 302
+    completion_rate_vs_reg:  sub.completionRate,
   }
 
   function sortChapters<T extends { status: string; date_iso: string | null }>(rows: T[]): T[] {
@@ -93,16 +95,19 @@ export async function buildDsuMessage(): Promise<string> {
 
   const kpiBlock = [
     `• Code Camps: <b>${kpiMap['code_camps'] ?? '–'}</b>`,
-    `• Dev Events / Slots: <b>${kpiMap['dev_events'] ?? '–'}</b>`,
-    `• Total Attendees: <b>${kpiMap['total_attendees'] ?? '–'}</b>`,
-    `• Form Submissions: <b>${kpiMap['form_submissions'] ?? '–'}</b>`,
-    `• Mentors Trained: <b>${kpiMap['trained_mentors'] ?? '–'}</b>`,
-    `• Students Trained: <b>${kpiMap['students_trained'] ?? '–'}</b>`,
-    `• Deployments: <b>${kpiMap['confirmed_deployments'] ?? '–'}</b>`,
-    `• Completion Rate: <b>${kpiMap['completion_rate'] ?? '–'}</b>`,
-    `• Labs Activated: <b>${kpiMap['computer_labs'] ?? '–'}</b>`,
-    `• Verified Completions: <b>${kpiMap['verified_completions']}</b> (${kpiMap['completion_rate_vs_reg']} vs reg — ${sub.doneCount} chapters done)`,
+    `• Dev Events: <b>${kpiMap['dev_events'] ?? '–'}</b>`,
+    `• Attendees: <b>${kpiMap['total_attendees']}</b>`,
+    `• Submissions: <b>${kpiMap['form_submissions']}</b>`,
+    `• Mainnet Deployments: <b>${kpiMap['mainnet_deployments']}</b>`,
+    `• Verified w/ Public Vercel: <b>${kpiMap['verified_completions']}</b>`,
+    `• Completion Rate: <b>${kpiMap['completion_rate_vs_reg']}</b>`,
+    `• Labs: <b>${kpiMap['computer_labs'] ?? '–'}</b>`,
   ].join('\n')
+
+  const insightsBlock = `<b>💡 Camp Insights (${sub.doneCount} chapters done)</b>
+✅ <b>What works:</b> BYOD pre-install day · TinyURL command sheets · dedicated mentor splits · automated validation scripts
+⚠️ <b>Recurring issues:</b> OBJECT ID confusion depletes gas · private Vercel links fail HQ check · GitHub not set up pre-event · WSL/tool version mismatches in labs
+🎯 <b>For next camps:</b> lock tool versions 2 wks ahead · budget 0.05–0.07 SUI/pax for gas · add 48-hr post-event submission window · 3-touch confirmation to reduce no-shows`
 
   const statusIcon: Record<string, string> = {
     completed: '✅', rescheduling: '⚠️', in_progress: '🔄',
@@ -165,6 +170,8 @@ ${urgentBlock}
 
 <b>⚠️ High Risks</b> (${uniqueOpenRisks.length} total open)
 ${risksBlock}
+
+${insightsBlock}
 
 <i>Use /tasks, /risks, or /chapter [id] for details.</i>${deepSurgeBlock}`
 }
