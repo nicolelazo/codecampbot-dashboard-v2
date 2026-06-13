@@ -18,10 +18,11 @@ import LinksPanel from '@/components/panels/LinksPanel'
 import ContactsPanel from '@/components/panels/ContactsPanel'
 import ContentPanel from '@/components/panels/ContentPanel'
 import SettingsPanel from '@/components/panels/SettingsPanel'
+import InsightsPanel from '@/components/panels/InsightsPanel'
 
-type TabId = 'overview' | 'kpi' | 'milestones' | 'chapters' | 'risks' | 'merch' | 'links' | 'contacts' | 'content' | 'settings'
+type TabId = 'overview' | 'kpi' | 'milestones' | 'insights' | 'chapters' | 'risks' | 'merch' | 'links' | 'contacts' | 'content' | 'settings'
 
-const TAB_IDS: TabId[] = ['overview', 'kpi', 'milestones', 'chapters', 'risks', 'merch', 'links', 'contacts', 'content', 'settings']
+const TAB_IDS: TabId[] = ['overview', 'kpi', 'milestones', 'insights', 'chapters', 'risks', 'merch', 'links', 'contacts', 'content', 'settings']
 
 function getTabFromQuery(tab: string | null): TabId {
   return TAB_IDS.includes((tab ?? '') as TabId) ? (tab as TabId) : 'overview'
@@ -119,7 +120,8 @@ const NAV_SECTIONS = [
     items: [
       { id: 'overview'   as TabId, label: 'Event Discovery', icon: '◈' },
       { id: 'kpi'        as TabId, label: 'KPI Dashboard',   icon: '◉' },
-      { id: 'milestones' as TabId, label: 'Partnership KPIs',icon: '◎' },
+      { id: 'milestones' as TabId, label: 'Partnership KPIs',  icon: '◎' },
+      { id: 'insights'   as TabId, label: 'Code Camp Insights', icon: '◑' },
     ],
   },
   {
@@ -1346,6 +1348,7 @@ export default function Dashboard({ initialChapterId }: DashboardProps) {
             <div className="animate-fade-in">
               {activeTab === 'kpi'        && <KpiPanel kpis={kpis} chapters={chapters} setKpis={setKpis} isMobile={isMobile} />}
               {activeTab === 'milestones' && <MilestonesPanel />}
+              {activeTab === 'insights'   && <InsightsPanel />}
               {activeTab === 'chapters'   && <ChaptersPanel chapters={chapters} onShowChapter={showChapter} onRefresh={refresh} isMobile={isMobile} />}
               {activeTab === 'risks'      && <RisksPanel risks={risks} setRisks={setRisks} onRefresh={refresh} isMobile={isMobile} />}
               {activeTab === 'merch'      && <MerchPanel merch_items={merchItems} chapters={chapters} onRefresh={refresh} isMobile={isMobile} />}
