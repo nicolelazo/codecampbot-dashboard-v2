@@ -124,7 +124,7 @@ export default function ChaptersPanel({ chapters, onShowChapter, onRefresh, isMo
                 onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(6,182,212,0.35)')}
                 onMouseLeave={e => { e.currentTarget.style.borderLeft = `3px solid ${accent}`; e.currentTarget.style.borderColor = '#1e293b' }}
               >
-                <span style={{ fontSize: '10px', fontWeight: 700, color: '#475569', fontFamily: 'monospace' }}>{c.number}</span>
+                <span style={{ fontSize: '10px', fontWeight: 700, color: '#475569', fontFamily: 'monospace' }}>{c.id === 'legazpi' ? '' : c.number}</span>
                 <div>
                   <div style={{ fontSize: '13px', fontWeight: 600, color: '#cfd5dd', marginBottom: '3px' }}>{c.name}</div>
                   <div style={{ fontSize: '11px', color: '#64748b', marginBottom: '8px' }}>
@@ -207,7 +207,7 @@ export default function ChaptersPanel({ chapters, onShowChapter, onRefresh, isMo
                 onMouseEnter={e => (e.currentTarget.style.background = `${accent}25`)}
                 onMouseLeave={e => (e.currentTarget.style.background = `${accent}14`)}
               >
-                Ch{c.number} {c.city}
+                {c.id === 'legazpi' ? c.city : `Ch${c.number} ${c.city}`}
               </button>
             )
           })}
