@@ -388,8 +388,9 @@ async function sendOrEdit(
 }
 
 function sortChaptersForDsu<T extends { id?: string; status: string; date_iso: string | null }>(rows: T[]): T[] {
-  // Exclude applicant chapters and Tacloban (removed from official slots)
-  const filtered = rows.filter(c => c.status !== 'applicant' && (c as { id?: string }).id?.toLowerCase() !== 'tacloban')
+  // Exclude applicant chapters, Tacloban (removed), and Pampanga (declined)
+  const EXCLUDED_IDS = ['tacloban', 'pampanga']
+  const filtered = rows.filter(c => c.status !== 'applicant' && !EXCLUDED_IDS.includes((c as { id?: string }).id?.toLowerCase() ?? ''))
   const ISSUE_STATUSES = ['tbc', 'rescheduling', 'declined']
   const active = filtered.filter(c => c.status !== 'completed' && !ISSUE_STATUSES.includes(c.status))
   const tbc    = filtered.filter(c => c.status === 'tbc')
@@ -435,8 +436,8 @@ export async function buildDsuOverview() {
   ])
 
   const chapterRows = sortChaptersForDsu(chapters ?? [])
-  // Exclude tasks from chapters removed from DSU (tacloban = applicant/removed)
-  const openTasks = (tasks ?? []).filter(t => t.chapter_id.toLowerCase() !== 'tacloban')
+  // Exclude tasks from chapters removed from DSU (tacloban removed, pampanga declined)
+  const openTasks = (tasks ?? []).filter(t => !['tacloban', 'pampanga'].includes(t.chapter_id.toLowerCase()))
   const allRisks = risksData ?? []
   const urgentTasks = openTasks.filter(t => t.status === 'urgent')
   const kpiMapRaw = Object.fromEntries((kpis ?? []).map(k => [k.key, k.value]))
@@ -1154,7 +1155,7 @@ async function cmdRisks(chatId: number, filter: string, page = 0, editTarget?: {
 
 async function cmdChapter(chatId: number, id: string) {
   if (!id) {
-    await send(chatId, 'Usage: /chapter [chapter]\nValid chapters: manila · tacloban · iloilo · bukidnon · pampanga · laguna')
+    await send(chatId, 'Usage: /chapter [chapter]\nValid chapters: manila · iloilo · bukidnon · laguna · cdo · legazpi')
     return
   }
 
@@ -1215,7 +1216,7 @@ async function cmdKpis(chatId: number, page = 0, editTarget?: { messageId: numbe
 
 const CHAPTER_CODES: Record<string, string> = {
   manila: 'MNL', tacloban: 'TCL', iloilo: 'ILO',
-  bukidnon: 'BKD', pampanga: 'PMP', laguna: 'LGN', cdo: 'CDO',
+  bukidnon: 'BKD', pampanga: 'PMP', laguna: 'LGN', cdo: 'CDO', legazpi: 'LGZ',
 }
 
 async function generateShortId(sb: ReturnType<typeof db>, chapter_id: string): Promise<string> {
@@ -1241,7 +1242,7 @@ async function cmdAddTask(chatId: number, args: string) {
 
   const { data: chapter } = await sb.from('chapters').select('id, name').eq('id', chapter_id).single()
   if (!chapter) {
-    await send(chatId, `Chapter <code>${chapter_id}</code> not found.\nValid chapters: manila · tacloban · iloilo · bukidnon · pampanga · laguna`)
+    await send(chatId, `Chapter <code>${chapter_id}</code> not found.\nValid chapters: manila · iloilo · bukidnon · laguna · cdo · legazpi`)
     return
   }
 
@@ -1520,7 +1521,7 @@ Fields:
 
   const { data: chapter } = await sb.from('chapters').select('id, name, number, date_iso, date_text').eq('id', chapterId.toLowerCase()).single()
   if (!chapter) {
-    await send(chatId, `Chapter <code>${chapterId}</code> not found.\nValid chapters: manila · tacloban · iloilo · bukidnon · pampanga · laguna`)
+    await send(chatId, `Chapter <code>${chapterId}</code> not found.\nValid chapters: manila · iloilo · bukidnon · laguna · cdo · legazpi`)
     return
   }
 
@@ -1673,7 +1674,7 @@ async function cmdSetChecklistActivity(chatId: number, args: string) {
   const sb = db()
   const { data: chapter } = await sb.from('chapters').select('id, number, name').eq('id', chapterId).single()
   if (!chapter) {
-    await send(chatId, `Chapter <code>${chapterId}</code> not found.\nValid chapters: manila · tacloban · iloilo · bukidnon · pampanga · laguna`)
+    await send(chatId, `Chapter <code>${chapterId}</code> not found.\nValid chapters: manila · iloilo · bukidnon · laguna · cdo · legazpi`)
     return
   }
 
