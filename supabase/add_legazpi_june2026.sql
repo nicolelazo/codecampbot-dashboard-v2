@@ -41,7 +41,7 @@ VALUES (
   'LGZ-t1',
   'legazpi',
   'Nicole',
-  'Legazpi plan C w/ JP - confirm venue, date, lead for 5th code camp slot in July.',
+  'Coordinate with JP for TBD details - Legazpi probable 5th code camp slot. Confirm venue, date, and lead.',
   'urgent'
 )
 ON CONFLICT (short_id) DO UPDATE SET
