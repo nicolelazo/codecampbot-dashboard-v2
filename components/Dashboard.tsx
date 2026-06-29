@@ -524,7 +524,7 @@ function SubmissionSummarySection({ isMobile }: { isMobile?: boolean }) {
 }
 
 // ── Full 15-item FW checklist per chapter (standardized template)
-// Order: Bukidnon (May 6 ✓) → Iloilo (May 16 ✓) → Laguna (May 29) → Pampanga (Jun 24) → Tacloban (candidate, last)
+// Order: Bukidnon (May 6 ✓) → Iloilo (May 16 ✓) → Laguna (May 29) → Pampanga (declined) → CDO (5th slot, not moving) → Legazpi (plan C) → Tacloban (applicant, last)
 const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string }[]> = {
   bukidnon: [
     { done: true,  label: 'Invitation Letter' },
@@ -614,23 +614,41 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: false, label: 'Post-Report',       note: 'Blocked' },
     { done: false, label: 'Liquidation',       note: 'Blocked' },
   ],
-  // CDO — probable 5th slot · all details tentative · nothing started yet
+  // CDO — 5th slot candidate · NOT moving · can't close a classroom venue · Legazpi plan C in play
   cdo: [
-    { done: false, label: 'Invitation Letter', note: 'Pending — details tentative' },
-    { done: false, label: 'Event Schedule',    note: 'Jul 4 tentative · DICT Region X (tentative)' },
-    { done: false, label: 'DeepSurge Link',    note: 'Pending' },
-    { done: false, label: 'Promo Materials',   note: 'Pending' },
-    { done: false, label: 'Volunteers 2+',     note: 'Pending' },
-    { done: false, label: 'Whitelist',         note: 'Pending' },
-    { done: false, label: 'Seed Fund',         note: 'Pending' },
-    { done: false, label: 'Slides Prep',       note: 'Pending' },
-    { done: false, label: 'Mentors 10+',       note: 'Pending' },
-    { done: false, label: 'Dry Run 1',         note: 'Pending' },
-    { done: false, label: 'Dry Run 2',         note: 'Pending' },
-    { done: false, label: 'Final Promo Push',  note: 'Pending' },
-    { done: false, label: 'Post-Event Post',   note: 'Pending' },
-    { done: false, label: 'Post-Report',       note: 'Pending' },
-    { done: false, label: 'Liquidation',       note: 'Pending' },
+    { done: false, label: 'Invitation Letter', note: 'Pending — decision by Mon Jun 30' },
+    { done: false, label: 'Event Schedule',    note: 'Not moving · cannot close a classroom venue · decision pending Mon Jun 30' },
+    { done: false, label: 'DeepSurge Link',    note: 'Blocked — venue not confirmed' },
+    { done: false, label: 'Promo Materials',   note: 'Blocked' },
+    { done: false, label: 'Volunteers 2+',     note: 'Blocked' },
+    { done: false, label: 'Whitelist',         note: 'Blocked' },
+    { done: false, label: 'Seed Fund',         note: 'Blocked' },
+    { done: false, label: 'Slides Prep',       note: 'Blocked' },
+    { done: false, label: 'Mentors 10+',       note: 'Blocked' },
+    { done: false, label: 'Dry Run 1',         note: 'Blocked' },
+    { done: false, label: 'Dry Run 2',         note: 'Blocked' },
+    { done: false, label: 'Final Promo Push',  note: 'Blocked' },
+    { done: false, label: 'Post-Event Post',   note: 'Blocked' },
+    { done: false, label: 'Post-Report',       note: 'Blocked' },
+    { done: false, label: 'Liquidation',       note: 'If CDO drops: ask CDO to ship merch' },
+  ],
+  // Legazpi — Plan C candidate for 5th slot · w/ JP · all pending · awaiting Monday decision
+  legazpi: [
+    { done: false, label: 'Invitation Letter' },
+    { done: false, label: 'Event Schedule' },
+    { done: false, label: 'DeepSurge Link' },
+    { done: false, label: 'Promo Materials' },
+    { done: false, label: 'Volunteers 2+' },
+    { done: false, label: 'Whitelist' },
+    { done: false, label: 'Seed Fund' },
+    { done: false, label: 'Slides Prep' },
+    { done: false, label: 'Mentors 10+' },
+    { done: false, label: 'Dry Run 1' },
+    { done: false, label: 'Dry Run 2' },
+    { done: false, label: 'Final Promo Push' },
+    { done: false, label: 'Post-Event Post' },
+    { done: false, label: 'Post-Report' },
+    { done: false, label: 'Liquidation' },
   ],
 }
 
@@ -683,7 +701,7 @@ function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chap
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, flex: 1 }}>
                       {isTacloban && <span style={{ fontSize: '12px', flexShrink: 0 }}>⚠️</span>}
                       <div style={{ minWidth: 0 }}>
-                        <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.id !== 'cdo' ? `Ch${c.number} · ` : ''}{displayCity(c.city)}</div>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.id !== 'cdo' && c.id !== 'legazpi' ? `Ch${c.number} · ` : ''}{displayCity(c.city)}</div>
                         {isTacloban
                           ? <div style={{ fontSize: '9px', color: '#FBBF24', fontWeight: 700, marginTop: '1px' }}>🔴 Cancellation · No date · No reply</div>
                           : c.date_text ? <div style={{ fontSize: '9px', color: C.muted, marginTop: '1px' }}>{c.date_text}</div> : null}
@@ -707,7 +725,7 @@ function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chap
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
                     {isTacloban && <span style={{ fontSize: '13px', flexShrink: 0 }}>⚠️</span>}
                     <div style={{ minWidth: 0 }}>
-                      <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.id !== 'cdo' ? `Ch${c.number} · ` : ''}{displayCity(c.city)}</div>
+                      <div style={{ fontSize: '12px', fontWeight: 700, color: C.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.id !== 'cdo' && c.id !== 'legazpi' ? `Ch${c.number} · ` : ''}{displayCity(c.city)}</div>
                       {isTacloban
                         ? <div style={{ fontSize: '9px', color: '#FBBF24', fontWeight: 700, marginTop: '1px' }}>🔴 CANCELLATION DISCUSSION · Candidate · No date · No reply</div>
                         : c.date_text ? <div style={{ fontSize: '9px', color: C.muted, marginTop: '1px' }}>{c.date_text}</div> : null}
@@ -796,7 +814,7 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
   ]
 
   const KEY_RISKS = [
-    { text: 'CDO — all details tentative · venue & date (Jul 4) unconfirmed · no official 5th slot yet · BYOD setup TBD · pending Nicole follow-up with Kenshin', urgent: false, high: true  },
+    { text: 'CDO — NOT moving · cannot close a single classroom venue · Legazpi (plan C w/ JP) being pursued as backup 5th slot · decision by Mon Jun 30 · if CDO drops: ask CDO to ship merch', urgent: true, high: true  },
     { text: 'Laguna — EOD/post-report done ✓ · liquidation still pending', urgent: false, high: true  },
     ...highRisks.filter(r => !(r.chapter_tag ?? '').toLowerCase().includes('tacloban') && !(r.chapter_tag ?? '').toLowerCase().includes('cdo') && !(r.chapter_tag ?? '').toLowerCase().includes('laguna')).slice(0, 2)
       .map(r => ({ text: `${r.chapter_tag ? r.chapter_tag + ' — ' : ''}${r.title}`, urgent: false, high: true })),
@@ -807,7 +825,8 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
   ]
 
   const KEY_NEXT_STEPS = [
-    { urgent: true,  text: 'CDO — follow up with Kenshin · confirm venue (DICT Region X), date (Jul 4), BYOD setup, pax count · lock in as official 5th slot' },
+    { urgent: true,  text: 'CDO — decision by Mon Jun 30 · if not moving → pivot to Legazpi (plan C w/ JP) as 5th code camp in July · if CDO drops, ask CDO to ship merch' },
+    { urgent: true,  text: 'Legazpi — confirm plan w/ JP · lock in venue, date, and lead for 5th code camp slot' },
     { urgent: false, text: 'Laguna — liquidation still pending · ensure completion' },
     { urgent: true,  text: 'Tacloban — cancellation discussion · decide to activate or formally remove' },
     { urgent: false, text: 'Iloilo — submit liquidation report (pending)' },
