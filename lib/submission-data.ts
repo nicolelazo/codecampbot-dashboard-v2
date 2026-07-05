@@ -31,7 +31,7 @@ export const SUBMISSION_ROWS: SubmissionRow[] = [
   { location: 'Bukidnon', date: 'May 6',  done: true, registrations: 136, total: 80,  share: '22.10%', verified: 73,  incomplete: 7,  rate: '53.68%' },
   { location: 'Iloilo',   date: 'May 16', done: true, registrations: 164, total: 162, share: '44.75%', verified: 144, incomplete: 18, rate: '87.80%' },
   { location: 'Laguna',   date: 'May 29', done: true, registrations: 80,  total: 60,  share: '16.57%', verified: 56,  incomplete: 4,  rate: '70.00%' },
-  { location: 'Legazpi', date: 'TBD (Plan C)', done: false },
+  { location: 'Legazpi', date: 'Jul 30, 2026', done: false },
   { location: 'CDO', date: 'Jul 4 (tentative)', done: false },
   { location: 'Pampanga', date: 'Declined', done: false },
 ]
