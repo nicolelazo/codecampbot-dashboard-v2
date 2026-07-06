@@ -525,7 +525,7 @@ function SubmissionSummarySection({ isMobile }: { isMobile?: boolean }) {
 
 // ── Full 15-item FW checklist per chapter (standardized template)
 // Order: Bukidnon (May 6 ✓) → Iloilo (May 16 ✓) → Laguna (May 29 ✓) → Pampanga (declined) → CDO (Jul 29, DICT Region-X) → Legazpi (Jul 30, IDS Colleges) → Tacloban (applicant, last)
-// `active` renders the pill highlighted (not grayed out) even when not yet done
+// `active` renders the pill green like done items (no ✓) even when not yet done
 const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string; active?: boolean }[]> = {
   bukidnon: [
     { done: true,  label: 'Invitation Letter' },
@@ -762,9 +762,9 @@ function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chap
                     <span key={idx}
                       title={item.note ?? ''}
                       style={{ fontSize: '9px', fontWeight: 600, padding: '2px 7px', borderRadius: '999px',
-                        background: item.done ? 'rgba(20,184,166,0.12)' : item.active ? 'rgba(6,182,212,0.12)' : isTacloban ? 'rgba(248,113,113,0.08)' : 'rgba(100,116,139,0.08)',
-                        color: item.done ? '#2DD4BF' : item.active ? '#22D3EE' : isTacloban ? '#F87171' : C.muted,
-                        border: `1px solid ${item.done ? 'rgba(45,212,191,0.25)' : item.active ? 'rgba(34,211,238,0.3)' : isTacloban ? 'rgba(248,113,113,0.2)' : 'rgba(100,116,139,0.15)'}`,
+                        background: item.done || item.active ? 'rgba(20,184,166,0.12)' : isTacloban ? 'rgba(248,113,113,0.08)' : 'rgba(100,116,139,0.08)',
+                        color: item.done || item.active ? '#2DD4BF' : isTacloban ? '#F87171' : C.muted,
+                        border: `1px solid ${item.done || item.active ? 'rgba(45,212,191,0.25)' : isTacloban ? 'rgba(248,113,113,0.2)' : 'rgba(100,116,139,0.15)'}`,
                         cursor: item.note ? 'help' : 'default',
                       }}>
                       {item.done ? '✓ ' : ''}{item.label}

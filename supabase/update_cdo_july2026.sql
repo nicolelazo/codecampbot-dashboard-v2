@@ -1,4 +1,5 @@
 -- CDO confirmed — Jul 29, 2026 · DICT Region-X
+-- Also moves Legazpi off 'tbc' — Jul 30 is confirmed
 -- Run in Supabase SQL Editor > New Query
 
 -- 1. Update chapter record with confirmed date and venue
@@ -7,9 +8,15 @@ UPDATE chapters SET
   date_text        = 'Jul 29, 2026',
   date_iso         = '2026-07-29',
   countdown_text   = 'Jul 29',
-  status           = 'tbc',
+  status           = 'in_progress',
   updated_at       = now()
 WHERE id = 'cdo';
+
+-- 1b. Legazpi is confirmed for Jul 30 — no longer TBC
+UPDATE chapters SET
+  status     = 'in_progress',
+  updated_at = now()
+WHERE id = 'legazpi';
 
 -- 2. Close the old "confirm details" task — date and venue are now confirmed
 UPDATE chapter_tasks SET
