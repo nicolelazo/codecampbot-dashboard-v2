@@ -524,8 +524,9 @@ function SubmissionSummarySection({ isMobile }: { isMobile?: boolean }) {
 }
 
 // ── Full 15-item FW checklist per chapter (standardized template)
-// Order: Bukidnon (May 6 ✓) → Iloilo (May 16 ✓) → Laguna (May 29 ✓) → Pampanga (declined) → Legazpi (Jul 30, IDS Colleges) → CDO → Tacloban (applicant, last)
-const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string }[]> = {
+// Order: Bukidnon (May 6 ✓) → Iloilo (May 16 ✓) → Laguna (May 29 ✓) → Pampanga (declined) → CDO (Jul 29, DICT Region-X) → Legazpi (Jul 30, IDS Colleges) → Tacloban (applicant, last)
+// `active` renders the pill highlighted (not grayed out) even when not yet done
+const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string; active?: boolean }[]> = {
   bukidnon: [
     { done: true,  label: 'Invitation Letter' },
     { done: true,  label: 'Event Schedule' },
@@ -614,28 +615,28 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: false, label: 'Post-Report',       note: 'Blocked' },
     { done: false, label: 'Liquidation',       note: 'Blocked' },
   ],
-  // CDO — NOT moving · can't close a classroom venue
+  // CDO — Jul 29, 2026 · DICT Region-X · confirmed
   cdo: [
-    { done: false, label: 'Invitation Letter', note: 'Pending — decision by Mon Jun 30' },
-    { done: false, label: 'Event Schedule',    note: 'Not moving · cannot close a classroom venue · decision pending Mon Jun 30' },
-    { done: false, label: 'DeepSurge Link',    note: 'Blocked — venue not confirmed' },
-    { done: false, label: 'Promo Materials',   note: 'Blocked' },
-    { done: false, label: 'Volunteers 2+',     note: 'Blocked' },
-    { done: false, label: 'Whitelist',         note: 'Blocked' },
-    { done: false, label: 'Seed Fund',         note: 'Blocked' },
-    { done: false, label: 'Slides Prep',       note: 'Blocked' },
-    { done: false, label: 'Mentors 10+',       note: 'Blocked' },
-    { done: false, label: 'Dry Run 1',         note: 'Blocked' },
-    { done: false, label: 'Dry Run 2',         note: 'Blocked' },
-    { done: false, label: 'Final Promo Push',  note: 'Blocked' },
-    { done: false, label: 'Post-Event Post',   note: 'Blocked' },
-    { done: false, label: 'Post-Report',       note: 'Blocked' },
-    { done: false, label: 'Liquidation',       note: 'If CDO drops: ask CDO to ship merch' },
+    { done: false, label: 'Invitation Letter', active: true, note: 'In progress — Jul 29 · DICT Region-X' },
+    { done: false, label: 'Event Schedule',    active: true, note: 'Jul 29, 2026 · DICT Region-X' },
+    { done: false, label: 'DeepSurge Link' },
+    { done: false, label: 'Promo Materials' },
+    { done: false, label: 'Volunteers 2+' },
+    { done: false, label: 'Whitelist' },
+    { done: false, label: 'Seed Fund' },
+    { done: false, label: 'Slides Prep' },
+    { done: false, label: 'Mentors 10+' },
+    { done: false, label: 'Dry Run 1' },
+    { done: false, label: 'Dry Run 2' },
+    { done: false, label: 'Final Promo Push' },
+    { done: false, label: 'Post-Event Post' },
+    { done: false, label: 'Post-Report' },
+    { done: false, label: 'Liquidation' },
   ],
   // Legazpi — Jul 30, 2026 · IDS Colleges · 5th Code Camp
   legazpi: [
-    { done: false, label: 'Invitation Letter' },
-    { done: false, label: 'Event Schedule' },
+    { done: false, label: 'Invitation Letter', active: true, note: 'In progress — Jul 30 · IDS Colleges' },
+    { done: false, label: 'Event Schedule',    active: true, note: 'Jul 30, 2026 · IDS Colleges' },
     { done: false, label: 'DeepSurge Link' },
     { done: false, label: 'Promo Materials' },
     { done: false, label: 'Volunteers 2+' },
@@ -761,9 +762,9 @@ function FwStatusSection({ chapters, onShowChapter, isMobile }: { chapters: Chap
                     <span key={idx}
                       title={item.note ?? ''}
                       style={{ fontSize: '9px', fontWeight: 600, padding: '2px 7px', borderRadius: '999px',
-                        background: item.done ? 'rgba(20,184,166,0.12)' : isTacloban ? 'rgba(248,113,113,0.08)' : 'rgba(100,116,139,0.08)',
-                        color: item.done ? '#2DD4BF' : isTacloban ? '#F87171' : C.muted,
-                        border: `1px solid ${item.done ? 'rgba(45,212,191,0.25)' : isTacloban ? 'rgba(248,113,113,0.2)' : 'rgba(100,116,139,0.15)'}`,
+                        background: item.done ? 'rgba(20,184,166,0.12)' : item.active ? 'rgba(6,182,212,0.12)' : isTacloban ? 'rgba(248,113,113,0.08)' : 'rgba(100,116,139,0.08)',
+                        color: item.done ? '#2DD4BF' : item.active ? '#22D3EE' : isTacloban ? '#F87171' : C.muted,
+                        border: `1px solid ${item.done ? 'rgba(45,212,191,0.25)' : item.active ? 'rgba(34,211,238,0.3)' : isTacloban ? 'rgba(248,113,113,0.2)' : 'rgba(100,116,139,0.15)'}`,
                         cursor: item.note ? 'help' : 'default',
                       }}>
                       {item.done ? '✓ ' : ''}{item.label}

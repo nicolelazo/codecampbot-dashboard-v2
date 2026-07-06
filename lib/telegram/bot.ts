@@ -402,8 +402,8 @@ function sortChaptersForDsu<T extends { id?: string; status: string; date_iso: s
     if (b.date_iso) return 1
     return 0
   })
-  // Legazpi (confirmed 5th slot) before CDO in the tbc bucket
-  const TBC_ORDER = ['legazpi', 'cdo']
+  // CDO (Jul 29) before Legazpi (Jul 30) in the tbc bucket — chronological
+  const TBC_ORDER = ['cdo', 'legazpi']
   tbc.sort((a, b) => {
     const ai = TBC_ORDER.indexOf((a as { id?: string }).id?.toLowerCase() ?? '')
     const bi = TBC_ORDER.indexOf((b as { id?: string }).id?.toLowerCase() ?? '')
@@ -522,6 +522,8 @@ export async function buildDsuOverview() {
             : ch.status
           const status = ch.id.toLowerCase() === 'legazpi'
             ? '5th Code Camp · Jul 30 · IDS Colleges'
+            : ch.id.toLowerCase() === 'cdo'
+            ? 'Confirmed · Jul 29 · DICT Region-X'
             : chapterStatusLabel(displayStatusKey)
           const weeks = ` (${weeksToGoLabel(ch.date_iso, ch.date_text)})`
           const chapterTasks = chapterTaskMap[ch.id.toLowerCase()] ?? []
