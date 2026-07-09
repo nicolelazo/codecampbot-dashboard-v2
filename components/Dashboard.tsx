@@ -645,7 +645,7 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: false, label: 'Seed Fund' },
     { done: false, label: 'Slides Prep' },
     { done: false, label: 'Mentors 10+',       note: 'Finalize 10 mentors · training Jul 13, 7–10 PM' },
-    { done: false, label: 'Merch Shipment' },
+    { done: true,  label: 'Merch Shipment',     note: 'Shipped via LBC ✓' },
     { done: false, label: 'Dry Run 1' },
     { done: false, label: 'Dry Run 2' },
     { done: false, label: 'Final Promo Push' },

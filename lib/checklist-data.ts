@@ -151,7 +151,7 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
     { tCode: 'W-2',    task: 'Seed Fund Request — submit request 1–2 weeks before the Code Camp; follow up approval/status if needed',                           date: 'Jul 16, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'Slides Preparation — prepare and finalize all presentation slides; ensure all links and embedded materials are working; test demos', date: 'Jul 16, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'Mentor Requirements — finalize 10 mentor names; mentor training Jul 13, 2026 7–10 PM; submit Sui smart contract as proof of learning', date: 'Jul 16, 2026', status: 'pending' },
-    { tCode: 'W-2',    task: 'Merch Shipment — arrange and ship merchandise to arrive at venue before event day',                                                 date: 'Jul 16, 2026', status: 'pending' },
+    { tCode: 'W-2',    task: 'Merch Shipment — shipped via LBC; en route to IDS Colleges before event day',                                                       date: 'Jul 16, 2026', status: 'done' },
     { tCode: 'W-2',    task: 'First Dry Run — check overall flow and technical issues; test internet stability, audio/visual setup, and facilitator coordination', date: 'Jul 16, 2026', status: 'pending' },
     { tCode: 'W-1',    task: 'Second Dry Run — final timing check; speaker transitions; participant support flow; final technical validation',                    date: 'Jul 23, 2026', status: 'pending' },
     { tCode: 'W-1',    task: 'Final Promotions Push — release final promotional materials; remind participants to register; coordinate confirmations',             date: 'Jul 23, 2026', status: 'pending' },

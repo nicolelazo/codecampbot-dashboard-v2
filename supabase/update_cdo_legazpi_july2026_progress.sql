@@ -73,6 +73,18 @@ ON CONFLICT (short_id) DO UPDATE SET
   is_done     = false,
   updated_at  = now();
 
+-- Legazpi merch — shipped via LBC (mark done)
+INSERT INTO chapter_tasks (short_id, chapter_id, owner, description, status, is_done)
+VALUES
+  ('LGZ-t3', 'legazpi', 'Nicole', 'Merch shipped via LBC — en route to IDS Colleges for Jul 30.', 'done', true)
+ON CONFLICT (short_id) DO UPDATE SET
+  chapter_id  = EXCLUDED.chapter_id,
+  owner       = EXCLUDED.owner,
+  description = EXCLUDED.description,
+  status      = 'done',
+  is_done     = true,
+  updated_at  = now();
+
 -- ────────────────────────────────────────────────────────────
 -- 5. KPI sublabel — both confirmed
 -- ────────────────────────────────────────────────────────────
