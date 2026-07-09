@@ -615,17 +615,17 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: false, label: 'Post-Report',       note: 'Blocked' },
     { done: false, label: 'Liquidation',       note: 'Blocked' },
   ],
-  // CDO — Jul 29, 2026 · DICT Region-X · confirmed
+  // CDO — Jul 29, 2026 · DICT Region-X · confirmed · 30%
   cdo: [
     { done: false, label: 'Invitation Letter', active: true, note: 'In progress — Jul 29 · DICT Region-X' },
     { done: false, label: 'Event Schedule',    active: true, note: 'Jul 29, 2026 · DICT Region-X' },
-    { done: false, label: 'DeepSurge Link' },
-    { done: false, label: 'Promo Materials' },
+    { done: false, label: 'DeepSurge Link',    note: 'Pending · DEVCON+ registration link pending' },
+    { done: false, label: 'Promo Materials',   note: 'Pre-publication materials pending' },
     { done: false, label: 'Volunteers 2+' },
     { done: false, label: 'Whitelist' },
     { done: false, label: 'Seed Fund' },
     { done: false, label: 'Slides Prep' },
-    { done: false, label: 'Mentors 10+' },
+    { done: false, label: 'Mentors 10+',       note: 'Mentor training Jul 13, 2026 7–10 PM · finalize 10 mentors' },
     { done: false, label: 'Dry Run 1' },
     { done: false, label: 'Dry Run 2' },
     { done: false, label: 'Final Promo Push' },
@@ -633,18 +633,18 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: false, label: 'Post-Report' },
     { done: false, label: 'Liquidation' },
   ],
-  // Legazpi — Jul 30, 2026 · IDS Colleges · 5th Code Camp
+  // Legazpi — Jul 30, 2026 · IDS Colleges · 5th Code Camp · 40%
   legazpi: [
     { done: false, label: 'Invitation Letter', active: true, note: 'In progress — Jul 30 · IDS Colleges' },
     { done: false, label: 'Event Schedule',    active: true, note: 'Jul 30, 2026 · IDS Colleges' },
-    { done: false, label: 'DeepSurge Link' },
+    { done: false, label: 'DeepSurge Link',    note: 'Pending · registration link pending' },
     { done: false, label: 'Promo Materials' },
     { done: false, label: 'Volunteers 2+' },
-    { done: false, label: 'Training Schedule' },
+    { done: false, label: 'Training Schedule', note: 'Mentor training Jul 13, 2026 7–10 PM' },
     { done: false, label: 'Whitelist' },
     { done: false, label: 'Seed Fund' },
     { done: false, label: 'Slides Prep' },
-    { done: false, label: 'Mentors 10+' },
+    { done: false, label: 'Mentors 10+',       note: 'Finalize 10 mentors · training Jul 13, 7–10 PM' },
     { done: false, label: 'Merch Shipment' },
     { done: false, label: 'Dry Run 1' },
     { done: false, label: 'Dry Run 2' },
@@ -817,7 +817,8 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
   ]
 
   const KEY_RISKS = [
-    { text: 'Legazpi — confirmed 5th Code Camp · Jul 30, 2026 · IDS Colleges · training schedule and merch shipment still pending', urgent: true, high: true  },
+    { text: 'CDO — 30% · Jul 29 · DICT Region-X · DEVCON+ registration & DeepSurge links pending · mentor training Jul 13 (7–10 PM) · finalize 10 mentors + installation', urgent: true, high: true  },
+    { text: 'Legazpi — 40% · Jul 30 · IDS Colleges · registration & DeepSurge links pending · mentor training Jul 13 (7–10 PM) · finalize 10 mentors + installation', urgent: true, high: true  },
     { text: 'Laguna — EOD/post-report done ✓ · liquidation still pending', urgent: false, high: true  },
     ...highRisks.filter(r => !(r.chapter_tag ?? '').toLowerCase().includes('tacloban') && !(r.chapter_tag ?? '').toLowerCase().includes('cdo') && !(r.chapter_tag ?? '').toLowerCase().includes('laguna')).slice(0, 2)
       .map(r => ({ text: `${r.chapter_tag ? r.chapter_tag + ' — ' : ''}${r.title}`, urgent: false, high: true })),
@@ -828,7 +829,8 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
   ]
 
   const KEY_NEXT_STEPS = [
-    { urgent: true,  text: 'Legazpi — confirmed Jul 30, 2026 · IDS Colleges · plan training schedule and arrange merch shipment' },
+    { urgent: true,  text: 'CDO — mentor training Jul 13 (7–10 PM) · finalize 10 mentors · pre-publication materials · installation · registration + DeepSurge links pending' },
+    { urgent: true,  text: 'Legazpi — finalize 10 mentors · mentor training Jul 13 (7–10 PM) · installation · registration + DeepSurge links pending' },
     { urgent: false, text: 'Laguna — liquidation still pending · ensure completion' },
     { urgent: true,  text: 'Tacloban — cancellation discussion · decide to activate or formally remove' },
     { urgent: false, text: 'Iloilo — submit liquidation report (pending)' },

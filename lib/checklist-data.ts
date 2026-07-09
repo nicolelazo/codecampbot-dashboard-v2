@@ -140,17 +140,17 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
     { tCode: 'T+7',    task: 'Liquidation — collect and organize all receipts; submit complete liquidation report; ensure all supporting documents are complete', date: 'Jun 5, 2026',  status: 'upcoming' },
   ],
   legazpi: [
-    // Jul 30, 2026 @ IDS Colleges
+    // Jul 30, 2026 @ IDS Colleges · 40%
     { tCode: 'W-4',    task: 'Invitation Letter from HQ — request/send official invitation for Chapter and Code Camp Lead; secure partner school confirmations', date: 'Jul 2, 2026',  status: 'pending' },
     { tCode: 'W-4',    task: 'Finalize Event Schedule — include date, time, venue/location, partner schools/organizations',                                       date: 'Jul 2, 2026',  status: 'pending' },
-    { tCode: 'W-3',    task: 'DeepSurge Link Creation — create and finalize registration/event links before promotions begin; test registration flow',           date: 'Jul 9, 2026',  status: 'pending' },
+    { tCode: 'W-3',    task: 'DeepSurge Link Creation — registration link and DeepSurge link still PENDING; create/finalize before promotions begin; test registration flow', date: 'Jul 9, 2026',  status: 'pending' },
     { tCode: 'W-4',    task: 'Promotional Materials — create publication materials/posters using Canva; follow branding guidelines; prepare captions/schedule',  date: 'Jul 2, 2026',  status: 'pending' },
     { tCode: 'W-4',    task: 'Volunteer Requirements — recruit at least 2 volunteers for photos/videos; invite school publication; assign documentation roles',   date: 'Jul 2, 2026',  status: 'pending' },
-    { tCode: 'W-3',    task: 'Plan Training Schedule — finalize training agenda and timeline for participants and mentors',                                        date: 'Jul 9, 2026',  status: 'pending' },
+    { tCode: 'W-3',    task: 'Plan Training Schedule — mentor training Jul 13, 2026 7–10 PM; finalize training agenda and timeline for participants and mentors', date: 'Jul 9, 2026',  status: 'pending' },
     { tCode: 'W-2',    task: 'Whitelist Required Websites — sui.io, suiscan.xyz, github.com, vercel.app, youtube.com, docs.google.com',                         date: 'Jul 16, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'Seed Fund Request — submit request 1–2 weeks before the Code Camp; follow up approval/status if needed',                           date: 'Jul 16, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'Slides Preparation — prepare and finalize all presentation slides; ensure all links and embedded materials are working; test demos', date: 'Jul 16, 2026', status: 'pending' },
-    { tCode: 'W-2',    task: 'Mentor Requirements — minimum 10 mentors; attend required mentor training; submit Sui smart contract as proof of learning',        date: 'Jul 16, 2026', status: 'pending' },
+    { tCode: 'W-2',    task: 'Mentor Requirements — finalize 10 mentor names; mentor training Jul 13, 2026 7–10 PM; submit Sui smart contract as proof of learning', date: 'Jul 16, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'Merch Shipment — arrange and ship merchandise to arrive at venue before event day',                                                 date: 'Jul 16, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'First Dry Run — check overall flow and technical issues; test internet stability, audio/visual setup, and facilitator coordination', date: 'Jul 16, 2026', status: 'pending' },
     { tCode: 'W-1',    task: 'Second Dry Run — final timing check; speaker transitions; participant support flow; final technical validation',                    date: 'Jul 23, 2026', status: 'pending' },
@@ -161,16 +161,16 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
     { tCode: 'T+7',    task: 'Liquidation — collect and organize all receipts; submit complete liquidation report; ensure all supporting documents are complete', date: 'Aug 6, 2026',  status: 'pending' },
   ],
   cdo: [
-    // Jul 29, 2026 @ DICT Region-X
+    // Jul 29, 2026 @ DICT Region-X · 30%
     { tCode: 'W-4',    task: 'Invitation Letter from HQ — request/send official invitation for Chapter and Code Camp Lead; secure partner school confirmations', date: 'Jul 1, 2026',  status: 'pending' },
     { tCode: 'W-4',    task: 'Finalize Event Schedule — include date, time, venue/location, partner schools/organizations',                                       date: 'Jul 1, 2026',  status: 'pending' },
-    { tCode: 'W-3',    task: 'DeepSurge Link Creation — create and finalize registration/event links before promotions begin; test registration flow',           date: 'Jul 8, 2026',  status: 'pending' },
-    { tCode: 'W-4',    task: 'Promotional Materials — create publication materials/posters using Canva; follow branding guidelines; prepare captions/schedule',  date: 'Jul 1, 2026',  status: 'pending' },
+    { tCode: 'W-3',    task: 'DeepSurge Link Creation — DEVCON+ registration link and DeepSurge link still PENDING; create/finalize before promotions begin; test registration flow', date: 'Jul 8, 2026',  status: 'pending' },
+    { tCode: 'W-4',    task: 'Promotional Materials — pre-publication materials pending; create posters using Canva; follow branding guidelines; prepare captions/schedule', date: 'Jul 1, 2026',  status: 'pending' },
     { tCode: 'W-4',    task: 'Volunteer Requirements — recruit at least 2 volunteers for photos/videos; invite school publication; assign documentation roles',   date: 'Jul 1, 2026',  status: 'pending' },
     { tCode: 'W-2',    task: 'Whitelist Required Websites — sui.io, suiscan.xyz, github.com, vercel.app, youtube.com, docs.google.com',                         date: 'Jul 15, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'Seed Fund Request — submit request 1–2 weeks before the Code Camp; follow up approval/status if needed',                           date: 'Jul 15, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'Slides Preparation — prepare and finalize all presentation slides; ensure all links and embedded materials are working; test demos', date: 'Jul 15, 2026', status: 'pending' },
-    { tCode: 'W-2',    task: 'Mentor Requirements — minimum 10 mentors; attend required mentor training; submit Sui smart contract as proof of learning',        date: 'Jul 15, 2026', status: 'pending' },
+    { tCode: 'W-2',    task: 'Mentor Requirements — finalize 10 mentor names; mentor training Jul 13, 2026 7–10 PM; submit Sui smart contract as proof of learning', date: 'Jul 15, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'First Dry Run — check overall flow and technical issues; test internet stability, audio/visual setup, and facilitator coordination', date: 'Jul 15, 2026', status: 'pending' },
     { tCode: 'W-1',    task: 'Second Dry Run — final timing check; speaker transitions; participant support flow; final technical validation',                    date: 'Jul 22, 2026', status: 'pending' },
     { tCode: 'W-1',    task: 'Final Promotions Push — release final promotional materials; remind participants to register; coordinate confirmations',             date: 'Jul 22, 2026', status: 'pending' },
