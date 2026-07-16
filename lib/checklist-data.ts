@@ -141,12 +141,12 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
   ],
   legazpi: [
     // Jul 30, 2026 @ IDS Colleges · 40%
-    { tCode: 'W-4',    task: 'Invitation Letter from HQ — request/send official invitation for Chapter and Code Camp Lead; secure partner school confirmations', date: 'Jul 2, 2026',  status: 'pending' },
-    { tCode: 'W-4',    task: 'Finalize Event Schedule — include date, time, venue/location, partner schools/organizations',                                       date: 'Jul 2, 2026',  status: 'pending' },
-    { tCode: 'W-3',    task: 'DeepSurge Link Creation — registration link and DeepSurge link still PENDING; create/finalize before promotions begin; test registration flow', date: 'Jul 9, 2026',  status: 'pending' },
-    { tCode: 'W-4',    task: 'Promotional Materials — create publication materials/posters using Canva; follow branding guidelines; prepare captions/schedule',  date: 'Jul 2, 2026',  status: 'pending' },
+    { tCode: 'W-4',    task: 'Invitation Letter from HQ — official invitation for Chapter and Code Camp Lead sent; partner school confirmations secured ✓', date: 'Jul 2, 2026',  status: 'done' },
+    { tCode: 'W-4',    task: 'Finalize Event Schedule — date, time, venue/location, partner schools/organizations finalized ✓',                                  date: 'Jul 2, 2026',  status: 'done' },
+    { tCode: 'W-3',    task: 'DeepSurge Link Creation — registration link and DeepSurge link created ✓; registration flow tested',                              date: 'Jul 9, 2026',  status: 'done' },
+    { tCode: 'W-4',    task: 'Promotional Materials — publication materials/posters and promotional posts ready ✓',                                            date: 'Jul 2, 2026',  status: 'done' },
     { tCode: 'W-4',    task: 'Volunteer Requirements — recruit at least 2 volunteers for photos/videos; invite school publication; assign documentation roles',   date: 'Jul 2, 2026',  status: 'pending' },
-    { tCode: 'W-3',    task: 'Plan Training Schedule — mentor training Jul 13, 2026 7–10 PM; finalize training agenda and timeline for participants and mentors', date: 'Jul 9, 2026',  status: 'pending' },
+    { tCode: 'W-3',    task: 'Plan Training Schedule — mentor training completed Jul 13, 2026 7–10 PM ✓; training agenda and timeline finalized',               date: 'Jul 9, 2026',  status: 'done' },
     { tCode: 'W-2',    task: 'Whitelist Required Websites — sui.io, suiscan.xyz, github.com, vercel.app, youtube.com, docs.google.com',                         date: 'Jul 16, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'Seed Fund Request — submit request 1–2 weeks before the Code Camp; follow up approval/status if needed',                           date: 'Jul 16, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'Slides Preparation — prepare and finalize all presentation slides; ensure all links and embedded materials are working; test demos', date: 'Jul 16, 2026', status: 'pending' },
@@ -162,10 +162,10 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
   ],
   cdo: [
     // Jul 29, 2026 @ DICT Region-X · 30%
-    { tCode: 'W-4',    task: 'Invitation Letter from HQ — request/send official invitation for Chapter and Code Camp Lead; secure partner school confirmations', date: 'Jul 1, 2026',  status: 'pending' },
-    { tCode: 'W-4',    task: 'Finalize Event Schedule — include date, time, venue/location, partner schools/organizations',                                       date: 'Jul 1, 2026',  status: 'pending' },
-    { tCode: 'W-3',    task: 'DeepSurge Link Creation — DEVCON+ registration link and DeepSurge link still PENDING; create/finalize before promotions begin; test registration flow', date: 'Jul 8, 2026',  status: 'pending' },
-    { tCode: 'W-4',    task: 'Promotional Materials — pre-publication materials pending; create posters using Canva; follow branding guidelines; prepare captions/schedule', date: 'Jul 1, 2026',  status: 'pending' },
+    { tCode: 'W-4',    task: 'Invitation Letter from HQ — official invitation for Chapter and Code Camp Lead sent; partner school confirmations secured ✓', date: 'Jul 1, 2026',  status: 'done' },
+    { tCode: 'W-4',    task: 'Finalize Event Schedule — date, time, venue/location, partner schools/organizations finalized ✓',                                  date: 'Jul 1, 2026',  status: 'done' },
+    { tCode: 'W-3',    task: 'DeepSurge Link Creation — DEVCON+ registration link and DeepSurge link created ✓; registration flow tested',                       date: 'Jul 8, 2026',  status: 'done' },
+    { tCode: 'W-4',    task: 'Promotional Materials — pre-publication materials and promotional posts ready ✓',                                                date: 'Jul 1, 2026',  status: 'done' },
     { tCode: 'W-4',    task: 'Volunteer Requirements — recruit at least 2 volunteers for photos/videos; invite school publication; assign documentation roles',   date: 'Jul 1, 2026',  status: 'pending' },
     { tCode: 'W-2',    task: 'Whitelist Required Websites — sui.io, suiscan.xyz, github.com, vercel.app, youtube.com, docs.google.com',                         date: 'Jul 15, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'Seed Fund Request — submit request 1–2 weeks before the Code Camp; follow up approval/status if needed',                           date: 'Jul 15, 2026', status: 'pending' },
