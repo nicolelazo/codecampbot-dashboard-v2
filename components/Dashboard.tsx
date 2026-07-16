@@ -817,8 +817,8 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
   ]
 
   const KEY_RISKS = [
-    { text: 'CDO — 40% · Jul 29 · DICT Region-X · registration & DeepSurge links ready ✓ · mentor training done Jul 13 ✓ · finalize 10 mentors + installation + internal dry run', urgent: true, high: true  },
-    { text: 'Legazpi — 50% · Jul 30 · IDS Colleges · registration & DeepSurge links ready ✓ · mentor training done Jul 13 ✓ · finalize 10 mentors + installation + internal dry run', urgent: false, high: true  },
+    { text: 'CDO — 40% · Jul 29 · DICT Region-X · finalize 10 mentors + installation + internal dry run', urgent: false, high: true  },
+    { text: 'Legazpi — 50% · Jul 30 · IDS Colleges · finalize 10 mentors + installation + internal dry run', urgent: false, high: true  },
     { text: 'Laguna — EOD/post-report done ✓ · liquidation still pending', urgent: false, high: true  },
     ...highRisks.filter(r => !(r.chapter_tag ?? '').toLowerCase().includes('tacloban') && !(r.chapter_tag ?? '').toLowerCase().includes('cdo') && !(r.chapter_tag ?? '').toLowerCase().includes('laguna')).slice(0, 2)
       .map(r => ({ text: `${r.chapter_tag ? r.chapter_tag + ' — ' : ''}${r.title}`, urgent: false, high: true })),
