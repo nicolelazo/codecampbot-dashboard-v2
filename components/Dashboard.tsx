@@ -817,8 +817,8 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
   ]
 
   const KEY_RISKS = [
-    { text: 'CDO — 30% · Jul 29 · DICT Region-X · DEVCON+ registration & DeepSurge links pending · mentor training Jul 13 (7–10 PM) · finalize 10 mentors + installation', urgent: true, high: true  },
-    { text: 'Legazpi — 40% · Jul 30 · IDS Colleges · registration & DeepSurge links pending · mentor training Jul 13 (7–10 PM) · finalize 10 mentors + installation', urgent: true, high: true  },
+    { text: 'CDO — 40% · Jul 29 · DICT Region-X · registration & DeepSurge links ready ✓ · mentor training done Jul 13 ✓ · finalize 10 mentors + installation + internal dry run', urgent: true, high: true  },
+    { text: 'Legazpi — 50% · Jul 30 · IDS Colleges · registration & DeepSurge links ready ✓ · mentor training done Jul 13 ✓ · finalize 10 mentors + installation + internal dry run', urgent: false, high: true  },
     { text: 'Laguna — EOD/post-report done ✓ · liquidation still pending', urgent: false, high: true  },
     ...highRisks.filter(r => !(r.chapter_tag ?? '').toLowerCase().includes('tacloban') && !(r.chapter_tag ?? '').toLowerCase().includes('cdo') && !(r.chapter_tag ?? '').toLowerCase().includes('laguna')).slice(0, 2)
       .map(r => ({ text: `${r.chapter_tag ? r.chapter_tag + ' — ' : ''}${r.title}`, urgent: false, high: true })),
@@ -829,8 +829,8 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
   ]
 
   const KEY_NEXT_STEPS = [
-    { urgent: true,  text: 'CDO — mentor training Jul 13 (7–10 PM) · finalize 10 mentors · pre-publication materials · installation · registration + DeepSurge links pending' },
-    { urgent: true,  text: 'Legazpi — finalize 10 mentors · mentor training Jul 13 (7–10 PM) · installation · registration + DeepSurge links pending' },
+    { urgent: true,  text: 'CDO — finalize 10 mentors · installation · internal dry run (new steps)' },
+    { urgent: false, text: 'Legazpi — finalize 10 mentors · installation · internal dry run (new steps)' },
     { urgent: false, text: 'Laguna — liquidation still pending · ensure completion' },
     { urgent: true,  text: 'Tacloban — cancellation discussion · decide to activate or formally remove' },
     { urgent: false, text: 'Iloilo — submit liquidation report (pending)' },
