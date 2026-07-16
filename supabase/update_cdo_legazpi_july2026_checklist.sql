@@ -32,7 +32,7 @@ WHERE short_id = 'CDO-t5';
 --    Indices per lib/checklist-data.ts:
 --      0 Invitation Letter · 1 Finalize Event Schedule
 --      2 DeepSurge Link · 3 Promotional Materials
---      (Legazpi additionally 5 Plan Training Schedule — training done)
+--      5 Plan Training Schedule (mentor training done Jul 13) — both chapters
 --    Merge preserves any existing overrides for other items.
 -- ────────────────────────────────────────────────────────────
 INSERT INTO bot_settings (key, value, updated_at)
@@ -44,7 +44,7 @@ UPDATE bot_settings AS b SET
     COALESCE(NULLIF(b.value, '')::jsonb, '{}'::jsonb)
     || jsonb_build_object('cdo',
          COALESCE(NULLIF(b.value, '')::jsonb -> 'cdo', '{}'::jsonb)
-         || '{"0":{"activity_status":"done"},"1":{"activity_status":"done"},"2":{"activity_status":"done"},"3":{"activity_status":"done"}}'::jsonb)
+         || '{"0":{"activity_status":"done"},"1":{"activity_status":"done"},"2":{"activity_status":"done"},"3":{"activity_status":"done"},"5":{"activity_status":"done"}}'::jsonb)
     || jsonb_build_object('legazpi',
          COALESCE(NULLIF(b.value, '')::jsonb -> 'legazpi', '{}'::jsonb)
          || '{"0":{"activity_status":"done"},"1":{"activity_status":"done"},"2":{"activity_status":"done"},"3":{"activity_status":"done"},"5":{"activity_status":"done"}}'::jsonb)

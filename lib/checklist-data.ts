@@ -167,6 +167,7 @@ export const CHECKLIST_TEMPLATE: Record<string, ChecklistTemplateItem[]> = {
     { tCode: 'W-3',    task: 'DeepSurge Link Creation — DEVCON+ registration link and DeepSurge link created ✓; registration flow tested',                       date: 'Jul 8, 2026',  status: 'done' },
     { tCode: 'W-4',    task: 'Promotional Materials — pre-publication materials and promotional posts ready ✓',                                                date: 'Jul 1, 2026',  status: 'done' },
     { tCode: 'W-4',    task: 'Volunteer Requirements — recruit at least 2 volunteers for photos/videos; invite school publication; assign documentation roles',   date: 'Jul 1, 2026',  status: 'pending' },
+    { tCode: 'W-3',    task: 'Plan Training Schedule — mentor training completed Jul 13, 2026 7–10 PM ✓; training agenda and timeline finalized',               date: 'Jul 8, 2026',  status: 'done' },
     { tCode: 'W-2',    task: 'Whitelist Required Websites — sui.io, suiscan.xyz, github.com, vercel.app, youtube.com, docs.google.com',                         date: 'Jul 15, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'Seed Fund Request — submit request 1–2 weeks before the Code Camp; follow up approval/status if needed',                           date: 'Jul 15, 2026', status: 'pending' },
     { tCode: 'W-2',    task: 'Slides Preparation — prepare and finalize all presentation slides; ensure all links and embedded materials are working; test demos', date: 'Jul 15, 2026', status: 'pending' },

@@ -622,6 +622,7 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: true,  label: 'DeepSurge Link',    note: 'DEVCON+ registration link created ✓' },
     { done: true,  label: 'Promo Materials',   note: 'Promotional posts ready ✓' },
     { done: false, label: 'Volunteers 2+' },
+    { done: true,  label: 'Training Schedule', note: 'Mentor training done Jul 13 ✓' },
     { done: false, label: 'Whitelist' },
     { done: false, label: 'Seed Fund' },
     { done: false, label: 'Slides Prep' },
