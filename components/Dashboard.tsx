@@ -576,7 +576,7 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: true,  label: 'Dry Run 2',        note: 'Completed ✓' },
     { done: true,  label: 'Final Promo Push', note: 'Done ✓' },
     { done: true,  label: 'Post-Event Post',  note: 'Published ✓' },
-    { done: false, label: 'Post-Report',      note: 'In progress — due Jun 3' },
+    { done: true,  label: 'Post-Report',      note: 'Done ✓' },
     { done: false, label: 'Liquidation',      note: 'Upcoming — due Jun 5' },
   ],
   // Pampanga — Jun 24 · venue confirmed · mentors in training · pending dry runs
@@ -615,7 +615,7 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: false, label: 'Post-Report',       note: 'Blocked' },
     { done: false, label: 'Liquidation',       note: 'Blocked' },
   ],
-  // CDO — Jul 29, 2026 · DICT Region-X · confirmed · 30%
+  // CDO — Jul 29, 2026 · DICT Region-X · confirmed · 50%
   cdo: [
     { done: true,  label: 'Invitation Letter', note: 'Sent ✓ · Jul 29 · DICT Region-X' },
     { done: true,  label: 'Event Schedule',    note: 'Finalized ✓ · Jul 29, 2026 · DICT Region-X' },
@@ -623,18 +623,19 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: true,  label: 'Promo Materials',   note: 'Promotional posts ready ✓' },
     { done: false, label: 'Volunteers 2+' },
     { done: true,  label: 'Training Schedule', note: 'Mentor training done Jul 13 ✓' },
-    { done: false, label: 'Whitelist' },
+    { done: true,  label: 'Whitelist',          note: 'Done ✓' },
     { done: false, label: 'Seed Fund' },
-    { done: false, label: 'Slides Prep' },
+    { done: true,  label: 'Slides Prep',        note: 'Done ✓' },
     { done: false, label: 'Mentors 10+', active: true, note: 'Training done Jul 13 ✓ · finalize 10 mentors' },
-    { done: false, label: 'Dry Run 1' },
+    { done: true,  label: 'Merch Shipment',     note: 'Shipped via LBC ✓' },
+    { done: true,  label: 'Dry Run 1',          note: 'Completed ✓' },
     { done: false, label: 'Dry Run 2' },
     { done: false, label: 'Final Promo Push' },
     { done: false, label: 'Post-Event Post' },
     { done: false, label: 'Post-Report' },
     { done: false, label: 'Liquidation' },
   ],
-  // Legazpi — Jul 30, 2026 · IDS Colleges · 5th Code Camp · 40%
+  // Legazpi — Jul 30, 2026 · IDS Colleges · 5th Code Camp · 70%
   legazpi: [
     { done: true,  label: 'Invitation Letter', note: 'Sent ✓ · Jul 30 · IDS Colleges' },
     { done: true,  label: 'Event Schedule',    note: 'Finalized ✓ · Jul 30, 2026 · IDS Colleges' },
@@ -642,12 +643,12 @@ const FW_CHECKLIST: Record<string, { done: boolean; label: string; note?: string
     { done: true,  label: 'Promo Materials',   note: 'Promotional posts ready ✓' },
     { done: false, label: 'Volunteers 2+' },
     { done: true,  label: 'Training Schedule', note: 'Mentor training done Jul 13 ✓' },
-    { done: false, label: 'Whitelist' },
+    { done: true,  label: 'Whitelist',          note: 'Done ✓' },
     { done: false, label: 'Seed Fund' },
-    { done: false, label: 'Slides Prep' },
+    { done: true,  label: 'Slides Prep',        note: 'Done ✓' },
     { done: false, label: 'Mentors 10+', active: true, note: 'Training done Jul 13 ✓ · finalize 10 mentors' },
     { done: true,  label: 'Merch Shipment',     note: 'Shipped via LBC ✓' },
-    { done: false, label: 'Dry Run 1' },
+    { done: true,  label: 'Dry Run 1',          note: 'Completed ✓' },
     { done: false, label: 'Dry Run 2' },
     { done: false, label: 'Final Promo Push' },
     { done: false, label: 'Post-Event Post' },
@@ -818,8 +819,8 @@ function ProgramSummarySection({ kpis, risks, chapters, onSwitch, onOpenRisks, i
   ]
 
   const KEY_RISKS = [
-    { text: 'CDO — 40% · Jul 29 · DICT Region-X · finalize 10 mentors + installation + internal dry run', urgent: false, high: true  },
-    { text: 'Legazpi — 50% · Jul 30 · IDS Colleges · finalize 10 mentors + installation + internal dry run', urgent: false, high: true  },
+    { text: 'CDO — 50% · Jul 29 · DICT Region-X · low internal mentor-training participation → likely struggles on event day · only 5 mentors (need 10) · low registrant count', urgent: true,  high: true  },
+    { text: 'Legazpi — 70% · Jul 30 · IDS Colleges · finalize 10 mentors + installation + internal dry run', urgent: false, high: true  },
     { text: 'Laguna — EOD/post-report done ✓ · liquidation still pending', urgent: false, high: true  },
     ...highRisks.filter(r => !(r.chapter_tag ?? '').toLowerCase().includes('tacloban') && !(r.chapter_tag ?? '').toLowerCase().includes('cdo') && !(r.chapter_tag ?? '').toLowerCase().includes('laguna')).slice(0, 2)
       .map(r => ({ text: `${r.chapter_tag ? r.chapter_tag + ' — ' : ''}${r.title}`, urgent: false, high: true })),
