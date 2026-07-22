@@ -86,5 +86,26 @@ UPDATE risks SET
   updated_at  = now()
 WHERE upper(trim(code)) = 'CDO-R1';
 
+-- ────────────────────────────────────────────────────────────
+-- 5. Telegram DSU sync — the chapter status summary (Haiku) reads the
+--    top open task + open risks. Update the CDO top task so the summary
+--    matches the dashboard risk (only 5 mentors, low training turnout,
+--    low registrations) instead of the stale "training scheduled Jul 13".
+--    Legazpi task reworded to reflect training already done.
+-- ────────────────────────────────────────────────────────────
+UPDATE chapter_tasks SET
+  description = 'Finalize the 10 mentors — only 5 confirmed so far (need 10); low internal mentor-training turnout; also push registrations. Lock in mentor list before Jul 29.',
+  status      = 'urgent',
+  is_done     = false,
+  updated_at  = now()
+WHERE short_id = 'CDO-t5';
+
+UPDATE chapter_tasks SET
+  description = 'Finalize the 10 mentors — lock in the final list of mentor names (mentor training already done Jul 13).',
+  status      = 'urgent',
+  is_done     = false,
+  updated_at  = now()
+WHERE short_id = 'LGZ-t4';
+
 -- Note: progress_percent is manually set above. Toggling any checklist item from the
 -- dashboard recomputes it from the template (app/api/chapter-checklist/route.ts).
